@@ -18,9 +18,6 @@
 	--color-info: #81d1f0;
 	--color-info-content: #010404;
 
-	--color-success: #8be78f;
-	--color-success-content: #020403;
-
 	--color-warning: #ffd489;
 	--color-warning-content: #0d0b06;
 
@@ -39,9 +36,6 @@
 	--color-info-dark: #0090b5;
 	--color-info-content-dark: #ebfdfe;
 
-	--color-success-dark: #00a43b;
-	--color-success-content-dark: #effcf3;
-
 	--color-warning-dark: #d08700;
 	--color-warning-content-dark: #fcfae6;
 
@@ -54,6 +48,12 @@
 
 	--color-neutral: #8a97ac;
 	--color-neutral-content: #f7f8fa;
+
+	--color-green-primary: #00a43b;
+	--color-green-primary-content: #effcf3;
+
+	--color-light-green: #8be78f;
+	--color-light-green: #020403;
 
 	/* Custom properties */
 	--radius-sm: 0.25rem;

@@ -1,13 +1,13 @@
 import * as React from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/cn'
 
 function Card({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
 	return (
 		<div
 			data-slot="card"
 			className={cn(
-				'bg-base-200 text-base-content flex flex-col gap-6 rounded-xl border p-4 dark:bg-base-200-dark dark:text-base-content-dark dark:border-base-300-dark',
+				'bg-base-200 text-base-content flex flex-col gap-6 rounded-xl border border-base-300 p-4 dark:bg-base-200-dark dark:text-base-content-dark dark:border-base-300-dark',
 				className
 			)}
 			{...props}
