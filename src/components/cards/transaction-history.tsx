@@ -1,7 +1,7 @@
 import { BanknoteArrowDown, BanknoteArrowUp, ChevronsUpDown, Ellipsis } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import { cn } from '@/utils/cn'
 
 interface Transaction {
