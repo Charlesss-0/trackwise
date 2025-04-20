@@ -61,8 +61,8 @@ export default function AnalysisOverview(): React.ReactNode {
 					<YAxis dataKey="income" />
 					<Tooltip
 						contentStyle={{
-							backgroundColor: theme === 'dark' ? '#060d1c' : '#e9ebed',
-							border: theme === 'dark' ? '#182230' : '#d3d4d6',
+							backgroundColor: theme === 'dark' ? '#182230' : '#d3d4d6',
+							border: theme === 'dark' ? '#030712' : '#f7f8fa',
 							padding: '15px',
 						}}
 						wrapperClassName="rounded-lg shadow-lg"

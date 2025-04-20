@@ -12,7 +12,7 @@
 	},
 	"aliases": {
 		"components": "@/components",
-		"utils": "@/utils/tw-merge",
+		"utils": "@/utils/cn",
 		"ui": "@/components/ui",
 		"hooks": "@/hooks"
 	},
