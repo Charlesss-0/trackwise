@@ -7,7 +7,7 @@
 	--color-base-100: #f7f8fa;
 	--color-base-200: #e9ebed;
 	--color-base-300: #d3d4d6;
-	--color-base-content: #030712;
+	--color-base-content: #242b2f;
 
 	--color-secondary: #aad4f5;
 	--color-secondary-content: #1c2327;
@@ -61,8 +61,19 @@
 	--radius-lg: 0.7rem;
 	--radius-xl: 1rem;
 
-	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+	--shadow-sm: 0 1px 2.5px rgba(0, 0, 0, 0.2);
 	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 	--shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+@layer utilities {
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none;
+	}
+
+	.scrollbar-hide {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
 }

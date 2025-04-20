@@ -56,7 +56,7 @@ function CardAction({ className, ...props }: React.ComponentProps<'div'>): React
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
-	return <div data-slot="card-content" className={cn('px-6', className)} {...props} />
+	return <div data-slot="card-content" className={cn('p-4', className)} {...props} />
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {

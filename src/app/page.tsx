@@ -14,6 +14,7 @@ import { Card, CardHeader } from '@/components/ui/card'
 
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/theme-toggle'
+import TransactionHistory from '@/components/transaction-history'
 import { cn } from '@/utils/cn'
 import { useTheme } from 'next-themes'
 
@@ -104,8 +105,8 @@ export default function Home(): React.ReactNode {
 	] as const
 
 	return (
-		<div className="max-w-[1600px] h-screen p-5 justify-items-center bg-base-100 dark:bg-base-100-dark overflow-auto">
-			<header className="flex items-center justify-end w-full gap-4 p-4">
+		<div className="max-w-[1600px] p-5 justify-items-center bg-base-100 dark:bg-base-100-dark">
+			<header className="flex items-center justify-end w-full gap-6 p-4">
 				<div className="flex gap-4">
 					{ACTION_BUTTONS.map(btn => (
 						<Button key={btn.name} size={btn.size} variant={btn.variant}>
@@ -130,7 +131,7 @@ export default function Home(): React.ReactNode {
 					))}
 				</div>
 
-				<div className="grid grid-cols-1 gap-6 mt-6 md:grid-cols-4">
+				<div className="grid grid-cols-1 grid-rows-2 gap-6 mt-6 md:grid-cols-4">
 					<Card className="col-span-1 md:col-span-3">
 						<h2 className="text-lg font-medium text-neutral">Analysis Overview</h2>
 						<ResponsiveContainer aspect={3 / 1} className="w-full h-full pt-4 pr-12">
@@ -150,6 +151,7 @@ export default function Home(): React.ReactNode {
 								<Area
 									type="monotone"
 									dataKey="income"
+									name="Income"
 									stackId="1"
 									stroke="#8884d8"
 									fill="#8884d8"
@@ -157,6 +159,7 @@ export default function Home(): React.ReactNode {
 								<Area
 									type="monotone"
 									dataKey="expenses"
+									name="Expenses"
 									stackId="1"
 									stroke="#82ca9d"
 									fill="#82ca9d"
@@ -164,6 +167,7 @@ export default function Home(): React.ReactNode {
 								<Area
 									type="monotone"
 									dataKey="available"
+									name="Available"
 									stackId="1"
 									stroke="#ffc658"
 									fill="#ffc658"
@@ -171,6 +175,18 @@ export default function Home(): React.ReactNode {
 							</AreaChart>
 						</ResponsiveContainer>
 					</Card>
+
+					<Card className="col-span-1 md:col-span-1">
+						<h2 className="text-lg font-medium text-neutral">Goals</h2>
+						<div className="flex flex-col items-center justify-center h-full">
+							<p className="text-neutral">No goals set yet.</p>
+							<Button variant="outline" className="mt-4">
+								Add Goal
+							</Button>
+						</div>
+					</Card>
+
+					<TransactionHistory />
 				</div>
 			</main>
 		</div>

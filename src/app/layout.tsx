@@ -15,7 +15,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>): React.ReactNode {
 	return (
 		<html lang="en" suppressHydrationWarning data-theme="system">
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+			<body
+				className={`${geistSans.variable} ${geistMono.variable} antialiased bg-base-100 dark:bg-base-100-dark`}
+			>
 				<ThemeProvider
 					attribute="data-theme"
 					defaultTheme="system"
