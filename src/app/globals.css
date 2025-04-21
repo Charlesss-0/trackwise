@@ -77,3 +77,9 @@
 		scrollbar-width: none; /* Firefox */
 	}
 }
+
+@layer components {
+	.input {
+		@apply w-full px-3 py-2 text-sm font-medium bg-transparent border rounded-lg outline-none border-neutral placeholder:text-neutral focus-visible:ring-3 focus-visible:ring-secondary dark:focus-visible:ring-secondary-dark;
+	}
+}

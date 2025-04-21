@@ -33,15 +33,26 @@ export default function AddIncome({
 					</DialogDescription>
 				</DialogHeader>
 				<form>
-					<div>
-						<fieldset>
-							<label htmlFor="amount">Amount</label>
-							<input type="number" id="amount" name="amount" placeholder="0.00" required />
+					<div className="grid gap-4 py-2 my-6">
+						<fieldset className="grid items-center grid-cols-4 gap-2">
+							<label htmlFor="amount" className="text-right">
+								Amount
+							</label>
+							<input
+								type="number"
+								id="amount"
+								name="amount"
+								placeholder="0.00"
+								required
+								className="col-span-3 input"
+							/>
 						</fieldset>
-						<fieldset>
-							<label htmlFor="type">Type</label>
+						<fieldset className="grid items-center grid-cols-4 gap-2">
+							<label htmlFor="type" className="text-right">
+								Type
+							</label>
 							<Select>
-								<SelectTrigger>
+								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select income type" />
 								</SelectTrigger>
 								<SelectContent>
@@ -52,10 +63,12 @@ export default function AddIncome({
 								</SelectContent>
 							</Select>
 						</fieldset>
-						<fieldset>
-							<label htmlFor="frequency">Frequency</label>
+						<fieldset className="grid items-center grid-cols-4 gap-2">
+							<label htmlFor="frequency" className="text-right">
+								Frequency
+							</label>
 							<Select>
-								<SelectTrigger>
+								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select frequency" />
 								</SelectTrigger>
 								<SelectContent>
