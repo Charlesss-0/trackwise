@@ -2,6 +2,7 @@
 
 import { Plus, Wallet } from 'lucide-react'
 
+import AddExpense from './add-expense-dialog'
 import AddIncome from './add-income-dialog'
 import { Button } from './ui/button'
 import { ThemeToggle } from './theme-toggle'
@@ -9,6 +10,7 @@ import { useState } from 'react'
 
 export default function Header(): React.ReactNode {
 	const [addIncomeOpen, setAddIncomeOpen] = useState<boolean>(false)
+	const [addExpenseOpen, setAddExpenseOpen] = useState<boolean>(false)
 
 	const ACTION_BUTTONS = [
 		{
@@ -23,9 +25,7 @@ export default function Header(): React.ReactNode {
 			icon: <Wallet className="w-5 h-5" />,
 			size: 'lg',
 			variant: 'destructive',
-			action: (): void => {
-				// Add expense action
-			},
+			action: (): void => setAddExpenseOpen(true),
 		},
 	] as const
 
@@ -44,6 +44,7 @@ export default function Header(): React.ReactNode {
 			</header>
 
 			<AddIncome open={addIncomeOpen} onOpenChange={setAddIncomeOpen} />
+			<AddExpense open={addExpenseOpen} onOpenChange={setAddExpenseOpen} />
 		</>
 	)
 }
