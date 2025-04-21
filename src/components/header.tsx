@@ -2,10 +2,10 @@
 
 import { Plus, Wallet } from 'lucide-react'
 
-import AddExpense from './add-expense-dialog'
-import AddIncome from './add-income-dialog'
-import { Button } from './ui/button'
-import { ThemeToggle } from './theme-toggle'
+import AddExpense from '@/components/dialogs/add-expense'
+import AddIncome from '@/components/dialogs/add-income'
+import { Button } from '@/components/ui/button'
+import { ThemeToggle } from '@/components/theme-toggle'
 import { useState } from 'react'
 
 export default function Header(): React.ReactNode {

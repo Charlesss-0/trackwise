@@ -1,6 +1,6 @@
 'use client'
 
-import AddFixedExpense from '@/components/add-fixed-expense-dialog'
+import AddFixedExpense from '@/components/dialogs/add-fixed-expense'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { useState } from 'react'
