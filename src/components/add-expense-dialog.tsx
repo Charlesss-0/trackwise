@@ -15,18 +15,7 @@ import {
 } from '@/components/ui/select'
 
 import { Button } from '@/components/ui/button'
-
-const DEFAULT_CATEGORIES = [
-	'food',
-	'housing',
-	'clothing',
-	'groceries',
-	'entertainment',
-	'transportation',
-	'utilities',
-	'healthcare',
-	'other',
-]
+import { DEFAULT_CATEGORIES } from '@/data/default-categories'
 
 export default function AddExpense({
 	open,
@@ -100,7 +89,7 @@ export default function AddExpense({
 						</fieldset>
 					</div>
 					<DialogFooter>
-						<Button type="submit" variant="destructive">
+						<Button type="submit" variant="secondary">
 							Add Expense
 						</Button>
 					</DialogFooter>

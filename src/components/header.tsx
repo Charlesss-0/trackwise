@@ -42,7 +42,6 @@ export default function Header(): React.ReactNode {
 				</div>
 				<ThemeToggle />
 			</header>
-
 			<AddIncome open={addIncomeOpen} onOpenChange={setAddIncomeOpen} />
 			<AddExpense open={addExpenseOpen} onOpenChange={setAddExpenseOpen} />
 		</>
