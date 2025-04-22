@@ -11,12 +11,12 @@ import { useState } from 'react'
 export default function Header(): React.ReactNode {
 	const [addIncomeOpen, setAddIncomeOpen] = useState<boolean>(false)
 	const [addExpenseOpen, setAddExpenseOpen] = useState<boolean>(false)
-	const currentDate = () => {
+	const currentDate = (): string => {
 		const date = new Date()
 		const formattedDate = date.toLocaleDateString('en-US', {
-			year: 'numeric',
-			month: 'short',
 			day: 'numeric',
+			month: 'long',
+			year: 'numeric',
 		})
 
 		return formattedDate
