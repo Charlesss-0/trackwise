@@ -30,7 +30,7 @@ export default function AddFixedExpense({
 				<DialogHeader>
 					<DialogTitle>Add Fixed Expense</DialogTitle>
 					<DialogDescription>
-						Add a recurring expense with target amount and due date
+						Add a recurring expense with target amount and due date.
 					</DialogDescription>
 				</DialogHeader>
 				<form>
@@ -43,8 +43,9 @@ export default function AddFixedExpense({
 								type="text"
 								id="name"
 								name="name"
-								required
+								placeholder="e.g., Rent"
 								autoComplete="off"
+								required
 								className="col-span-3 input"
 							/>
 						</fieldset>

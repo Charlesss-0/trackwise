@@ -15,9 +15,8 @@ import {
 } from '@/components/ui/select'
 
 import { Button } from '@/components/ui/button'
-import { DEFAULT_CATEGORIES } from '@/data/default-categories'
 
-export default function AddExpense({
+export default function AddGoal({
 	open,
 	onOpenChange,
 }: {
@@ -28,83 +27,83 @@ export default function AddExpense({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Add Expense</DialogTitle>
+					<DialogTitle>Add Goal</DialogTitle>
 					<DialogDescription>
-						Add your expense details including category and payment method.
+						Set up a new financial goal with target amount and deadline.
 					</DialogDescription>
 				</DialogHeader>
 				<form>
 					<div className="grid gap-4 py-2 my-6">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="name" className="text-right">
-								Expense Name
+								Goal Name
 							</label>
 							<input
 								type="text"
 								id="name"
 								name="name"
-								placeholder="e.g., Dinner with friends"
-								required
+								placeholder="e.g., New Car"
 								autoComplete="off"
+								required
 								className="col-span-3 input"
 							/>
 						</fieldset>
 						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="amount" className="text-right">
-								Amount
+							<label htmlFor="target" className="text-right">
+								Target Amount
 							</label>
 							<input
 								type="number"
-								id="amount"
-								name="amount"
+								id="target"
+								name="target"
 								placeholder="0.00"
 								required
 								className="col-span-3 input"
 							/>
 						</fieldset>
 						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="category" className="text-right">
-								Category
+							<label htmlFor="deadline" className="text-right">
+								Deadline
+							</label>
+							<input
+								type="date"
+								id="deadline"
+								name="deadline"
+								required
+								className="col-span-3 input"
+							/>
+						</fieldset>
+						<fieldset className="grid items-center grid-cols-4 gap-2">
+							<label htmlFor="priority" className="text-right">
+								Priority
 							</label>
 							<Select>
-								<SelectTrigger className="col-span-3">
-									<SelectValue placeholder="Select category" />
+								<SelectTrigger className="col-span-3 input">
+									<SelectValue placeholder="Select priority" />
 								</SelectTrigger>
 								<SelectContent>
-									{DEFAULT_CATEGORIES.map(category => (
-										<SelectItem key={category} value={category}>
-											{category.charAt(0).toUpperCase() + category.slice(1)}
-										</SelectItem>
-									))}
+									<SelectItem value="high">High</SelectItem>
+									<SelectItem value="medium">Medium</SelectItem>
+									<SelectItem value="low">Low</SelectItem>
 								</SelectContent>
 							</Select>
 						</fieldset>
 						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="payment_method" className="text-right">
-								Payment Method
+							<label htmlFor="monthly" className="text-right">
+								Monthly Contribution
 							</label>
-							<Select>
-								<SelectTrigger className="col-span-3">
-									<SelectValue placeholder="Select payment method" />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="credit">Credit Card</SelectItem>
-									<SelectItem value="debit">Debit Card</SelectItem>
-									<SelectItem value="cash">Cash</SelectItem>
-									<SelectItem value="transfer">Bank Transfer</SelectItem>
-								</SelectContent>
-							</Select>
-						</fieldset>
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="date" className="text-right">
-								Date
-							</label>
-							<input type="date" id="date" name="date" className="col-span-3 input" />
+							<input
+								type="number"
+								id="monthly"
+								name="monthly"
+								placeholder="0.00"
+								className="col-span-3 input"
+							/>
 						</fieldset>
 					</div>
 					<DialogFooter>
 						<Button type="submit" variant="secondary">
-							Add Expense
+							Add Goal
 						</Button>
 					</DialogFooter>
 				</form>
