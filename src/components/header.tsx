@@ -11,6 +11,16 @@ import { useState } from 'react'
 export default function Header(): React.ReactNode {
 	const [addIncomeOpen, setAddIncomeOpen] = useState<boolean>(false)
 	const [addExpenseOpen, setAddExpenseOpen] = useState<boolean>(false)
+	const currentDate = () => {
+		const date = new Date()
+		const formattedDate = date.toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric',
+		})
+
+		return formattedDate
+	}
 
 	const ACTION_BUTTONS = [
 		{
@@ -31,7 +41,10 @@ export default function Header(): React.ReactNode {
 
 	return (
 		<>
-			<header className="flex items-center justify-end w-full gap-6 p-4">
+			<header className="flex items-center justify-between w-full gap-6 p-4">
+				<h1 className="text-2xl font-bold text-base-content dark:text-base-content-dark">
+					{currentDate()}
+				</h1>
 				<div className="flex gap-4">
 					{ACTION_BUTTONS.map(btn => (
 						<Button key={btn.name} size={btn.size} variant={btn.variant} onClick={btn.action}>
@@ -39,8 +52,8 @@ export default function Header(): React.ReactNode {
 							<span>{btn.name}</span>
 						</Button>
 					))}
+					<ThemeToggle />
 				</div>
-				<ThemeToggle />
 			</header>
 			<AddIncome open={addIncomeOpen} onOpenChange={setAddIncomeOpen} />
 			<AddExpense open={addExpenseOpen} onOpenChange={setAddExpenseOpen} />

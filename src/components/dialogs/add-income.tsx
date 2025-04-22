@@ -1,3 +1,5 @@
+'use client'
+
 import {
 	Dialog,
 	DialogContent,
@@ -15,6 +17,9 @@ import {
 } from '@/components/ui/select'
 
 import { Button } from '../ui/button'
+import { useIncomeStore } from '@/stores/income-store'
+import { useState } from 'react'
+import { useTransactionsStore } from '@/stores/transactions-store'
 
 export default function AddIncome({
 	open,
@@ -23,6 +28,40 @@ export default function AddIncome({
 	open: boolean
 	onOpenChange: (open: boolean) => void
 }): React.ReactNode {
+	const { addIncome } = useIncomeStore()
+	const { addTransaction } = useTransactionsStore()
+	const [amount, setAmount] = useState<string>('')
+	const [type, setType] = useState<string>('')
+	const [frequency, setFrequency] = useState<string>('')
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+		e.preventDefault()
+
+		const income: Income = {
+			id: crypto.randomUUID(),
+			amount: Number(amount),
+			type,
+			frequency,
+			date: Date.now(),
+		}
+
+		const transaction: Transaction = {
+			id: crypto.randomUUID(),
+			name: income.type,
+			date: income.date,
+			category: income.type,
+			amount: income.amount,
+			isExpense: false,
+		}
+
+		addIncome(income)
+		addTransaction(transaction)
+		onOpenChange(false)
+		setAmount('')
+		setType('')
+		setFrequency('')
+	}
+
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-[425px]">
@@ -32,7 +71,7 @@ export default function AddIncome({
 						Add your income details. You can specify the type and frequency of your income.
 					</DialogDescription>
 				</DialogHeader>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="amount" className="text-right">
@@ -40,6 +79,8 @@ export default function AddIncome({
 							</label>
 							<input
 								type="number"
+								value={amount}
+								onChange={e => setAmount(e.target.value)}
 								id="amount"
 								name="amount"
 								placeholder="0.00"
@@ -51,7 +92,7 @@ export default function AddIncome({
 							<label htmlFor="type" className="text-right">
 								Type
 							</label>
-							<Select>
+							<Select value={type} onValueChange={setType}>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select income type" />
 								</SelectTrigger>
@@ -67,7 +108,7 @@ export default function AddIncome({
 							<label htmlFor="frequency" className="text-right">
 								Frequency
 							</label>
-							<Select>
+							<Select value={frequency} onValueChange={setFrequency}>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select frequency" />
 								</SelectTrigger>
