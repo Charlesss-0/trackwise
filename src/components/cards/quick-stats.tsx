@@ -4,26 +4,30 @@ import { ArrowDownCircle, PiggyBank, Target, TrendingUp } from 'lucide-react'
 import { Card, CardHeader } from '@/components/ui/card'
 
 import { cn } from '@/utils/cn'
+import { useExpenseStore } from '@/stores/expenses-store'
+import { useIncomeStore } from '@/stores/income-store'
 import { useMemo } from 'react'
-import { useTransactionsStore } from '@/stores/transactions-store'
 
 export default function QuickStats(): React.ReactNode {
-	const { transactions } = useTransactionsStore()
+	const { income } = useIncomeStore()
+	const { expenses } = useExpenseStore()
 
-	const income = transactions.filter((transaction: Transaction) => transaction.isExpense === false)
+	const totalIncome = income.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2)
+	const totalExpenses = expenses.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2)
+	const availableMoney = Number(totalIncome) - Number(totalExpenses)
 
 	const QUICK_STATS = useMemo(
 		() =>
 			[
 				{
 					name: 'Total Income',
-					value: income.reduce((total, income) => total + income.amount, 0),
+					value: totalIncome,
 					valueColor: 'text-green-primary',
 					icon: <TrendingUp className="w-4 h-4 text-green-primary" />,
 				},
 				{
 					name: 'Total Expenses',
-					value: 0,
+					value: totalExpenses,
 					valueColor: 'text-destructive',
 					icon: <ArrowDownCircle className="w-4 h-4 text-destructive" />,
 				},
@@ -35,12 +39,12 @@ export default function QuickStats(): React.ReactNode {
 				},
 				{
 					name: 'Available Money',
-					value: 0,
+					value: availableMoney.toFixed(2),
 					valueColor: 'text-info dark:text-info-dark',
 					icon: <PiggyBank className="w-4 h-4 text-info dark:text-info-dark" />,
 				},
 			] as const,
-		[income]
+		[income, expenses]
 	)
 
 	return (

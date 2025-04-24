@@ -42,13 +42,13 @@ export default function AddIncome({
 			amount: Number(amount),
 			type,
 			frequency,
-			date: Date.now(),
+			timestamp: Date.now(),
 		}
 
 		const transaction: Transaction = {
-			id: crypto.randomUUID(),
+			id: income.id,
 			name: income.type,
-			date: income.date,
+			timestamp: income.timestamp,
 			category: income.type,
 			amount: income.amount,
 			isExpense: false,

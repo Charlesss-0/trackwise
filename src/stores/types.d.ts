@@ -3,13 +3,38 @@ type Income = {
 	amount: number
 	type: string
 	frequency: string
-	date: number
+	timestamp: number
+}
+
+type Expense = {
+	id: string
+	name: string
+	amount: number
+	category: string
+	paymentMethod: string
+	timestamp: number
+}
+
+type FixedExpense = Omit<Expense, 'paymentMethod' | 'amount'> & {
+	targetAmount: number
+	dueDate: number
+	frequency: string
+}
+
+type Goal = {
+	id: string
+	name: string
+	targetAmount: number
+	deadline: number
+	priority: string
+	monthlyContribution: number
+	timestamp: number
 }
 
 type Transaction = {
 	id: string
 	name: string
-	date: number
+	timestamp: number
 	category: string
 	amount: number
 	isExpense: boolean

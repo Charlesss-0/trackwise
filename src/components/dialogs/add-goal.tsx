@@ -1,3 +1,5 @@
+'use client'
+
 import {
 	Dialog,
 	DialogContent,
@@ -15,6 +17,8 @@ import {
 } from '@/components/ui/select'
 
 import { Button } from '@/components/ui/button'
+import { useGoalStore } from '@/stores/goals-store'
+import { useState } from 'react'
 
 export default function AddGoal({
 	open,
@@ -23,6 +27,35 @@ export default function AddGoal({
 	open: boolean
 	onOpenChange: (open: boolean) => void
 }): React.ReactNode {
+	const { addGoal } = useGoalStore()
+	const [name, setName] = useState<string>('')
+	const [targetAmount, setTargetAmount] = useState<string>('')
+	const [deadline, setDeadline] = useState<string>('')
+	const [priority, setPriority] = useState<string>('')
+	const [monthlyContribution, setMonthlyContribution] = useState<string>('')
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+		e.preventDefault()
+
+		const goal: Goal = {
+			id: crypto.randomUUID(),
+			name,
+			targetAmount: Number(targetAmount),
+			deadline: Number(deadline),
+			priority,
+			monthlyContribution: Number(monthlyContribution),
+			timestamp: Date.now(),
+		}
+
+		addGoal(goal)
+		onOpenChange(false)
+		setName('')
+		setTargetAmount('')
+		setDeadline('')
+		setPriority('')
+		setMonthlyContribution('')
+	}
+
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-[425px]">
@@ -32,7 +65,7 @@ export default function AddGoal({
 						Set up a new financial goal with target amount and deadline.
 					</DialogDescription>
 				</DialogHeader>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="name" className="text-right">
@@ -82,9 +115,9 @@ export default function AddGoal({
 									<SelectValue placeholder="Select priority" />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="high">High</SelectItem>
-									<SelectItem value="medium">Medium</SelectItem>
-									<SelectItem value="low">Low</SelectItem>
+									<SelectItem value="1">High</SelectItem>
+									<SelectItem value="2">Medium</SelectItem>
+									<SelectItem value="3">Low</SelectItem>
 								</SelectContent>
 							</Select>
 						</fieldset>

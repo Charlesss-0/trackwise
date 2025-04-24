@@ -1,3 +1,5 @@
+'use client'
+
 import {
 	Dialog,
 	DialogContent,
@@ -16,6 +18,9 @@ import {
 
 import { Button } from '@/components/ui/button'
 import { DEFAULT_CATEGORIES } from '@/data/default-categories'
+import { useExpenseStore } from '@/stores/expenses-store'
+import { useState } from 'react'
+import { useTransactionsStore } from '@/stores/transactions-store'
 
 export default function AddExpense({
 	open,
@@ -24,6 +29,43 @@ export default function AddExpense({
 	open: boolean
 	onOpenChange: (open: boolean) => void
 }): React.ReactNode {
+	const { addExpense } = useExpenseStore()
+	const { addTransaction } = useTransactionsStore()
+	const [name, setName] = useState<string>('')
+	const [amount, setAmount] = useState<string>('')
+	const [category, setCategory] = useState<string>('')
+	const [paymentMethod, setPaymentMethod] = useState<string>('')
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+		e.preventDefault()
+
+		const expense: Expense = {
+			id: crypto.randomUUID(),
+			name,
+			amount: Number(amount),
+			category,
+			paymentMethod,
+			timestamp: Date.now(),
+		}
+
+		const transaction: Transaction = {
+			id: expense.id,
+			name: expense.name,
+			timestamp: expense.timestamp,
+			category: expense.category,
+			amount: expense.amount,
+			isExpense: true,
+		}
+
+		addExpense(expense)
+		addTransaction(transaction)
+		onOpenChange(false)
+		setName('')
+		setAmount('')
+		setCategory('')
+		setPaymentMethod('')
+	}
+
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-[425px]">
@@ -33,7 +75,7 @@ export default function AddExpense({
 						Add your expense details including category and payment method.
 					</DialogDescription>
 				</DialogHeader>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="name" className="text-right">
@@ -43,6 +85,8 @@ export default function AddExpense({
 								type="text"
 								id="name"
 								name="name"
+								value={name}
+								onChange={e => setName(e.target.value)}
 								placeholder="e.g., Dinner with friends"
 								required
 								autoComplete="off"
@@ -57,6 +101,8 @@ export default function AddExpense({
 								type="number"
 								id="amount"
 								name="amount"
+								value={amount}
+								onChange={e => setAmount(e.target.value)}
 								placeholder="0.00"
 								required
 								className="col-span-3 input"
@@ -66,7 +112,7 @@ export default function AddExpense({
 							<label htmlFor="category" className="text-right">
 								Category
 							</label>
-							<Select>
+							<Select value={category} onValueChange={setCategory}>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select category" />
 								</SelectTrigger>
@@ -83,7 +129,7 @@ export default function AddExpense({
 							<label htmlFor="payment_method" className="text-right">
 								Payment Method
 							</label>
-							<Select>
+							<Select value={paymentMethod} onValueChange={setPaymentMethod}>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select payment method" />
 								</SelectTrigger>
@@ -94,12 +140,6 @@ export default function AddExpense({
 									<SelectItem value="transfer">Bank Transfer</SelectItem>
 								</SelectContent>
 							</Select>
-						</fieldset>
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="date" className="text-right">
-								Date
-							</label>
-							<input type="date" id="date" name="date" className="col-span-3 input" />
 						</fieldset>
 					</div>
 					<DialogFooter>

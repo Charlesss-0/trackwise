@@ -57,6 +57,8 @@
 	--color-light-green: #020403;
 
 	/* Custom properties */
+	--font-sans: 'Geist', sans-serif;
+
 	--radius-sm: 0.3rem;
 	--radius-md: 0.6rem;
 	--radius-lg: 0.7rem;

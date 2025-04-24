@@ -7,7 +7,7 @@ type State = {
 
 type Actions = {
 	addTransaction: (transaction: Transaction) => void
-	removeTransaction: (id: string) => void
+	deleteTransaction: (id: string) => void
 }
 
 type TransactionStore = State & Actions
@@ -18,7 +18,7 @@ export const useTransactionsStore = create(
 			transactions: [],
 			addTransaction: (transaction: Transaction): void =>
 				set(state => ({ ...state, transactions: [...state.transactions, transaction] })),
-			removeTransaction: (id: string): void =>
+			deleteTransaction: (id: string): void =>
 				set(state => ({
 					...state,
 					transactions: state.transactions.filter(transaction => transaction.id !== id),
