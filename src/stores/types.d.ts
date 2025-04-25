@@ -22,6 +22,12 @@ type FixedExpense = Omit<Expense, 'paymentMethod' | 'amount'> & {
 	frequency: string
 }
 
+type Contribution = {
+	id: string
+	amount: number
+	timestamp: number
+}
+
 type Goal = {
 	id: string
 	name: string
@@ -29,7 +35,7 @@ type Goal = {
 	currentAmount: number
 	deadline: number
 	priority: string
-	monthlyContribution: number
+	contributions?: Contribution[]
 	timestamp: number
 }
 

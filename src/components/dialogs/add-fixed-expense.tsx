@@ -42,6 +42,7 @@ export default function AddFixedExpense({
 			id: crypto.randomUUID(),
 			name,
 			targetAmount: Number(targetAmount),
+			currentAmount: 0,
 			category,
 			dueDate: Number(dueDate),
 			frequency,

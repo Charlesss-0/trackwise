@@ -10,13 +10,15 @@ export default function Home(): React.ReactNode {
 		<div className="w-full mx-auto max-w-[1600px] p-5 justify-items-center bg-base-100 dark:bg-base-100-dark">
 			<Header />
 
-			<main className="w-full p-4">
-				<QuickStats />
-
-				<div className="grid grid-cols-1 grid-rows-2 gap-6 mt-6 md:grid-cols-4">
+			<main className="grid w-full grid-cols-1 gap-6 p-2 mt-4 md:grid-cols-4">
+				<div className="grid col-span-1 gap-6 md:col-span-3">
+					<QuickStats />
 					<AnalysisOverview />
-					<FixedExpenses />
 					<TransactionHistory />
+				</div>
+
+				<div className="flex flex-col col-span-1 gap-6 overflow-auto">
+					<FixedExpenses />
 					<Goals />
 				</div>
 			</main>

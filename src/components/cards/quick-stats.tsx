@@ -48,7 +48,7 @@ export default function QuickStats(): React.ReactNode {
 	)
 
 	return (
-		<div className="grid grid-cols-1 gap-6 md:grid-cols-4">
+		<div className="grid grid-cols-2 gap-6 md:grid-cols-4">
 			{QUICK_STATS.map(stat => (
 				<Card key={stat.name}>
 					<CardHeader>

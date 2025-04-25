@@ -62,7 +62,7 @@ export default function TransactionHistory(): React.ReactNode {
 	}
 
 	return (
-		<Card className="col-span-1 md:col-span-3">
+		<Card>
 			<h2 className="text-lg font-medium text-neutral">Transaction History</h2>
 			<CardContent className="relative h-full p-0 overflow-y-auto border rounded-lg scrollbar-hide max-h-92 border-base-300 bg-base-100 dark:bg-base-100-dark dark:border-base-300-dark">
 				<table className="min-w-full border-collapse table-fixed">

@@ -56,17 +56,11 @@ function CardAction({ className, ...props }: React.ComponentProps<'div'>): React
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
-	return <div data-slot="card-content" className={cn('p-4', className)} {...props} />
+	return <div data-slot="card-content" className={cn('flex text-sm', className)} {...props} />
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
-	return (
-		<div
-			data-slot="card-footer"
-			className={cn('flex items-center px-6 [.border-t]:pt-6', className)}
-			{...props}
-		/>
-	)
+	return <div data-slot="card-footer" className={cn('flex items-center', className)} {...props} />
 }
 
 export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent }

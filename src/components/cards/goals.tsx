@@ -10,9 +10,9 @@ export default function Goals(): React.ReactNode {
 
 	return (
 		<>
-			<Card className="col-span-1 md:col-span-1">
+			<Card className="relative h-max">
 				<h2 className="text-lg font-medium text-neutral">Goals</h2>
-				<div className="flex flex-col items-center justify-center h-full">
+				<div className="flex flex-col items-center justify-center h-full mb-6">
 					<p className="text-sm font-medium text-neutral">No goals set yet.</p>
 					<Button variant="outline" className="mt-4" onClick={() => setAddGoalOpen(true)}>
 						Add Goal
