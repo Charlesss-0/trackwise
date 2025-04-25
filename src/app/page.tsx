@@ -1,7 +1,7 @@
 import AnalysisOverview from '@/components/cards/analysis-overview'
 import FixedExpenses from '@/components/cards/fixed-expenses'
 import Goals from '@/components/cards/goals'
-import Header from '@/components/header'
+import Header from '@/components/layout/header'
 import QuickStats from '@/components/cards/quick-stats'
 import TransactionHistory from '@/components/cards/transaction-history'
 

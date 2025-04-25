@@ -17,6 +17,7 @@ type Expense = {
 
 type FixedExpense = Omit<Expense, 'paymentMethod' | 'amount'> & {
 	targetAmount: number
+	currentAmount: number
 	dueDate: number
 	frequency: string
 }
@@ -25,6 +26,7 @@ type Goal = {
 	id: string
 	name: string
 	targetAmount: number
+	currentAmount: number
 	deadline: number
 	priority: string
 	monthlyContribution: number
