@@ -82,7 +82,7 @@ export default function TransactionHistory(): React.ReactNode {
 						{transactions && transactions.length > 0 ? (
 							transactions
 								.slice()
-								.sort((a, b) => b.timestamp - a.timestamp)
+								.sort((a, b) => b.createdAt - a.createdAt)
 								.map((transaction, index) => (
 									<tr
 										key={transaction.id}
@@ -97,7 +97,7 @@ export default function TransactionHistory(): React.ReactNode {
 										<td className="px-6">
 											{transaction.name.charAt(0).toUpperCase() + transaction.name.slice(1)}
 										</td>
-										<td className="px-6">{formatDate(transaction.timestamp)}</td>
+										<td className="px-6">{formatDate(transaction.createdAt)}</td>
 										<td className="px-6">
 											{transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}
 										</td>

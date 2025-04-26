@@ -8,65 +8,79 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select'
+import React, { useEffect, useState } from 'react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '../ui/button'
 import { DEFAULT_CATEGORIES } from '@/data/default-categories'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
-import { useState } from 'react'
 
-export default function AddFixedExpense({
+export default function EditFixedExpense({
+	id,
 	open,
 	onOpenChange,
 }: {
+	id: string
 	open: boolean
 	onOpenChange: (open: boolean) => void
 }): React.ReactNode {
-	const { addFixedExpense } = useFixedExpenseStore()
-	const [name, setName] = useState<string>('')
-	const [targetAmount, setTargetAmount] = useState<string>('')
-	const [category, setCategory] = useState<string>('')
-	const [dueDate, setDueDate] = useState<string>('')
-	const [frequency, setFrequency] = useState<string>('')
+	const { fixedExpenses, updateFixedExpense } = useFixedExpenseStore()
+	const [formData, setFormData] = useState({
+		name: '',
+		targetAmount: '',
+		category: '',
+		dueDate: '',
+		frequency: '',
+	})
+
+	const fixedExpense = fixedExpenses.find(fixedExpense => fixedExpense.id === id)
+
+	useEffect(() => {
+		if (fixedExpense && open) {
+			setFormData({
+				name: fixedExpense.name,
+				targetAmount: fixedExpense.targetAmount.toString(),
+				category: fixedExpense.category,
+				dueDate: fixedExpense.dueDate,
+				frequency: fixedExpense.frequency,
+			})
+		}
+	}, [fixedExpense, open])
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+		const { name, value } = e.target
+		setFormData(prev => ({ ...prev, [name]: value }))
+	}
+
+	const handleSelectChange = (name: string, value: string): void => {
+		setFormData(prev => ({ ...prev, [name]: value }))
+	}
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
 
-		const fixedExpense: FixedExpense = {
-			id: crypto.randomUUID(),
-			name,
-			targetAmount: Number(targetAmount),
-			currentAmount: 0,
-			category,
-			dueDate: dueDate,
-			isRecurring: true,
-			frequency,
-			isPaid: false,
-			createdAt: Date.now(),
+		if (!fixedExpense) return
+
+		const updatedExpense: FixedExpense = {
+			...fixedExpense,
+			name: formData.name,
+			targetAmount: Number(formData.targetAmount),
+			category: formData.category,
+			dueDate: formData.dueDate,
+			frequency: formData.frequency,
 		}
 
-		addFixedExpense(fixedExpense)
+		updateFixedExpense(id, updatedExpense)
 		onOpenChange(false)
-		setName('')
-		setTargetAmount('')
-		setCategory('')
-		setDueDate('')
-		setFrequency('')
 	}
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Add Fixed Expense</DialogTitle>
+					<DialogTitle>Edit Fixed Expense</DialogTitle>
 					<DialogDescription>
-						Add a recurring expense with target amount and due date.
+						Edit your fixed expense details including category and payment method.
 					</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={handleSubmit}>
@@ -79,8 +93,8 @@ export default function AddFixedExpense({
 								type="text"
 								id="name"
 								name="name"
-								value={name}
-								onChange={e => setName(e.target.value)}
+								value={formData.name}
+								onChange={handleChange}
 								placeholder="e.g., Rent"
 								autoComplete="off"
 								required
@@ -88,15 +102,15 @@ export default function AddFixedExpense({
 							/>
 						</fieldset>
 						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="target" className="text-right">
+							<label htmlFor="targetAmount" className="text-right">
 								Target Amount
 							</label>
 							<input
 								type="number"
-								id="target"
-								name="target"
-								value={targetAmount}
-								onChange={e => setTargetAmount(e.target.value)}
+								id="targetAmount"
+								name="targetAmount"
+								value={formData.targetAmount}
+								onChange={handleChange}
 								placeholder="0.00"
 								required
 								className="col-span-3 input"
@@ -106,8 +120,11 @@ export default function AddFixedExpense({
 							<label htmlFor="category" className="text-right">
 								Category
 							</label>
-							<Select value={category} onValueChange={setCategory}>
-								<SelectTrigger className="col-span-3">
+							<Select
+								value={formData.category}
+								onValueChange={value => handleSelectChange('category', value)}
+							>
+								<SelectTrigger id="category" className="col-span-3">
 									<SelectValue placeholder="Select category" />
 								</SelectTrigger>
 								<SelectContent>
@@ -126,9 +143,9 @@ export default function AddFixedExpense({
 							<input
 								type="date"
 								id="dueDate"
-								name="due_date"
-								value={dueDate}
-								onChange={e => setDueDate(e.target.value)}
+								name="dueDate"
+								value={formData.dueDate}
+								onChange={handleChange}
 								required
 								className="col-span-3 input"
 							/>
@@ -137,8 +154,12 @@ export default function AddFixedExpense({
 							<label htmlFor="frequency" className="text-right">
 								Frequency
 							</label>
-							<Select value={frequency} onValueChange={setFrequency} required>
-								<SelectTrigger className="col-span-3">
+							<Select
+								value={formData.frequency}
+								onValueChange={value => handleSelectChange('frequency', value)}
+								required
+							>
+								<SelectTrigger id="frequency" className="col-span-3">
 									<SelectValue placeholder="Select frequency" />
 								</SelectTrigger>
 								<SelectContent>
@@ -151,7 +172,7 @@ export default function AddFixedExpense({
 					</div>
 					<DialogFooter>
 						<Button type="submit" variant="secondary">
-							Add Fixed Expense
+							Save
 						</Button>
 					</DialogFooter>
 				</form>

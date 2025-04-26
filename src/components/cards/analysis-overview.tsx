@@ -32,11 +32,11 @@ export default function AnalysisOverview(): React.ReactNode {
 		const monthStr = month.toLocaleString('default', { month: 'short' })
 
 		const monthIncome = income
-			.filter(inc => new Date(inc.timestamp).getMonth() === month.getMonth())
+			.filter(inc => new Date(inc.createdAt).getMonth() === month.getMonth())
 			.reduce((sum, inc) => sum + inc.amount, 0)
 
 		const monthExpenses = expenses
-			.filter(exp => new Date(exp.timestamp).getMonth() === month.getMonth())
+			.filter(exp => new Date(exp.createdAt).getMonth() === month.getMonth())
 			.reduce((sum, exp) => sum + exp.amount, 0)
 
 		const monthFixedExpenses = fixedExpenses
@@ -48,7 +48,7 @@ export default function AnalysisOverview(): React.ReactNode {
 			return (
 				sum +
 				contributions
-					.filter(c => new Date(c.timestamp).getMonth() === month.getMonth())
+					.filter(c => new Date(c.createdAt).getMonth() === month.getMonth())
 					.reduce((total, c) => total + c.amount, 0)
 			)
 		}, 0)

@@ -3,7 +3,7 @@ type Income = {
 	amount: number
 	type: string
 	frequency: string
-	timestamp: number
+	createdAt: number
 }
 
 type Expense = {
@@ -12,20 +12,22 @@ type Expense = {
 	amount: number
 	category: string
 	paymentMethod: string
-	timestamp: number
+	createdAt: number
 }
 
 type FixedExpense = Omit<Expense, 'paymentMethod' | 'amount'> & {
 	targetAmount: number
 	currentAmount: number
-	dueDate: number
+	dueDate: string
+	isRecurring: boolean
 	frequency: string
+	isPaid: boolean
 }
 
 type Contribution = {
 	id: string
 	amount: number
-	timestamp: number
+	createdAt: number
 }
 
 type Goal = {
@@ -35,15 +37,16 @@ type Goal = {
 	currentAmount: number
 	deadline: number
 	priority: string
+	monthlyContribution: number
 	contributions?: Contribution[]
-	timestamp: number
+	createdAt: number
 }
 
 type Transaction = {
 	id: string
 	name: string
-	timestamp: number
 	category: string
 	amount: number
 	isExpense: boolean
+	createdAt: number
 }

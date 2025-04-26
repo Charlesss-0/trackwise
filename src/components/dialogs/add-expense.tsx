@@ -45,13 +45,13 @@ export default function AddExpense({
 			amount: Number(amount),
 			category,
 			paymentMethod,
-			timestamp: Date.now(),
+			createdAt: Date.now(),
 		}
 
 		const transaction: Transaction = {
 			id: expense.id,
 			name: expense.name,
-			timestamp: expense.timestamp,
+			createdAt: expense.createdAt,
 			category: expense.category,
 			amount: expense.amount,
 			isExpense: true,

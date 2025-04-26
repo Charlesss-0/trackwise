@@ -41,10 +41,12 @@ export default function AddGoal({
 			id: crypto.randomUUID(),
 			name,
 			targetAmount: Number(targetAmount),
+			currentAmount: 0,
 			deadline: Number(deadline),
 			priority,
 			monthlyContribution: Number(monthlyContribution),
-			timestamp: Date.now(),
+			contributions: [],
+			createdAt: Date.now(),
 		}
 
 		addGoal(goal)

@@ -42,16 +42,16 @@ export default function AddIncome({
 			amount: Number(amount),
 			type,
 			frequency,
-			timestamp: Date.now(),
+			createdAt: Date.now(),
 		}
 
 		const transaction: Transaction = {
 			id: income.id,
 			name: income.type,
-			timestamp: income.timestamp,
 			category: income.type,
 			amount: income.amount,
 			isExpense: false,
+			createdAt: income.createdAt,
 		}
 
 		addIncome(income)
