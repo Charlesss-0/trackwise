@@ -12,7 +12,7 @@ import {
 } from 'recharts'
 
 import { Card } from '@/components/ui/card'
-import ChartTooltip from '@/components/chart-tooltip'
+import ChartTooltip from '@/components/chart/chartTooltip'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 import { useGoalStore } from '@/stores/goals-store'

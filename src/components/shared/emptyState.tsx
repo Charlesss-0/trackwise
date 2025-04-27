@@ -1,0 +1,27 @@
+'use client'
+
+import { Button } from '../ui/button'
+import { cn } from '@/utils/cn'
+
+export default function EmptyState({
+	message,
+	btnText,
+	onClick,
+	className,
+}: {
+	message: string
+	btnText: string
+	onClick?: () => void
+	className?: string
+}): React.ReactNode {
+	return (
+		<div className={cn('flex flex-col items-center justify-center h-full mb-6', className)}>
+			<p className="text-sm font-medium text-neutral">{message}</p>
+			{btnText && (
+				<Button variant="outline" className="mt-4" onClick={onClick}>
+					{btnText}
+				</Button>
+			)}
+		</div>
+	)
+}

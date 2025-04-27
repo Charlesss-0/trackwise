@@ -1,0 +1,73 @@
+import { Calendar, Trash2 } from 'lucide-react'
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+
+import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
+import { capitalize } from '@/utils/capitalize'
+import { formatDate } from '@/utils/format-date'
+
+export default function FixedExpense({
+	expense,
+	onEdit,
+	onDelete,
+	onAddPayment,
+}: {
+	expense: FixedExpense
+	onEdit: () => void
+	onDelete: () => void
+	onAddPayment: () => void
+}): React.ReactNode {
+	return (
+		<Card
+			className="rounded-md bg-base-100 dark:bg-base-100-dark hover:cursor-pointer"
+			onClick={onEdit}
+		>
+			<CardHeader className="flex justify-between">
+				<div className="flex flex-col gap-1">
+					<span className="text-base-content dark:text-base-content-dark">{expense.name}</span>
+					<span className="text-sm font-medium text-neutral">{capitalize(expense.category)}</span>
+				</div>
+				<div className="flex items-center gap-2">
+					<span className="flex items-center gap-2 text-sm font-medium text-neutral">
+						<Calendar size={16} />
+						{formatDate(expense.dueDate)}
+					</span>
+					<Button
+						variant="ghost"
+						size="icon"
+						className="hover:bg-base-200 dark:hover:bg-base-300-dark"
+						onClick={e => {
+							e.stopPropagation()
+							onDelete()
+						}}
+					>
+						<Trash2 size={16} className="text-red-400" />
+						<span className="sr-only">Delete</span>
+					</Button>
+				</div>
+			</CardHeader>
+			<CardContent className="flex-col gap-2">
+				<div className="flex justify-between">
+					<span>Progress</span>
+					<span>
+						${expense.currentAmount ? expense.currentAmount.toFixed(2) : '0.00'} / $
+						{expense.targetAmount.toFixed(2)}
+					</span>
+				</div>
+				<Progress value={(expense.currentAmount / expense.targetAmount) * 100} />
+			</CardContent>
+			<CardFooter>
+				<Button
+					variant="secondary"
+					className="w-full rounded-sm"
+					onClick={e => {
+						e.stopPropagation()
+						onAddPayment()
+					}}
+				>
+					Add Payment
+				</Button>
+			</CardFooter>
+		</Card>
+	)
+}

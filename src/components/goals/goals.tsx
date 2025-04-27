@@ -2,7 +2,7 @@
 
 import { Card, CardHeader } from '@/components/ui/card'
 
-import AddGoal from '@/components/dialogs/add-goal'
+import AddGoal from '@/components/goals/addGoalDialog'
 import { Button } from '@/components/ui/button'
 import { useGoalStore } from '@/stores/goals-store'
 import { useState } from 'react'

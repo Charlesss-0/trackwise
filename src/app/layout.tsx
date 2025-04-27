@@ -3,7 +3,7 @@ import './globals.css'
 import { geistMono, geistSans } from '@/fonts'
 
 import type { Metadata } from 'next'
-import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeProvider } from '@/components/hoc/themeProvider'
 
 export const metadata: Metadata = {
 	title: 'Trackwise',

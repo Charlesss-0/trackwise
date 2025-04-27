@@ -1,9 +1,9 @@
-import AnalysisOverview from '@/components/cards/analysis-overview'
-import FixedExpenses from '@/components/cards/fixed-expenses'
-import Goals from '@/components/cards/goals'
-import Header from '@/components/layout/header'
-import QuickStats from '@/components/cards/quick-stats'
-import TransactionHistory from '@/components/cards/transaction-history'
+import AnalysisOverview from '@/components/chart/chartCard'
+import FixedExpensesCard from '@/components/expenses/fixedExpensesCard'
+import Goals from '@/components/goals/goals'
+import Header from '@/components/header/header'
+import QuickStats from '@/components/quickStats/quickStats'
+import TransactionHistory from '@/components/transactions/transactionHistory'
 
 export default function Home(): React.ReactNode {
 	return (
@@ -18,7 +18,7 @@ export default function Home(): React.ReactNode {
 				</div>
 
 				<div className="flex flex-col col-span-1 gap-6 overflow-auto">
-					<FixedExpenses />
+					<FixedExpensesCard />
 					<Goals />
 				</div>
 			</main>
