@@ -62,9 +62,9 @@ export default function FixedExpensesCard(): React.ReactNode {
 
 	return (
 		<>
-			<Card className="relative max-h-[400px]">
+			<Card className="relative max-h-[400px] h-full">
 				<h2 className="text-lg font-medium text-neutral">Fixed Expenses</h2>
-				<div className="h-full overflow-y-auto space-y-4 scrollbar-hide rounded-md">
+				<div className="h-full space-y-4 overflow-y-auto rounded-md scrollbar-hide">
 					{fixedExpenses.length > 0 ? (
 						fixedExpenses.map(expense => (
 							<FixedExpense
@@ -118,7 +118,7 @@ export default function FixedExpensesCard(): React.ReactNode {
 							<DialogTitle className="text-sm font-medium text-base-content dark:text-base-content-dark">
 								Are you sure you want to delete this fixed expense?
 							</DialogTitle>
-							<div className="mt-4 flex justify-end gap-4">
+							<div className="flex justify-end gap-4 mt-4">
 								<Button variant="secondary" onClick={closeModal}>
 									Cancel
 								</Button>

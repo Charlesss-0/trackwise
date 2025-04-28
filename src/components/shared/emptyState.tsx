@@ -15,7 +15,7 @@ export default function EmptyState({
 	className?: string
 }): React.ReactNode {
 	return (
-		<div className={cn('flex flex-col items-center justify-center h-full mb-6', className)}>
+		<div className={cn('flex flex-col items-center justify-center h-full', className)}>
 			<p className="text-sm font-medium text-neutral">{message}</p>
 			{btnText && (
 				<Button variant="outline" className="mt-4" onClick={onClick}>

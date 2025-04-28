@@ -3,7 +3,7 @@
 import { Card, CardHeader } from '@/components/ui/card'
 
 import AddGoal from '@/components/goals/addGoalDialog'
-import { Button } from '@/components/ui/button'
+import EmptyState from '../shared/emptyState'
 import { useGoalStore } from '@/stores/goals-store'
 import { useState } from 'react'
 
@@ -13,9 +13,9 @@ export default function Goals(): React.ReactNode {
 
 	return (
 		<>
-			<Card className="relative max-h-[400px]">
+			<Card className="relative max-h-[400px] h-full">
 				<h2 className="text-lg font-medium text-neutral">Goals</h2>
-				<div className="h-full overflow-y-auto space-y-4 scrollbar-hide rounded-md">
+				<div className="h-full space-y-4 overflow-y-auto rounded-md scrollbar-hide">
 					{goals.length > 0 ? (
 						goals.map(goal => (
 							<Card key={goal.id} className="rounded-md bg-base-100 dark:bg-base-100-dark">
@@ -29,12 +29,11 @@ export default function Goals(): React.ReactNode {
 							</Card>
 						))
 					) : (
-						<div className="flex flex-col items-center justify-center h-full mb-6">
-							<p className="text-sm font-medium text-neutral">No goals set yet.</p>
-							<Button variant="outline" className="mt-4" onClick={() => setAddGoalOpen(true)}>
-								Add Goal
-							</Button>
-						</div>
+						<EmptyState
+							message="No goals set yet."
+							btnText="Add Goal"
+							onClick={() => setAddGoalOpen(true)}
+						/>
 					)}
 				</div>
 			</Card>

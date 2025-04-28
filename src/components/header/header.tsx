@@ -27,7 +27,7 @@ export default function Header(): React.ReactNode {
 			name: 'Add Income',
 			icon: <Plus className="w-5 h-5" />,
 			size: 'lg',
-			variant: 'default',
+			variant: 'secondary',
 			action: (): void => setAddIncomeOpen(true),
 		},
 		{

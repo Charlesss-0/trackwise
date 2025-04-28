@@ -22,31 +22,31 @@ export default function FixedExpense({
 			className="rounded-md bg-base-100 dark:bg-base-100-dark hover:cursor-pointer"
 			onClick={onEdit}
 		>
-			<CardHeader className="flex justify-between">
+			<CardHeader className="flex justify-between text-xs">
 				<div className="flex flex-col gap-1">
 					<span className="text-base-content dark:text-base-content-dark">{expense.name}</span>
-					<span className="text-sm font-medium text-neutral">{capitalize(expense.category)}</span>
+					<span className="font-medium text-neutral">{capitalize(expense.category)}</span>
 				</div>
-				<div className="flex items-center gap-2">
-					<span className="flex items-center gap-2 text-sm font-medium text-neutral">
-						<Calendar size={16} />
+				<div className="flex items-center gap-1">
+					<span className="flex items-center gap-2 font-medium text-neutral">
+						<Calendar size={14} />
 						{formatDate(expense.dueDate)}
 					</span>
 					<Button
 						variant="ghost"
 						size="icon"
-						className="hover:bg-base-200 dark:hover:bg-base-300-dark"
+						className="hover:bg-base-200 dark:hover:bg-base-300-dark size-9"
 						onClick={e => {
 							e.stopPropagation()
 							onDelete()
 						}}
 					>
-						<Trash2 size={16} className="text-red-400" />
+						<Trash2 size={14} className="text-red-400" />
 						<span className="sr-only">Delete</span>
 					</Button>
 				</div>
 			</CardHeader>
-			<CardContent className="flex-col gap-2">
+			<CardContent className="flex-col gap-2 text-xs">
 				<div className="flex justify-between">
 					<span>Progress</span>
 					<span>
@@ -67,7 +67,7 @@ export default function FixedExpense({
 				) : (
 					<Button
 						variant="secondary"
-						className="w-full rounded-sm"
+						className="w-full text-xs rounded-sm"
 						onClick={e => {
 							e.stopPropagation()
 							onAddPayment()
