@@ -11,15 +11,17 @@ import {
 import AddFixedExpense from '@/components/expenses/addFixedExpenseDialog'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import EditFixedExpense from '@/components/expenses/editFixedExpenseDialog'
+import EditFixedExpense from '@/components/expenses/updateFixedExpenseDialog'
 import EmptyState from '@/components/shared/emptyState'
 import FixedExpense from './fixedExpense'
 import { Plus } from 'lucide-react'
+import { useExpenseStore } from '@/stores/expenses-store'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 import { useState } from 'react'
 
 export default function FixedExpensesCard(): React.ReactNode {
 	const { fixedExpenses, deleteFixedExpense, updateFixedExpense } = useFixedExpenseStore()
+	const { addExpense, deleteExpense } = useExpenseStore()
 	const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(null)
 	const [modalState, setModalState] = useState<'add' | 'edit' | 'delete' | 'payment' | null>(null)
 	const [amount, setAmount] = useState<string>('')
@@ -42,6 +44,16 @@ export default function FixedExpensesCard(): React.ReactNode {
 		if (!expense) return
 
 		let newAmount = Number(amount)
+
+		addExpense({
+			id: expense.id,
+			name: expense.name,
+			amount: newAmount,
+			category: expense.category,
+			createdAt: Date.now(),
+			paymentMethod: 'unknown',
+		})
+
 		if (expense.currentAmount) {
 			newAmount += expense.currentAmount
 
@@ -57,6 +69,7 @@ export default function FixedExpensesCard(): React.ReactNode {
 			currentAmount: newAmount,
 			isPaid: newAmount === expense.targetAmount,
 		})
+
 		closeModal()
 	}
 
@@ -126,6 +139,7 @@ export default function FixedExpensesCard(): React.ReactNode {
 									variant="destructive"
 									onClick={() => {
 										deleteFixedExpense(selectedExpenseId)
+										deleteExpense(selectedExpenseId)
 										closeModal()
 									}}
 								>

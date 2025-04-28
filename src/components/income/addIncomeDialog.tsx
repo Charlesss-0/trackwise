@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/select'
 
 import { Button } from '../ui/button'
+import { DEFAULT_INCOME_TYPES } from '@/data/default-categories'
 import { useIncomeStore } from '@/stores/income-store'
 import { useState } from 'react'
 import { useTransactionsStore } from '@/stores/transactions-store'
@@ -97,10 +98,11 @@ export default function AddIncome({
 									<SelectValue placeholder="Select income type" />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="salary">Salary</SelectItem>
-									<SelectItem value="bonus">Bonus</SelectItem>
-									<SelectItem value="investment">Investment</SelectItem>
-									<SelectItem value="other">Other</SelectItem>
+									{DEFAULT_INCOME_TYPES.map(type => (
+										<SelectItem key={type} value={type}>
+											{type.charAt(0).toUpperCase() + type.slice(1)}
+										</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 						</fieldset>

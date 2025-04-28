@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 import { Button } from '../ui/button'
-import { DEFAULT_CATEGORIES } from '@/data/default-categories'
+import { DEFAULT_EXPENSE_CATEGORIES } from '@/data/default-categories'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 
 export default function EditFixedExpense({
@@ -128,7 +128,7 @@ export default function EditFixedExpense({
 									<SelectValue placeholder="Select category" />
 								</SelectTrigger>
 								<SelectContent>
-									{DEFAULT_CATEGORIES.map(category => (
+									{DEFAULT_EXPENSE_CATEGORIES.map(category => (
 										<SelectItem key={category} value={category}>
 											{category.charAt(0).toUpperCase() + category.slice(1)}
 										</SelectItem>

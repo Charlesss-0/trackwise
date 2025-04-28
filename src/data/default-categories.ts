@@ -1,4 +1,4 @@
-export const DEFAULT_CATEGORIES = [
+export const DEFAULT_EXPENSE_CATEGORIES = [
 	'food',
 	'housing',
 	'clothing',
@@ -7,5 +7,14 @@ export const DEFAULT_CATEGORIES = [
 	'transportation',
 	'utilities',
 	'healthcare',
+	'other',
+]
+
+export const DEFAULT_INCOME_TYPES = [
+	'salary',
+	'business',
+	'investment',
+	'gift',
+	'freelance',
 	'other',
 ]

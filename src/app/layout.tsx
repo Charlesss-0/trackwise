@@ -14,16 +14,11 @@ export default function RootLayout({
 	children,
 }: Readonly<{ children: React.ReactNode }>): React.ReactNode {
 	return (
-		<html lang="en" suppressHydrationWarning data-theme="system">
+		<html lang="en" suppressHydrationWarning data-theme="dark">
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased bg-base-100 dark:bg-base-100-dark`}
 			>
-				<ThemeProvider
-					attribute="data-theme"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
+				<ThemeProvider attribute="data-theme" defaultTheme="dark" disableTransitionOnChange>
 					{children}
 				</ThemeProvider>
 			</body>

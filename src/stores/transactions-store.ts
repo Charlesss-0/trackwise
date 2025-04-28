@@ -8,6 +8,7 @@ type State = {
 type Actions = {
 	addTransaction: (transaction: Transaction) => void
 	deleteTransaction: (id: string) => void
+	updateTransaction: (id: string, transaction: Transaction) => void
 }
 
 type TransactionStore = State & Actions
@@ -22,6 +23,11 @@ export const useTransactionsStore = create(
 				set(state => ({
 					...state,
 					transactions: state.transactions.filter(transaction => transaction.id !== id),
+				})),
+			updateTransaction: (id: string, transaction: Transaction): void =>
+				set(state => ({
+					...state,
+					transactions: state.transactions.map(item => (item.id === id ? transaction : item)),
 				})),
 		}),
 		{

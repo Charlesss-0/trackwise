@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/select'
 
 import { Button } from '@/components/ui/button'
-import { DEFAULT_CATEGORIES } from '@/data/default-categories'
+import { DEFAULT_EXPENSE_CATEGORIES } from '@/data/default-categories'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useState } from 'react'
 import { useTransactionsStore } from '@/stores/transactions-store'
@@ -117,7 +117,7 @@ export default function AddExpense({
 									<SelectValue placeholder="Select category" />
 								</SelectTrigger>
 								<SelectContent>
-									{DEFAULT_CATEGORIES.map(category => (
+									{DEFAULT_EXPENSE_CATEGORIES.map(category => (
 										<SelectItem key={category} value={category}>
 											{category.charAt(0).toUpperCase() + category.slice(1)}
 										</SelectItem>
