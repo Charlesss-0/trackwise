@@ -94,14 +94,14 @@ export default function TransactionHistory(): React.ReactNode {
 												: 'bg-base-200 dark:bg-base-200-dark'
 										)}
 									>
-										<td className="px-6">
+										<td className="px-6 max-w-[200px] truncate">
 											{transaction.name.charAt(0).toUpperCase() + transaction.name.slice(1)}
 										</td>
-										<td className="px-6">{formatDate(transaction.createdAt)}</td>
-										<td className="px-6">
+										<td className="px-6 text-ellipsis">{formatDate(transaction.createdAt)}</td>
+										<td className="px-6 text-ellipsis max-w-[150px] truncate">
 											{transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}
 										</td>
-										<td className="px-6">${transaction.amount}</td>
+										<td className="px-6 text-ellipsis">${transaction.amount}</td>
 										<td className="px-6">
 											{transaction.isExpense ? (
 												<div className="flex items-center gap-2 px-4 py-2 text-xs rounded-full bg-destructive/20 w-max">

@@ -1,4 +1,4 @@
-import { Calendar, Trash2 } from 'lucide-react'
+import { Calendar, CircleCheck, Trash2 } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 
 import { Button } from '@/components/ui/button'
@@ -57,16 +57,25 @@ export default function FixedExpense({
 				<Progress value={(expense.currentAmount / expense.targetAmount) * 100} />
 			</CardContent>
 			<CardFooter>
-				<Button
-					variant="secondary"
-					className="w-full rounded-sm"
-					onClick={e => {
-						e.stopPropagation()
-						onAddPayment()
-					}}
-				>
-					Add Payment
-				</Button>
+				{expense.isPaid ? (
+					<div className="flex items-center justify-center w-full gap-2 p-2 text-center rounded-full bg-light-green/30 dark:bg-light-green/20">
+						<CircleCheck size={16} className="text-green-primary dark:text-light-green" />
+						<span className="text-sm font-medium text-green-primary dark:text-light-green">
+							Paid
+						</span>
+					</div>
+				) : (
+					<Button
+						variant="secondary"
+						className="w-full rounded-sm"
+						onClick={e => {
+							e.stopPropagation()
+							onAddPayment()
+						}}
+					>
+						Add Payment
+					</Button>
+				)}
 			</CardFooter>
 		</Card>
 	)

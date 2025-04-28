@@ -22,7 +22,6 @@ export default function FixedExpensesCard(): React.ReactNode {
 	const { fixedExpenses, deleteFixedExpense, updateFixedExpense } = useFixedExpenseStore()
 	const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(null)
 	const [modalState, setModalState] = useState<'add' | 'edit' | 'delete' | 'payment' | null>(null)
-	const [addFixedExpenseOpen, setAddFixedExpenseOpen] = useState<boolean>(false)
 	const [amount, setAmount] = useState<string>('')
 
 	const openModal = (state: typeof modalState, id?: string): void => {
@@ -56,6 +55,7 @@ export default function FixedExpensesCard(): React.ReactNode {
 		updateFixedExpense(selectedExpenseId as string, {
 			...expense,
 			currentAmount: newAmount,
+			isPaid: newAmount === expense.targetAmount,
 		})
 		closeModal()
 	}
@@ -76,7 +76,11 @@ export default function FixedExpensesCard(): React.ReactNode {
 							/>
 						))
 					) : (
-						<EmptyState message="No fixed expenses set yet." btnText="Add Fixed Expense" />
+						<EmptyState
+							message="No fixed expenses set yet."
+							btnText="Add Fixed Expense"
+							onClick={() => openModal('add')}
+						/>
 					)}
 
 					{fixedExpenses.length > 0 && (
@@ -92,7 +96,10 @@ export default function FixedExpensesCard(): React.ReactNode {
 				</div>
 			</Card>
 
-			<AddFixedExpense open={addFixedExpenseOpen} onOpenChange={setAddFixedExpenseOpen} />
+			<AddFixedExpense
+				open={modalState === 'add'}
+				onOpenChange={isOpen => (isOpen ? openModal('add') : closeModal())}
+			/>
 			{selectedExpenseId && (
 				<>
 					<EditFixedExpense
