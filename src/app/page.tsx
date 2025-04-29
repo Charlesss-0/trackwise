@@ -1,6 +1,6 @@
 import AnalysisOverview from '@/components/chart/chartCard'
-import FixedExpensesCard from '@/components/expenses/fixedExpensesCard'
-import Goals from '@/components/goals/goals'
+import FixedExpenseCard from '@/components/expenses/fixedExpenseCard'
+import GoalCard from '@/components/goals/goalCard'
 import Header from '@/components/header/header'
 import QuickStats from '@/components/quickStats/quickStats'
 import TransactionHistory from '@/components/transactions/transactionHistory'
@@ -18,8 +18,8 @@ export default function Home(): React.ReactNode {
 				</div>
 
 				<div className="flex flex-col grid-rows-2 gap-6 overflow-auto">
-					<FixedExpensesCard />
-					<Goals />
+					<FixedExpenseCard />
+					<GoalCard />
 				</div>
 			</main>
 		</div>

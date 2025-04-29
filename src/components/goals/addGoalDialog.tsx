@@ -28,34 +28,47 @@ export default function AddGoal({
 	onOpenChange: (open: boolean) => void
 }): React.ReactNode {
 	const { addGoal } = useGoalStore()
-	const [name, setName] = useState<string>('')
-	const [targetAmount, setTargetAmount] = useState<string>('')
-	const [deadline, setDeadline] = useState<string>('')
-	const [priority, setPriority] = useState<string>('')
-	const [monthlyContribution, setMonthlyContribution] = useState<string>('')
+	const [formData, setFormData] = useState({
+		name: '',
+		targetAmount: '',
+		deadline: '',
+		priority: '',
+		monthlyContribution: '',
+	})
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+		const { name, value } = e.target
+		setFormData(prev => ({ ...prev, [name]: value }))
+	}
+
+	const handleSelectChange = (name: string, value: string): void => {
+		setFormData(prev => ({ ...prev, [name]: value }))
+	}
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
 
 		const goal: Goal = {
 			id: crypto.randomUUID(),
-			name,
-			targetAmount: Number(targetAmount),
+			name: formData.name,
+			targetAmount: Number(formData.targetAmount),
 			currentAmount: 0,
-			deadline: Number(deadline),
-			priority,
-			monthlyContribution: Number(monthlyContribution),
+			deadline: formData.deadline,
+			priority: formData.priority,
+			monthlyContribution: Number(formData.monthlyContribution),
 			contributions: [],
 			createdAt: Date.now(),
 		}
 
 		addGoal(goal)
 		onOpenChange(false)
-		setName('')
-		setTargetAmount('')
-		setDeadline('')
-		setPriority('')
-		setMonthlyContribution('')
+		setFormData({
+			name: '',
+			targetAmount: '',
+			deadline: '',
+			priority: '',
+			monthlyContribution: '',
+		})
 	}
 
 	return (
@@ -78,6 +91,8 @@ export default function AddGoal({
 								id="name"
 								name="name"
 								placeholder="e.g., New Car"
+								value={formData.name}
+								onChange={handleChange}
 								autoComplete="off"
 								required
 								className="col-span-3 input"
@@ -89,9 +104,11 @@ export default function AddGoal({
 							</label>
 							<input
 								type="number"
-								id="target"
-								name="target"
+								id="targetAmount"
+								name="targetAmount"
 								placeholder="0.00"
+								value={formData.targetAmount}
+								onChange={handleChange}
 								required
 								className="col-span-3 input"
 							/>
@@ -104,6 +121,8 @@ export default function AddGoal({
 								type="date"
 								id="deadline"
 								name="deadline"
+								value={formData.deadline}
+								onChange={handleChange}
 								required
 								className="col-span-3 input"
 							/>
@@ -112,7 +131,10 @@ export default function AddGoal({
 							<label htmlFor="priority" className="text-right">
 								Priority
 							</label>
-							<Select>
+							<Select
+								value={formData.priority}
+								onValueChange={value => handleSelectChange('priority', value)}
+							>
 								<SelectTrigger className="col-span-3 input">
 									<SelectValue placeholder="Select priority" />
 								</SelectTrigger>
@@ -129,9 +151,11 @@ export default function AddGoal({
 							</label>
 							<input
 								type="number"
-								id="monthly"
-								name="monthly"
+								id="monthlyContribution"
+								name="monthlyContribution"
 								placeholder="0.00"
+								value={formData.monthlyContribution}
+								onChange={handleChange}
 								className="col-span-3 input"
 							/>
 						</fieldset>

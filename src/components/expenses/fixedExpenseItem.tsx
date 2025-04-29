@@ -6,7 +6,7 @@ import { Progress } from '@/components/ui/progress'
 import { capitalize } from '@/utils/capitalize'
 import { formatDate } from '@/utils/format-date'
 
-export default function FixedExpense({
+export default function FixedExpenseItem({
 	expense,
 	onEdit,
 	onDelete,

@@ -18,7 +18,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import { capitalize } from '@/utils/capitalize'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useIncomeStore } from '@/stores/income-store'

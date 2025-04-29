@@ -13,13 +13,13 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import EditFixedExpense from '@/components/expenses/updateFixedExpenseDialog'
 import EmptyState from '@/components/shared/emptyState'
-import FixedExpense from './fixedExpense'
+import FixedExpenseItem from './fixedExpenseItem'
 import { Plus } from 'lucide-react'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 import { useState } from 'react'
 
-export default function FixedExpensesCard(): React.ReactNode {
+export default function FixedExpenseCard(): React.ReactNode {
 	const { fixedExpenses, deleteFixedExpense, updateFixedExpense } = useFixedExpenseStore()
 	const { addExpense, deleteExpense } = useExpenseStore()
 	const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(null)
@@ -80,7 +80,7 @@ export default function FixedExpensesCard(): React.ReactNode {
 				<div className="h-full space-y-4 overflow-y-auto rounded-md scrollbar-hide">
 					{fixedExpenses.length > 0 ? (
 						fixedExpenses.map(expense => (
-							<FixedExpense
+							<FixedExpenseItem
 								key={expense.id}
 								expense={expense}
 								onEdit={() => openModal('edit', expense.id)}

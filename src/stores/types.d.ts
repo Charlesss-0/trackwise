@@ -35,7 +35,7 @@ type Goal = {
 	name: string
 	targetAmount: number
 	currentAmount: number
-	deadline: number
+	deadline: string
 	priority: string
 	monthlyContribution: number
 	contributions?: Contribution[]
