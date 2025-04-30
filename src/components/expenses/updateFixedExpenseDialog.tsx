@@ -9,9 +9,15 @@ import {
 	DialogTitle,
 } from '@/components/ui/dialog'
 import React, { useEffect, useState } from 'react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import { DEFAULT_EXPENSE_CATEGORIES } from '@/data/default-categories'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 

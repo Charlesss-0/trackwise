@@ -8,6 +8,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
+import React, { useEffect, useState } from 'react'
 import {
 	Select,
 	SelectContent,
@@ -16,20 +17,21 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '../ui/button'
 import { DEFAULT_GOAL_PRIORITIES } from '@/data/default-categories'
 import { capitalize } from '@/utils/capitalize'
 import { useGoalStore } from '@/stores/goals-store'
-import { useState } from 'react'
 
-export default function AddGoal({
+export default function UpdateGoal({
+	id,
 	open,
 	onOpenChange,
 }: {
+	id: string
 	open: boolean
 	onOpenChange: (open: boolean) => void
 }): React.ReactNode {
-	const { addGoal } = useGoalStore()
+	const { goals, updateGoal } = useGoalStore()
 	const [formData, setFormData] = useState({
 		name: '',
 		targetAmount: '',
@@ -38,7 +40,21 @@ export default function AddGoal({
 		monthlyContribution: '',
 	})
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+	const goal = goals.find(goal => goal.id === id)
+
+	useEffect(() => {
+		if (goal && open) {
+			setFormData({
+				name: goal.name,
+				targetAmount: goal.targetAmount.toString(),
+				deadline: goal.deadline,
+				priority: goal.priority,
+				monthlyContribution: goal.monthlyContribution.toString(),
+			})
+		}
+	}, [goal, open])
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		const { name, value } = e.target
 		setFormData(prev => ({ ...prev, [name]: value }))
 	}
@@ -50,70 +66,57 @@ export default function AddGoal({
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
 
-		const goal: Goal = {
-			id: crypto.randomUUID(),
+		if (!goal) return
+
+		const updatedGoal: Goal = {
+			...goal,
 			name: formData.name,
 			targetAmount: Number(formData.targetAmount),
-			currentAmount: 0,
 			deadline: formData.deadline,
 			priority: formData.priority,
 			monthlyContribution: Number(formData.monthlyContribution),
-			isPaid: false,
-			contributions: [],
-			createdAt: Date.now(),
 		}
 
-		addGoal(goal)
+		updateGoal(id, updatedGoal)
 		onOpenChange(false)
-		setFormData({
-			name: '',
-			targetAmount: '',
-			deadline: '',
-			priority: '',
-			monthlyContribution: '',
-		})
 	}
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Add Goal</DialogTitle>
-					<DialogDescription>
-						Set up a new financial goal with target amount and deadline.
-					</DialogDescription>
+					<DialogTitle>Update Goal</DialogTitle>
+					<DialogDescription>Update the details of a goal.</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="name" className="text-right">
-								Goal Name
+								Name
 							</label>
 							<input
 								type="text"
 								id="name"
 								name="name"
-								placeholder="e.g., New Car"
+								autoComplete="off"
 								value={formData.name}
 								onChange={handleChange}
-								autoComplete="off"
-								required
 								className="col-span-3 input"
+								required
 							/>
 						</fieldset>
 						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="target" className="text-right">
+							<label htmlFor="targetAmount" className="text-right">
 								Target Amount
 							</label>
 							<input
 								type="number"
 								id="targetAmount"
 								name="targetAmount"
-								placeholder="0.00"
 								value={formData.targetAmount}
 								onChange={handleChange}
-								required
 								className="col-span-3 input"
+								required
 							/>
 						</fieldset>
 						<fieldset className="grid items-center grid-cols-4 gap-2">
@@ -138,36 +141,22 @@ export default function AddGoal({
 								value={formData.priority}
 								onValueChange={value => handleSelectChange('priority', value)}
 							>
-								<SelectTrigger className="col-span-3 input">
+								<SelectTrigger id="priority" className="col-span-3">
 									<SelectValue placeholder="Select priority" />
 								</SelectTrigger>
 								<SelectContent>
-									{DEFAULT_GOAL_PRIORITIES.map(category => (
-										<SelectItem key={category} value={category}>
-											{capitalize(category)}
+									{DEFAULT_GOAL_PRIORITIES.map(priority => (
+										<SelectItem key={priority} value={priority}>
+											{capitalize(priority)}
 										</SelectItem>
 									))}
 								</SelectContent>
 							</Select>
 						</fieldset>
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="monthly" className="text-right">
-								Monthly Contribution
-							</label>
-							<input
-								type="number"
-								id="monthlyContribution"
-								name="monthlyContribution"
-								placeholder="0.00"
-								value={formData.monthlyContribution}
-								onChange={handleChange}
-								className="col-span-3 input"
-							/>
-						</fieldset>
 					</div>
 					<DialogFooter>
 						<Button type="submit" variant="secondary">
-							Add Goal
+							Save
 						</Button>
 					</DialogFooter>
 				</form>

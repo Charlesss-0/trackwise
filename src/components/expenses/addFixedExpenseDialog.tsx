@@ -1,6 +1,10 @@
 'use client'
 
 import {
+	DEFAULT_EXPENSE_CATEGORIES,
+	DEFAULT_FIXED_EXPENSE_FREQUENCIES,
+} from '@/data/default-categories'
+import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
@@ -17,7 +21,7 @@ import {
 } from '@/components/ui/select'
 
 import { Button } from '@/components/ui/button'
-import { DEFAULT_EXPENSE_CATEGORIES } from '@/data/default-categories'
+import { capitalize } from '@/utils/capitalize'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 import { useState } from 'react'
 
@@ -142,9 +146,11 @@ export default function AddFixedExpense({
 									<SelectValue placeholder="Select frequency" />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="monthly">Monthly</SelectItem>
-									<SelectItem value="quarterly">Quarterly</SelectItem>
-									<SelectItem value="annually">Annually</SelectItem>
+									{DEFAULT_FIXED_EXPENSE_FREQUENCIES.map(frequency => (
+										<SelectItem key={frequency} value={frequency}>
+											{capitalize(frequency)}
+										</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 						</fieldset>

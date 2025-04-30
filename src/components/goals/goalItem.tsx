@@ -7,9 +7,19 @@ import { Info } from 'lucide-react'
 import { Progress } from '@/components/ui/progress'
 import { formatDate } from '@/utils/format-date'
 
-export default function GoalItem({ goal }: { goal: Goal }): React.ReactNode {
+export default function GoalItem({
+	goal,
+	onEdit,
+	onInfo,
+	onContribute,
+}: {
+	goal: Goal
+	onEdit: () => void
+	onInfo: () => void
+	onContribute: () => void
+}): React.ReactNode {
 	return (
-		<Card className="bg-base-100 dark:bg-base-100-dark hover:cursor-pointer">
+		<Card className="bg-base-100 dark:bg-base-100-dark hover:cursor-pointer" onClick={onEdit}>
 			<CardHeader className="flex justify-between text-xs">
 				<div className="flex flex-col gap-1">
 					<span className="font-medium text-gray-900 dark:text-white">{goal.name}</span>
@@ -19,6 +29,10 @@ export default function GoalItem({ goal }: { goal: Goal }): React.ReactNode {
 					variant="ghost"
 					size="icon"
 					className="hover:bg-base-200 dark:hover:bg-base-300-dark size-9"
+					onClick={e => {
+						e.stopPropagation()
+						onInfo()
+					}}
 				>
 					<Info size={14} />
 				</Button>
@@ -34,7 +48,14 @@ export default function GoalItem({ goal }: { goal: Goal }): React.ReactNode {
 				<Progress value={(goal.currentAmount / goal.targetAmount) * 100} />
 			</CardContent>
 			<CardFooter>
-				<Button variant="secondary" className="w-full text-xs rounded-sm">
+				<Button
+					variant="secondary"
+					className="w-full text-xs rounded-sm"
+					onClick={e => {
+						e.stopPropagation()
+						onContribute()
+					}}
+				>
 					Contribute
 				</Button>
 			</CardFooter>

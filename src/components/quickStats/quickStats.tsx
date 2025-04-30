@@ -5,15 +5,18 @@ import { Card, CardHeader } from '@/components/ui/card'
 
 import { cn } from '@/utils/cn'
 import { useExpenseStore } from '@/stores/expenses-store'
+import { useGoalStore } from '@/stores/goals-store'
 import { useIncomeStore } from '@/stores/income-store'
 import { useMemo } from 'react'
 
 export default function QuickStats(): React.ReactNode {
 	const { income } = useIncomeStore()
 	const { expenses } = useExpenseStore()
+	const { goals } = useGoalStore()
 
 	const totalIncome = income.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2)
 	const totalExpenses = expenses.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2)
+	const totalContributions = goals.reduce((acc, curr) => acc + curr.currentAmount, 0).toFixed(2)
 	const availableMoney = Number(totalIncome) - Number(totalExpenses)
 
 	const QUICK_STATS = useMemo(
@@ -33,7 +36,7 @@ export default function QuickStats(): React.ReactNode {
 				},
 				{
 					name: 'Goal Contributions',
-					value: 0,
+					value: totalContributions,
 					valueColor: 'text-info dark:text-info-dark',
 					icon: <Target className="w-4 h-4 text-info dark:text-info-dark" />,
 				},

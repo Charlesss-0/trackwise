@@ -38,6 +38,7 @@ type Goal = {
 	deadline: string
 	priority: string
 	monthlyContribution: number
+	isPaid: boolean
 	contributions?: Contribution[]
 	createdAt: number
 }

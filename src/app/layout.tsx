@@ -14,7 +14,7 @@ export default function RootLayout({
 	children,
 }: Readonly<{ children: React.ReactNode }>): React.ReactNode {
 	return (
-		<html lang="en" suppressHydrationWarning data-theme="dark">
+		<html lang="en" suppressHydrationWarning data-theme>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased bg-base-100 dark:bg-base-100-dark`}
 			>

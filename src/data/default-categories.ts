@@ -1,3 +1,4 @@
+// Expense categories
 export const DEFAULT_EXPENSE_CATEGORIES = [
 	'food',
 	'housing',
@@ -10,6 +11,16 @@ export const DEFAULT_EXPENSE_CATEGORIES = [
 	'other',
 ]
 
+export const DEFAULT_FIXED_EXPENSE_FREQUENCIES = [
+	'daily',
+	'weekly',
+	'fortnightly',
+	'monthly',
+	'quarterly',
+	'yearly',
+]
+
+// Income types
 export const DEFAULT_INCOME_TYPES = [
 	'salary',
 	'business',
@@ -18,3 +29,6 @@ export const DEFAULT_INCOME_TYPES = [
 	'freelance',
 	'other',
 ]
+
+// Goal priority
+export const DEFAULT_GOAL_PRIORITIES = ['high', 'medium', 'low']
