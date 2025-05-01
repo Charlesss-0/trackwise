@@ -35,7 +35,7 @@ export default function GoalInfo({
 					<>
 						<div className="flex gap-2 justify-between text-sm font-medium">
 							<span className="text-neutral">Target Amount</span>
-							<span>${goal.monthlyContribution.toFixed(2)}</span>
+							<span>${goal.targetAmount.toFixed(2)}</span>
 						</div>
 						<div className="flex gap-2 justify-between text-sm font-medium">
 							<span className="text-neutral">Current Amount</span>
