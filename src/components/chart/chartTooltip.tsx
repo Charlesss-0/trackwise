@@ -21,7 +21,7 @@ export default function ChartTooltip({ payload, active }: TooltipProps<any, any>
 									: 'text-info'
 							)}
 						>
-							${value}
+							${value.toFixed(2)}
 						</span>
 					</div>
 				))}
