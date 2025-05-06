@@ -17,7 +17,7 @@ export default function Home(): React.ReactNode {
 					<TransactionHistory />
 				</div>
 
-				<div className="flex flex-col col-span-2 grid-rows-2 gap-6 overflow-auto">
+				<div className="flex flex-col col-span-2 grid-rows-2 gap-6 overflow-auto md:col-span-1">
 					<FixedExpenseCard />
 					<GoalCard />
 				</div>
