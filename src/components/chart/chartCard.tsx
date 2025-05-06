@@ -19,7 +19,7 @@ import { useGoalStore } from '@/stores/goals-store'
 import { useIncomeStore } from '@/stores/income-store'
 import { useTheme } from 'next-themes'
 
-export default function AnalysisOverview(): React.ReactNode {
+export default function ChartCard(): React.ReactNode {
 	const { theme } = useTheme()
 	const { income } = useIncomeStore()
 	const { expenses } = useExpenseStore()
@@ -64,8 +64,8 @@ export default function AnalysisOverview(): React.ReactNode {
 	return (
 		<Card>
 			<h2 className="text-lg font-medium text-neutral">Analysis Overview</h2>
-			<ResponsiveContainer aspect={3 / 1} className="w-full h-full pt-4 pr-12">
-				<AreaChart data={chartData}>
+			<ResponsiveContainer className="w-full h-full md:pt-4 md:pr-12 aspect-video">
+				<AreaChart data={chartData} className="w-full h-full pr-4">
 					<defs>
 						<linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
 							<stop offset="5%" stopColor="#00a43b" stopOpacity={0.3} />
@@ -102,10 +102,14 @@ export default function AnalysisOverview(): React.ReactNode {
 						fill="url(#colorAvailable)"
 					/>
 					<CartesianGrid strokeDasharray="2 2" stroke="#8a97ac" />
-					<XAxis dataKey="month" stroke={theme === 'dark' ? '#f1f2f4' : '#242b2f'} />
-					<YAxis stroke={theme === 'dark' ? '#f1f2f4' : '#242b2f'} />
+					<XAxis
+						dataKey="month"
+						stroke={theme === 'dark' ? '#f1f2f4' : '#242b2f'}
+						className="text-xs md:text-sm"
+					/>
+					<YAxis stroke={theme === 'dark' ? '#f1f2f4' : '#242b2f'} className="text-xs md:text-sm" />
 					<Tooltip content={<ChartTooltip />} />
-					<Legend />
+					<Legend className="text-xs md:text-sm" />
 				</AreaChart>
 			</ResponsiveContainer>
 		</Card>

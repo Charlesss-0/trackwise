@@ -8,12 +8,12 @@ export default function ChartTooltip({ payload, active }: TooltipProps<any, any>
 			<Card className="flex flex-col gap-1 bg-base-100 dark:bg-base-100-dark">
 				{payload.map(({ name, value }, index) => (
 					<div key={index} className="flex items-center gap-2">
-						<span className="text-sm font-semibold text-neutral">
+						<span className="text-xs font-semibold text-neutral md:text-sm">
 							{name.charAt(0).toUpperCase() + name.slice(1)}
 						</span>
 						<span
 							className={cn(
-								'text-sm font-semibold',
+								'text-xs font-semibold md:text-sm',
 								name === 'income'
 									? 'text-green-primary'
 									: name === 'expenses'

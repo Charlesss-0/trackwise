@@ -41,20 +41,31 @@ export default function Header(): React.ReactNode {
 
 	return (
 		<>
-			<header className="flex items-center justify-between w-full gap-6 p-4">
-				<h1 className="text-2xl font-bold text-base-content dark:text-base-content-dark">
-					{currentDate()}
-				</h1>
-				<div className="flex gap-4">
-					{ACTION_BUTTONS.map(btn => (
-						<Button key={btn.name} size={btn.size} variant={btn.variant} onClick={btn.action}>
-							{btn.icon}
-							<span>{btn.name}</span>
-						</Button>
-					))}
-					<ThemeToggle />
+			<header className="flex flex-col items-center justify-between w-full gap-6 p-4">
+				<div className="flex flex-col w-full gap-4">
+					<div className="flex items-center justify-between">
+						<h1 className="text-sm font-bold md:text-2xl text-base-content dark:text-base-content-dark">
+							{currentDate()}
+						</h1>
+						<ThemeToggle />
+					</div>
+					<div className="flex justify-between gap-4 md:justify-end">
+						{ACTION_BUTTONS.map(btn => (
+							<Button
+								key={btn.name}
+								size={btn.size}
+								variant={btn.variant}
+								onClick={btn.action}
+								className="px-2 text-xs"
+							>
+								{btn.icon}
+								<span>{btn.name}</span>
+							</Button>
+						))}
+					</div>
 				</div>
 			</header>
+
 			<AddIncome open={addIncomeOpen} onOpenChange={setAddIncomeOpen} />
 			<AddExpense open={addExpenseOpen} onOpenChange={setAddExpenseOpen} />
 		</>

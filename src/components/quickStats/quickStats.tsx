@@ -51,14 +51,14 @@ export default function QuickStats(): React.ReactNode {
 	)
 
 	return (
-		<div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+		<div className="grid w-full grid-cols-2 gap-4 md:gap-6 md:grid-cols-4">
 			{QUICK_STATS.map(stat => (
-				<Card key={stat.name}>
-					<CardHeader>
-						<span className="text-neutral">{stat.name}</span>
+				<Card key={stat.name} className="w-full">
+					<CardHeader className="items-start gap-2">
+						<span className="text-xs truncate text-neutral">{stat.name}</span>
 						{stat.icon}
 					</CardHeader>
-					<p className={cn('text-2xl font-bold', stat.valueColor)}>${stat.value}</p>
+					<p className={cn('text-sm md:text-2xl font-bold', stat.valueColor)}>${stat.value}</p>
 				</Card>
 			))}
 		</div>
