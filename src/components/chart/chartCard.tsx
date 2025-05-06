@@ -63,7 +63,7 @@ export default function ChartCard(): React.ReactNode {
 
 	return (
 		<Card>
-			<h2 className="text-lg font-medium text-neutral">Analysis Overview</h2>
+			<h2 className="text-sm font-medium md:text-lg text-neutral">Analysis Overview</h2>
 			<ResponsiveContainer className="w-full h-full md:pt-4 md:pr-12 aspect-video">
 				<AreaChart data={chartData} className="w-full h-full pr-4">
 					<defs>

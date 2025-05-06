@@ -16,9 +16,9 @@ export default function EmptyState({
 }): React.ReactNode {
 	return (
 		<div className={cn('flex flex-col items-center justify-center h-full', className)}>
-			<p className="text-sm font-medium text-neutral">{message}</p>
+			<p className="text-xs font-medium md:text-sm text-neutral">{message}</p>
 			{btnText && (
-				<Button variant="outline" className="mt-4" onClick={onClick}>
+				<Button variant="outline" className="mt-4 text-xs md:text-sm" onClick={onClick}>
 					{btnText}
 				</Button>
 			)}

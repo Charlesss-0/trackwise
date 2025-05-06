@@ -78,14 +78,14 @@ export default function TransactionHistory(): React.ReactNode {
 	return (
 		<>
 			<Card>
-				<h2 className="text-lg font-medium text-neutral">Transaction History</h2>
+				<h2 className="text-sm font-medium md:text-lg text-neutral">Transaction History</h2>
 				<CardContent className="relative h-full p-0 overflow-y-auto border rounded-lg scrollbar-hide max-h-92 border-base-300 bg-base-100 dark:bg-base-100-dark dark:border-base-300-dark">
 					<table className="min-w-full border-collapse table-fixed">
 						<thead className="sticky top-0 z-10 text-center bg-base-300 dark:bg-base-300-dark">
 							<tr>
 								{TABLE_HEADERS.map((header, index) => (
 									<th key={index} className="px-6 py-4 text-left">
-										<span className="flex items-center gap-2 font-semibold text-neutral">
+										<span className="flex items-center gap-2 text-xs font-semibold md:text-sm text-neutral">
 											{header.name}
 											{header.icon}
 										</span>
@@ -102,7 +102,7 @@ export default function TransactionHistory(): React.ReactNode {
 										<tr
 											key={transaction.id}
 											className={cn(
-												'border-b border-base-300 dark:border-base-300-dark text-sm',
+												'border-b border-base-300 dark:border-base-300-dark text-xs md:text-sm',
 												index === transactions.length - 1 ? 'border-b-0' : '',
 												index % 2 === 0
 													? 'bg-base-100 dark:bg-base-100-dark'

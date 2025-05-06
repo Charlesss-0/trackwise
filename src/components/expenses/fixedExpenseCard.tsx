@@ -76,7 +76,7 @@ export default function FixedExpenseCard(): React.ReactNode {
 	return (
 		<>
 			<Card className="relative max-h-[400px] h-full w-full">
-				<h2 className="text-lg font-medium text-neutral">Fixed Expenses</h2>
+				<h2 className="text-sm font-medium md:text-lg text-neutral">Fixed Expenses</h2>
 				<div className="h-full space-y-4 overflow-y-auto rounded-md scrollbar-hide">
 					{fixedExpenses.length > 0 ? (
 						fixedExpenses.map(expense => (

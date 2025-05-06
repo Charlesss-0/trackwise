@@ -72,7 +72,7 @@ export default function GoalCard(): React.ReactNode {
 	return (
 		<>
 			<Card className="relative max-h-[400px] h-full">
-				<h2 className="text-lg font-medium text-neutral">Goals</h2>
+				<h2 className="text-sm font-medium md:text-lg text-neutral">Goals</h2>
 				<div className="h-full space-y-4 overflow-y-auto rounded-md scrollbar-hide">
 					{goals.length > 0 ? (
 						goals.map(goal => (

@@ -7,7 +7,7 @@ import TransactionHistory from '@/components/transactions/transactionHistory'
 
 export default function Home(): React.ReactNode {
 	return (
-		<div className="w-full md:mx-auto md:max-w-[1600px] p-5 justify-items-center bg-base-100 dark:bg-base-100-dark border border-white">
+		<div className="w-full md:mx-auto md:max-w-[1600px] p-5 justify-items-center bg-base-100 dark:bg-base-100-dark">
 			<Header />
 
 			<main className="grid w-full grid-cols-2 col-span-1 gap-6 p-2 mt-4 md:grid-cols-4">
