@@ -55,7 +55,7 @@ export default function QuickStats(): React.ReactNode {
 			{QUICK_STATS.map(stat => (
 				<Card key={stat.name} className="w-full">
 					<CardHeader className="items-start gap-2">
-						<span className="text-xs truncate text-neutral">{stat.name}</span>
+						<span className="text-xs truncate md:text-sm text-neutral">{stat.name}</span>
 						{stat.icon}
 					</CardHeader>
 					<p className={cn('text-sm md:text-2xl font-bold', stat.valueColor)}>${stat.value}</p>
