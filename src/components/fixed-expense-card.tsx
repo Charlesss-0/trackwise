@@ -8,18 +8,18 @@ import {
 	DialogTitle,
 } from '@/components/ui/dialog'
 
-import AddFixedExpense from '@/components/expenses/addFixedExpenseDialog'
+import AddFixedExpense from '@/components/add-fixed-expense-dialog'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import EditFixedExpense from '@/components/expenses/updateFixedExpenseDialog'
-import EmptyState from '@/components/shared/emptyState'
-import FixedExpenseItem from './fixedExpenseItem'
+import EditFixedExpense from '@/components/update-fixed-expense-dialog'
+import EmptyState from '@/components/empty-state'
+import FixedExpenseItem from './fixed-expense-item'
 import { Plus } from 'lucide-react'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
-import { useState } from 'react'
+import { type JSX, useState } from 'react'
 
-export default function FixedExpenseCard(): React.ReactNode {
+export default function FixedExpenseCard(): JSX.Element {
 	const { fixedExpenses, deleteFixedExpense, updateFixedExpense } = useFixedExpenseStore()
 	const { addExpense, deleteExpense } = useExpenseStore()
 	const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(null)
@@ -100,7 +100,7 @@ export default function FixedExpenseCard(): React.ReactNode {
 						<Button
 							variant="ghost"
 							size="icon"
-							className="absolute right-4 top-4 hover:bg-base-300 dark:hover:bg-base-300-dark"
+							className="absolute right-4 top-4 hover:bg-base-300"
 							onClick={() => openModal('add')}
 						>
 							<Plus size={16} />
@@ -128,7 +128,7 @@ export default function FixedExpenseCard(): React.ReactNode {
 						}
 					>
 						<DialogContent>
-							<DialogTitle className="text-sm font-medium text-base-content dark:text-base-content-dark">
+							<DialogTitle className="text-sm font-medium text-base-content">
 								Are you sure you want to delete this fixed expense?
 							</DialogTitle>
 							<div className="flex justify-end gap-4 mt-4">

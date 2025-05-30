@@ -9,7 +9,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import React, { useEffect, useState } from 'react'
+import { type JSX, useEffect, useState } from 'react'
 import {
 	Select,
 	SelectContent,
@@ -32,7 +32,7 @@ export default function UpdateTransactionDialog({
 	id: string
 	open: boolean
 	onOpenChange: (open: boolean) => void
-}): React.ReactNode {
+}): JSX.Element {
 	const { transactions, updateTransaction } = useTransactionsStore()
 	const { income, updateIncome } = useIncomeStore()
 	const { expenses, updateExpense } = useExpenseStore()

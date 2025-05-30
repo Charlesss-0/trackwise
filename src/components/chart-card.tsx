@@ -12,14 +12,15 @@ import {
 } from 'recharts'
 
 import { Card } from '@/components/ui/card'
-import ChartTooltip from '@/components/chart/chartTooltip'
+import ChartTooltip from '@/components/chart-tool-tip'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 import { useGoalStore } from '@/stores/goals-store'
 import { useIncomeStore } from '@/stores/income-store'
 import { useTheme } from 'next-themes'
+import { type JSX } from 'react'
 
-export default function ChartCard(): React.ReactNode {
+export default function ChartCard(): JSX.Element {
 	const { theme } = useTheme()
 	const { income } = useIncomeStore()
 	const { expenses } = useExpenseStore()
@@ -27,20 +28,29 @@ export default function ChartCard(): React.ReactNode {
 	const { goals } = useGoalStore()
 
 	const chartData = Array.from({ length: 6 }, (_, i) => {
-		const month = new Date()
-		month.setMonth(month.getMonth() - i)
-		const monthStr = month.toLocaleString('default', { month: 'short' })
+		const currentDate = new Date()
+		const targetDate = new Date(currentDate)
+		targetDate.setMonth(targetDate.getMonth() - i)
+
+		const targetYear = targetDate.getFullYear()
+		const targetMonth = targetDate.getMonth()
+		const monthStr = targetDate.toLocaleString('default', { month: 'short' })
+
+		const isSameMonth = (date: number | string): boolean => {
+			const d = new Date(date)
+			return d.getFullYear() === targetYear && d.getMonth() === targetMonth
+		}
 
 		const monthIncome = income
-			.filter(inc => new Date(inc.createdAt).getMonth() === month.getMonth())
+			.filter(inc => isSameMonth(inc.createdAt))
 			.reduce((sum, inc) => sum + inc.amount, 0)
 
 		const monthExpenses = expenses
-			.filter(exp => new Date(exp.createdAt).getMonth() === month.getMonth())
+			.filter(exp => isSameMonth(exp.createdAt))
 			.reduce((sum, exp) => sum + exp.amount, 0)
 
 		const monthFixedExpenses = fixedExpenses
-			.filter(exp => new Date(exp.dueDate).getMonth() === month.getMonth())
+			.filter(exp => isSameMonth(exp.dueDate))
 			.reduce((sum, exp) => sum + exp.currentAmount, 0)
 
 		const monthContributions = goals.reduce((sum, goal) => {
@@ -48,7 +58,7 @@ export default function ChartCard(): React.ReactNode {
 			return (
 				sum +
 				contributions
-					.filter(c => new Date(c.createdAt).getMonth() === month.getMonth())
+					.filter(c => isSameMonth(c.createdAt))
 					.reduce((total, c) => total + c.amount, 0)
 			)
 		}, 0)

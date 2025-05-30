@@ -2,13 +2,13 @@
 
 import { Plus, Wallet } from 'lucide-react'
 
-import AddExpense from '@/components/expenses/addExpenseDialog'
-import AddIncome from '@/components/income/addIncomeDialog'
+import AddExpense from '@/components/add-expense-dialog'
+import AddIncome from '@/components/add-income-dialog'
 import { Button } from '@/components/ui/button'
-import { ThemeToggle } from '@/components/header/themeToggle'
-import { useState } from 'react'
+import { ThemeToggle } from '@/components/theme-toggle'
+import { type JSX, useState } from 'react'
 
-export default function Header(): React.ReactNode {
+export default function Header(): JSX.Element {
 	const [addIncomeOpen, setAddIncomeOpen] = useState<boolean>(false)
 	const [addExpenseOpen, setAddExpenseOpen] = useState<boolean>(false)
 	const currentDate = (): string => {
@@ -44,9 +44,7 @@ export default function Header(): React.ReactNode {
 			<header className="flex flex-col items-center justify-between w-full gap-6 p-4">
 				<div className="flex flex-col w-full gap-4">
 					<div className="flex items-center justify-between">
-						<h1 className="text-sm font-bold md:text-2xl text-base-content dark:text-base-content-dark">
-							{currentDate()}
-						</h1>
+						<h1 className="text-sm font-bold md:text-2xl text-base-content">{currentDate()}</h1>
 						<ThemeToggle />
 					</div>
 					<div className="flex justify-between gap-4 md:justify-end">

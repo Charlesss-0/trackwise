@@ -7,9 +7,9 @@ import { cn } from '@/utils/cn'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useGoalStore } from '@/stores/goals-store'
 import { useIncomeStore } from '@/stores/income-store'
-import { useMemo } from 'react'
+import { type JSX, useMemo } from 'react'
 
-export default function QuickStats(): React.ReactNode {
+export default function QuickStats(): JSX.Element {
 	const { income } = useIncomeStore()
 	const { expenses } = useExpenseStore()
 	const { goals } = useGoalStore()
@@ -37,14 +37,14 @@ export default function QuickStats(): React.ReactNode {
 				{
 					name: 'Goal Contributions',
 					value: totalContributions,
-					valueColor: 'text-info dark:text-info-dark',
-					icon: <Target className="w-4 h-4 text-info dark:text-info-dark" />,
+					valueColor: 'text-info',
+					icon: <Target className="w-4 h-4 text-info" />,
 				},
 				{
 					name: 'Available Money',
 					value: availableMoney.toFixed(2),
-					valueColor: 'text-info dark:text-info-dark',
-					icon: <PiggyBank className="w-4 h-4 text-info dark:text-info-dark" />,
+					valueColor: 'text-info',
+					icon: <PiggyBank className="w-4 h-4 text-info" />,
 				},
 			] as const,
 		[income, expenses]

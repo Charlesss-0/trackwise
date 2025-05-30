@@ -8,7 +8,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import React, { useEffect, useState } from 'react'
+import { type JSX, useEffect, useState } from 'react'
 import {
 	Select,
 	SelectContent,
@@ -17,7 +17,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import { DEFAULT_GOAL_PRIORITIES } from '@/data/default-categories'
 import { capitalize } from '@/utils/capitalize'
 import { useGoalStore } from '@/stores/goals-store'
@@ -30,7 +30,7 @@ export default function UpdateGoal({
 	id: string
 	open: boolean
 	onOpenChange: (open: boolean) => void
-}): React.ReactNode {
+}): JSX.Element {
 	const { goals, updateGoal } = useGoalStore()
 	const [formData, setFormData] = useState({
 		name: '',

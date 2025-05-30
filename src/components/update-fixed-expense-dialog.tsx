@@ -8,7 +8,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import React, { useEffect, useState } from 'react'
+import { type JSX, useEffect, useState } from 'react'
 import {
 	Select,
 	SelectContent,
@@ -29,7 +29,7 @@ export default function EditFixedExpense({
 	id: string
 	open: boolean
 	onOpenChange: (open: boolean) => void
-}): React.ReactNode {
+}): JSX.Element {
 	const { fixedExpenses, updateFixedExpense } = useFixedExpenseStore()
 	const [formData, setFormData] = useState({
 		name: '',

@@ -1,11 +1,15 @@
 import { type TooltipProps } from 'recharts'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/utils/cn'
+import { type JSX } from 'react'
 
-export default function ChartTooltip({ payload, active }: TooltipProps<any, any>): React.ReactNode {
+export default function ChartTooltip({
+	payload,
+	active,
+}: TooltipProps<any, any>): JSX.Element | undefined {
 	if (active && payload && payload.length) {
 		return (
-			<Card className="flex flex-col gap-1 bg-base-100 dark:bg-base-100-dark">
+			<Card className="flex flex-col gap-1 bg-base-100">
 				{payload.map(({ name, value }, index) => (
 					<div key={index} className="flex items-center gap-2">
 						<span className="text-xs font-semibold text-neutral md:text-sm">

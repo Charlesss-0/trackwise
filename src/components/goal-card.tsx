@@ -1,20 +1,26 @@
 'use client'
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from '@/components/ui/dialog'
 
-import AddGoal from '@/components/goals/addGoalDialog'
-import { Button } from '../ui/button'
+import AddGoal from '@/components/add-goal-dialog'
+import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import EmptyState from '../shared/emptyState'
-import GoalInfo from './goalInfo'
-import GoalItem from './goalItem'
+import EmptyState from '@/components/empty-state'
+import GoalInfo from '@/components/goal-info'
+import GoalItem from '@/components/goal-item'
 import { Plus } from 'lucide-react'
-import UpdateGoal from './updateGoal'
+import UpdateGoal from '@/components/update-goal'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useGoalStore } from '@/stores/goals-store'
-import { useState } from 'react'
+import { type JSX, useState } from 'react'
 
-export default function GoalCard(): React.ReactNode {
+export default function GoalCard(): JSX.Element {
 	const { goals, updateGoal, deleteGoal } = useGoalStore()
 	const { addExpense, deleteExpense } = useExpenseStore()
 	const [selectedGoalId, setSelectedGoalId] = useState<string | null>(null)
@@ -97,7 +103,7 @@ export default function GoalCard(): React.ReactNode {
 					<Button
 						variant="ghost"
 						size="icon"
-						className="absolute right-4 top-4 hover:bg-base-300 dark:hover:bg-base-300-dark"
+						className="absolute right-4 top-4 hover:bg-base-300"
 						onClick={() => openModal('add')}
 					>
 						<Plus size={16} />
@@ -122,7 +128,7 @@ export default function GoalCard(): React.ReactNode {
 						onOpenChange={isOpen => (isOpen ? openModal('delete', selectedGoalId) : closeModal())}
 					>
 						<DialogContent>
-							<DialogTitle className="text-sm font-medium text-base-content dark:text-base-content-dark">
+							<DialogTitle className="text-sm font-medium text-base-content">
 								Are you sure you want to delete this goal?
 							</DialogTitle>
 							<div className="flex justify-end gap-4 mt-4">

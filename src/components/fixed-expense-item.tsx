@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { capitalize } from '@/utils/capitalize'
 import { formatDate } from '@/utils/format-date'
+import { type JSX } from 'react'
 
 export default function FixedExpenseItem({
 	expense,
@@ -16,15 +17,12 @@ export default function FixedExpenseItem({
 	onEdit: () => void
 	onDelete: () => void
 	onAddPayment: () => void
-}): React.ReactNode {
+}): JSX.Element {
 	return (
-		<Card
-			className="rounded-md bg-base-100 dark:bg-base-100-dark hover:cursor-pointer"
-			onClick={onEdit}
-		>
+		<Card className="rounded-md bg-base-100 hover:cursor-pointer" onClick={onEdit}>
 			<CardHeader className="flex justify-between text-xs">
 				<div className="flex flex-col gap-1">
-					<span className="text-base-content dark:text-base-content-dark">{expense.name}</span>
+					<span className="text-base-content">{expense.name}</span>
 					<span className="font-medium text-neutral">{capitalize(expense.category)}</span>
 				</div>
 				<div className="flex items-center gap-1">
@@ -35,7 +33,7 @@ export default function FixedExpenseItem({
 					<Button
 						variant="ghost"
 						size="icon"
-						className="hover:bg-base-200 dark:hover:bg-base-300-dark size-9"
+						className="hover:bg-base-200 dark:hover:bg-base-300 size-9"
 						onClick={e => {
 							e.stopPropagation()
 							onDelete()

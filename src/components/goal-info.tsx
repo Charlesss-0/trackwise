@@ -3,10 +3,11 @@
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 
 import { Button } from '@/components/ui/button'
-import { Progress } from '../ui/progress'
+import { Progress } from './ui/progress'
 import { capitalize } from '@/utils/capitalize'
 import { formatDate } from '@/utils/format-date'
 import { useGoalStore } from '@/stores/goals-store'
+import { type JSX } from 'react'
 
 export default function GoalInfo({
 	selectedGoalId,
@@ -22,7 +23,7 @@ export default function GoalInfo({
 	deleteGoal: (id: string) => void
 	deleteExpense: (id: string) => void
 	closeModal: () => void
-}): React.ReactNode {
+}): JSX.Element {
 	const { goals } = useGoalStore()
 	const goal = goals.find(goal => goal.id === selectedGoalId)
 	const progress = goal && (goal.currentAmount / goal.targetAmount) * 100

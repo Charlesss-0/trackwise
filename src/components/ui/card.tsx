@@ -2,12 +2,12 @@ import * as React from 'react'
 
 import { cn } from '@/utils/cn'
 
-function Card({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
+function Card({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
 	return (
 		<div
 			data-slot="card"
 			className={cn(
-				'bg-base-200 text-base-content flex flex-col gap-4 rounded-xl border border-base-300 p-4 dark:bg-base-200-dark dark:text-base-content-dark dark:border-base-300-dark',
+				'bg-base-200 text-base-content flex flex-col gap-4 rounded-xl border border-base-300 p-4',
 				className
 			)}
 			{...props}
@@ -15,7 +15,7 @@ function Card({ className, ...props }: React.ComponentProps<'div'>): React.React
 	)
 }
 
-function CardHeader({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
+function CardHeader({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
 	return (
 		<div
 			data-slot="card-header"
@@ -25,7 +25,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>): React
 	)
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
+function CardTitle({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
 	return (
 		<div
 			data-slot="card-title"
@@ -35,7 +35,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<'div'>): React.
 	)
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
+function CardDescription({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
 	return (
 		<div
 			data-slot="card-description"
@@ -45,7 +45,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<'div'>): 
 	)
 }
 
-function CardAction({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
+function CardAction({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
 	return (
 		<div
 			data-slot="card-action"
@@ -55,11 +55,11 @@ function CardAction({ className, ...props }: React.ComponentProps<'div'>): React
 	)
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
+function CardContent({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
 	return <div data-slot="card-content" className={cn('flex text-sm', className)} {...props} />
 }
 
-function CardFooter({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
+function CardFooter({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
 	return <div data-slot="card-footer" className={cn('flex items-center', className)} {...props} />
 }
 

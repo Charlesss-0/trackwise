@@ -1,12 +1,8 @@
 import { FlatCompat } from '@eslint/eslintrc'
-import { dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import js from '@eslint/js'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
-
 const compat = new FlatCompat({
-	baseDirectory: __dirname,
+	baseDirectory: import.meta.dirname,
 	recommendedConfig: js.configs.recommended,
 })
 
@@ -17,6 +13,7 @@ const eslintConfig = [
 	...compat.config({
 		extends: [
 			'eslint:recommended',
+			'plugin:@next/next/recommended',
 			'plugin:@typescript-eslint/recommended',
 			'plugin:import/typescript',
 			'plugin:react/recommended',
@@ -25,6 +22,11 @@ const eslintConfig = [
 			'plugin:import/warnings',
 		],
 		plugins: ['@typescript-eslint', 'react', 'jsx-a11y', 'import'],
+		parserOptions: {
+			ecmaFeatures: {
+				jsx: true,
+			},
+		},
 		settings: {
 			'import/resolver': {
 				typescript: {

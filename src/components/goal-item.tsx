@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Info } from 'lucide-react'
 import { Progress } from '@/components/ui/progress'
 import { formatDate } from '@/utils/format-date'
+import { type JSX } from 'react'
 
 export default function GoalItem({
 	goal,
@@ -17,9 +18,9 @@ export default function GoalItem({
 	onEdit: () => void
 	onInfo: () => void
 	onContribute: () => void
-}): React.ReactNode {
+}): JSX.Element {
 	return (
-		<Card className="bg-base-100 dark:bg-base-100-dark hover:cursor-pointer" onClick={onEdit}>
+		<Card className="bg-base-100 hover:cursor-pointer" onClick={onEdit}>
 			<CardHeader className="flex justify-between text-xs">
 				<div className="flex flex-col gap-1">
 					<span className="font-medium text-gray-900 dark:text-white">{goal.name}</span>
@@ -28,7 +29,7 @@ export default function GoalItem({
 				<Button
 					variant="ghost"
 					size="icon"
-					className="hover:bg-base-200 dark:hover:bg-base-300-dark size-9"
+					className="hover:bg-base-200 size-9"
 					onClick={e => {
 						e.stopPropagation()
 						onInfo()

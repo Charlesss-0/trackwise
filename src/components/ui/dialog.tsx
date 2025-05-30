@@ -6,32 +6,34 @@ import * as React from 'react'
 import { XIcon } from 'lucide-react'
 import { cn } from '@/utils/cn'
 
-function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>): React.ReactNode {
+function Dialog({
+	...props
+}: React.ComponentProps<typeof DialogPrimitive.Root>): React.JSX.Element {
 	return <DialogPrimitive.Root data-slot="dialog" {...props} />
 }
 
 function DialogTrigger({
 	...props
-}: React.ComponentProps<typeof DialogPrimitive.Trigger>): React.ReactNode {
+}: React.ComponentProps<typeof DialogPrimitive.Trigger>): React.JSX.Element {
 	return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
 }
 
 function DialogPortal({
 	...props
-}: React.ComponentProps<typeof DialogPrimitive.Portal>): React.ReactNode {
+}: React.ComponentProps<typeof DialogPrimitive.Portal>): React.JSX.Element {
 	return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
 }
 
 function DialogClose({
 	...props
-}: React.ComponentProps<typeof DialogPrimitive.Close>): React.ReactNode {
+}: React.ComponentProps<typeof DialogPrimitive.Close>): React.JSX.Element {
 	return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
 }
 
 function DialogOverlay({
 	className,
 	...props
-}: React.ComponentProps<typeof DialogPrimitive.Overlay>): React.ReactNode {
+}: React.ComponentProps<typeof DialogPrimitive.Overlay>): React.JSX.Element {
 	return (
 		<DialogPrimitive.Overlay
 			data-slot="dialog-overlay"
@@ -48,20 +50,20 @@ function DialogContent({
 	className,
 	children,
 	...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>): React.ReactNode {
+}: React.ComponentProps<typeof DialogPrimitive.Content>): React.JSX.Element {
 	return (
 		<DialogPortal data-slot="dialog-portal">
 			<DialogOverlay />
 			<DialogPrimitive.Content
 				data-slot="dialog-content"
 				className={cn(
-					'bg-base-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-base-300 p-6 shadow-lg outline-none duration-200 sm:max-w-lg dark:bg-base-200-dark dark:border-base-300-dark',
+					'bg-base-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-base-300 p-6 shadow-lg outline-none duration-200 sm:max-w-lg',
 					className
 				)}
 				{...props}
 			>
 				{children}
-				<DialogPrimitive.Close className="focus:ring-secondary text-base-content absolute top-4 right-4 rounded-full p-1 opacity-70 transition-opacity hover:opacity-100 focus:ring-2 outline-none cursor-pointer disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 dark:text-base-content-dark">
+				<DialogPrimitive.Close className="focus:ring-secondary text-base-content absolute top-4 right-4 rounded-full p-1 opacity-70 transition-opacity hover:opacity-100 focus:ring-2 outline-none cursor-pointer disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
 					<XIcon />
 					<span className="sr-only">Close</span>
 				</DialogPrimitive.Close>
@@ -70,7 +72,7 @@ function DialogContent({
 	)
 }
 
-function DialogHeader({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
+function DialogHeader({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
 	return (
 		<div
 			data-slot="dialog-header"
@@ -80,7 +82,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<'div'>): Rea
 	)
 }
 
-function DialogFooter({ className, ...props }: React.ComponentProps<'div'>): React.ReactNode {
+function DialogFooter({ className, ...props }: React.ComponentProps<'div'>): React.JSX.Element {
 	return (
 		<div
 			data-slot="dialog-footer"
@@ -93,7 +95,7 @@ function DialogFooter({ className, ...props }: React.ComponentProps<'div'>): Rea
 function DialogTitle({
 	className,
 	...props
-}: React.ComponentProps<typeof DialogPrimitive.Title>): React.ReactNode {
+}: React.ComponentProps<typeof DialogPrimitive.Title>): React.JSX.Element {
 	return (
 		<DialogPrimitive.Title
 			data-slot="dialog-title"
@@ -106,11 +108,11 @@ function DialogTitle({
 function DialogDescription({
 	className,
 	...props
-}: React.ComponentProps<typeof DialogPrimitive.Description>): React.ReactNode {
+}: React.ComponentProps<typeof DialogPrimitive.Description>): React.JSX.Element {
 	return (
 		<DialogPrimitive.Description
 			data-slot="dialog-description"
-			className={cn('text-base-content text-sm dark:text-base-content-dark', className)}
+			className={cn('text-base-content text-sm', className)}
 			{...props}
 		/>
 	)

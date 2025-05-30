@@ -12,11 +12,11 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 import { Button } from '@/components/ui/button'
-import UpdateTransactionDialog from './updateTransactionDialog'
+import UpdateTransactionDialog from './update-transaction-dialog'
 import { cn } from '@/utils/cn'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useIncomeStore } from '@/stores/income-store'
-import { useState } from 'react'
+import { type JSX, useState } from 'react'
 import { useTransactionsStore } from '@/stores/transactions-store'
 
 const TABLE_HEADERS = [
@@ -46,7 +46,7 @@ const TABLE_HEADERS = [
 	},
 ]
 
-export default function TransactionHistory(): React.ReactNode {
+export default function TransactionHistory(): JSX.Element {
 	const { transactions, deleteTransaction } = useTransactionsStore()
 	const { deleteIncome } = useIncomeStore()
 	const { deleteExpense } = useExpenseStore()
@@ -79,9 +79,9 @@ export default function TransactionHistory(): React.ReactNode {
 		<>
 			<Card>
 				<h2 className="text-sm font-medium md:text-lg text-neutral">Transaction History</h2>
-				<CardContent className="relative h-full p-0 overflow-y-auto border rounded-lg scrollbar-hide max-h-92 border-base-300 bg-base-100 dark:bg-base-100-dark dark:border-base-300-dark">
+				<CardContent className="relative h-full p-0 overflow-y-auto border rounded-lg scrollbar-hide max-h-92 border-base-300 bg-base-100 dark:bg-base-100 dark:border-base-300">
 					<table className="min-w-full border-collapse table-fixed">
-						<thead className="sticky top-0 z-10 text-center bg-base-300 dark:bg-base-300-dark">
+						<thead className="sticky top-0 z-10 text-center bg-base-300">
 							<tr>
 								{TABLE_HEADERS.map((header, index) => (
 									<th key={index} className="px-6 py-4 text-left">
@@ -102,11 +102,9 @@ export default function TransactionHistory(): React.ReactNode {
 										<tr
 											key={transaction.id}
 											className={cn(
-												'border-b border-base-300 dark:border-base-300-dark text-xs md:text-sm',
+												'border-b border-base-300 text-xs md:text-sm',
 												index === transactions.length - 1 ? 'border-b-0' : '',
-												index % 2 === 0
-													? 'bg-base-100 dark:bg-base-100-dark'
-													: 'bg-base-200 dark:bg-base-200-dark'
+												index % 2 === 0 ? 'bg-base-100' : 'bg-base-200'
 											)}
 										>
 											<td className="px-6 max-w-[200px] truncate">
@@ -134,11 +132,7 @@ export default function TransactionHistory(): React.ReactNode {
 											<td className="px-6 py-3">
 												<Popover>
 													<PopoverTrigger asChild>
-														<Button
-															variant="outline"
-															size="icon"
-															className="bg-base-100 dark:bg-base-100-dark"
-														>
+														<Button variant="outline" size="icon" className="bg-base-100">
 															<Ellipsis size={16} />
 														</Button>
 													</PopoverTrigger>
@@ -147,7 +141,7 @@ export default function TransactionHistory(): React.ReactNode {
 															<li>
 																<Button
 																	variant="ghost"
-																	className="flex justify-between w-full gap-4 rounded-sm hover:base-200 dark:hover:bg-base-300-dark"
+																	className="flex justify-between w-full gap-4 rounded-sm hover:base-200 dark:hover:bg-base-300"
 																	onClick={() => {
 																		setSelectedTransactionId(transaction.id)
 																		setModalState('update')
@@ -160,7 +154,7 @@ export default function TransactionHistory(): React.ReactNode {
 															<li>
 																<Button
 																	variant="ghost"
-																	className="flex justify-between w-full gap-4 rounded-sm hover:base-200 dark:hover:bg-base-300-dark"
+																	className="flex justify-between w-full gap-4 rounded-sm hover:base-200 dark:hover:bg-base-300"
 																	onClick={() => removeTransaction(transaction.id)}
 																>
 																	<span>Delete</span>

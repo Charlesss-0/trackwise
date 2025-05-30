@@ -1,7 +1,8 @@
 'use client'
 
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/utils/cn'
+import { type JSX } from 'react'
 
 export default function EmptyState({
 	message,
@@ -13,7 +14,7 @@ export default function EmptyState({
 	btnText: string
 	onClick?: () => void
 	className?: string
-}): React.ReactNode {
+}): JSX.Element {
 	return (
 		<div className={cn('flex flex-col items-center justify-center h-full', className)}>
 			<p className="text-xs font-medium md:text-sm text-neutral">{message}</p>
