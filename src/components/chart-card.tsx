@@ -18,7 +18,7 @@ import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 import { useGoalStore } from '@/stores/goals-store'
 import { useIncomeStore } from '@/stores/income-store'
 import { useTheme } from 'next-themes'
-import { type JSX } from 'react'
+import { useMemo, type JSX } from 'react'
 
 export default function ChartCard(): JSX.Element {
 	const { theme } = useTheme()
@@ -27,49 +27,54 @@ export default function ChartCard(): JSX.Element {
 	const { fixedExpenses } = useFixedExpenseStore()
 	const { goals } = useGoalStore()
 
-	const chartData = Array.from({ length: 6 }, (_, i) => {
-		const currentDate = new Date()
-		const targetDate = new Date(currentDate)
-		targetDate.setMonth(targetDate.getMonth() - i)
+	const chartData = useMemo(
+		() =>
+			Array.from({ length: 6 }, (_, i) => {
+				const currentDate = new Date()
+				const date = new Date(currentDate.getFullYear(), currentDate.getMonth() - 4 + i, 1)
 
-		const targetYear = targetDate.getFullYear()
-		const targetMonth = targetDate.getMonth()
-		const monthStr = targetDate.toLocaleString('default', { month: 'short' })
+				const targetYear = date.getUTCFullYear()
+				const targetMonth = date.getUTCMonth()
+				const monthStr = date.toLocaleString('default', { month: 'short', year: '2-digit' })
 
-		const isSameMonth = (date: number | string): boolean => {
-			const d = new Date(date)
-			return d.getFullYear() === targetYear && d.getMonth() === targetMonth
-		}
+				const isSameMonth = (date: number | string): boolean => {
+					const d = new Date(date)
+					return d.getUTCFullYear() === targetYear && d.getUTCMonth() === targetMonth
+				}
 
-		const monthIncome = income
-			.filter(inc => isSameMonth(inc.createdAt))
-			.reduce((sum, inc) => sum + inc.amount, 0)
+				const monthIncome = income
+					.filter(inc => isSameMonth(inc.createdAt))
+					.reduce((sum, inc) => sum + inc.amount, 0)
 
-		const monthExpenses = expenses
-			.filter(exp => isSameMonth(exp.createdAt))
-			.reduce((sum, exp) => sum + exp.amount, 0)
+				const fixedExpenseId = new Set(fixedExpenses.map(e => e.id))
 
-		const monthFixedExpenses = fixedExpenses
-			.filter(exp => isSameMonth(exp.dueDate))
-			.reduce((sum, exp) => sum + exp.currentAmount, 0)
+				const monthExpenses = expenses
+					.filter(exp => isSameMonth(exp.createdAt) && !fixedExpenseId.has(exp.id))
+					.reduce((sum, exp) => sum + exp.amount, 0)
 
-		const monthContributions = goals.reduce((sum, goal) => {
-			const contributions = goal.contributions || []
-			return (
-				sum +
-				contributions
-					.filter(c => isSameMonth(c.createdAt))
-					.reduce((total, c) => total + c.amount, 0)
-			)
-		}, 0)
+				const monthFixedExpenses = fixedExpenses
+					.filter(exp => isSameMonth(exp.dueDate))
+					.reduce((sum, exp) => sum + Number(exp.currentAmount), 0)
 
-		return {
-			month: monthStr,
-			income: monthIncome,
-			expenses: monthExpenses + monthFixedExpenses,
-			available: monthIncome - monthExpenses - monthFixedExpenses - monthContributions,
-		}
-	}).reverse()
+				const monthContributions = goals.reduce((sum, goal) => {
+					const contributions = goal.contributions || []
+					return (
+						sum +
+						contributions
+							.filter(c => isSameMonth(c.createdAt))
+							.reduce((total, c) => total + c.amount, 0)
+					)
+				}, 0)
+
+				return {
+					month: monthStr,
+					income: monthIncome,
+					expenses: monthExpenses + monthFixedExpenses,
+					available: monthIncome - monthExpenses - monthFixedExpenses - monthContributions,
+				}
+			}),
+		[income, expenses, fixedExpenses, goals]
+	)
 
 	return (
 		<Card>

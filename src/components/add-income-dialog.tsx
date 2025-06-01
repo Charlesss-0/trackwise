@@ -116,6 +116,8 @@ export default function AddIncome({
 								</SelectTrigger>
 								<SelectContent>
 									<SelectItem value="monthly">Monthly</SelectItem>
+									<SelectItem value="weekly">Weekly</SelectItem>
+									<SelectItem value="fortnightly">Fortnightly</SelectItem>
 									<SelectItem value="quarterly">Quarterly</SelectItem>
 									<SelectItem value="annually">Annually</SelectItem>
 									<SelectItem value="one-time">One-time</SelectItem>
