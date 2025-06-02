@@ -132,7 +132,11 @@ export default function TransactionHistory(): JSX.Element {
 											<td className="px-6 py-3">
 												<Popover>
 													<PopoverTrigger asChild>
-														<Button variant="outline" size="icon" className="bg-base-100">
+														<Button
+															variant="outline"
+															size="icon"
+															className="bg-base-100 rounded-lg"
+														>
 															<Ellipsis size={16} />
 														</Button>
 													</PopoverTrigger>

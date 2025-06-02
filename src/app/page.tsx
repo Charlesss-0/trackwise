@@ -1,4 +1,3 @@
-import ChartCard from '@/components/chart-card'
 import FixedExpenseCard from '@/components/fixed-expense-card'
 import GoalCard from '@/components/goal-card'
 import Header from '@/components/header'
@@ -14,7 +13,6 @@ export default function Home(): JSX.Element {
 			<main className="grid w-full grid-cols-2 col-span-1 gap-6 p-2 mt-4 md:grid-cols-4">
 				<div className="w-full col-span-2 space-y-4 md:col-span-3">
 					<QuickStats />
-					<ChartCard />
 					<TransactionHistory />
 				</div>
 

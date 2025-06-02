@@ -65,7 +65,7 @@ export default function FixedExpenseItem({
 				) : (
 					<Button
 						variant="secondary"
-						className="w-full text-xs rounded-sm"
+						className="w-full text-xs rounded-full"
 						onClick={e => {
 							e.stopPropagation()
 							onAddPayment()
