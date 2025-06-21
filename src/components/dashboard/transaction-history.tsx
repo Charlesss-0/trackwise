@@ -44,7 +44,7 @@ const TABLE_HEADERS = [
 		name: 'Action',
 		icon: null,
 	},
-]
+] as const
 
 export default function TransactionHistory(): JSX.Element {
 	const { transactions, deleteTransaction } = useTransactionsStore()

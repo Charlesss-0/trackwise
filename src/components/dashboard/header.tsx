@@ -2,8 +2,8 @@
 
 import { Plus, Wallet } from 'lucide-react'
 
-import AddExpense from '@/components/add-expense-dialog'
-import AddIncome from '@/components/add-income-dialog'
+import AddExpense from '@/components/dashboard/add-expense-dialog'
+import AddIncome from '@/components/dashboard/add-income-dialog'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { type JSX, useState } from 'react'
