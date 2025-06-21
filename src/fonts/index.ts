@@ -1,11 +1,9 @@
-import { Geist, Geist_Mono } from 'next/font/google'
+import LocalFont from 'next/font/local'
 
-export const geistSans = Geist({
-	variable: '--font-geist-sans',
-	subsets: ['latin'],
-})
-
-export const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
-	subsets: ['latin'],
+export const amulya = LocalFont({
+	src: './Amulya-Variable.woff2',
+	variable: '--font-amulya',
+	weight: '100 900',
+	style: 'normal',
+	display: 'swap',
 })

@@ -15,11 +15,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+import { useMemo, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { DEFAULT_INCOME_TYPES } from '@/data/default-categories'
+import { capitalize } from '@/utils/capitalize'
 import { useIncomeStore } from '@/stores/income-store'
-import { useState } from 'react'
 import { useTransactionsStore } from '@/stores/transactions-store'
 
 export default function AddIncome({
@@ -34,6 +35,11 @@ export default function AddIncome({
 	const [amount, setAmount] = useState<string>('')
 	const [type, setType] = useState<string>('')
 	const [frequency, setFrequency] = useState<string>('')
+
+	const incomeFrequencies = useMemo(
+		() => ['monthly', 'weekly', 'fortnightly', 'quarterly', 'annually', 'one-time'],
+		[type]
+	)
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
@@ -115,12 +121,11 @@ export default function AddIncome({
 									<SelectValue placeholder="Select frequency" />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="monthly">Monthly</SelectItem>
-									<SelectItem value="weekly">Weekly</SelectItem>
-									<SelectItem value="fortnightly">Fortnightly</SelectItem>
-									<SelectItem value="quarterly">Quarterly</SelectItem>
-									<SelectItem value="annually">Annually</SelectItem>
-									<SelectItem value="one-time">One-time</SelectItem>
+									{incomeFrequencies.map(frequency => (
+										<SelectItem key={frequency} value={frequency}>
+											{capitalize(frequency)}
+										</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 						</fieldset>

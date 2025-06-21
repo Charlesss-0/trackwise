@@ -1,6 +1,6 @@
 import './globals.css'
 
-import { geistMono, geistSans } from '@/fonts'
+import { amulya } from '@/fonts'
 
 import type { Metadata } from 'next'
 import { ThemeProvider } from '@/components/theme-provider'
@@ -16,7 +16,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>): JSX.Element {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-base-100`}>
+			<body className={`${amulya.variable} antialiased bg-base-100`}>
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
 					{children}
 				</ThemeProvider>

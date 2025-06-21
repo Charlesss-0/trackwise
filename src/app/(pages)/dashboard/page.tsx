@@ -5,12 +5,12 @@ import QuickStats from '@/components/quick-stats'
 import TransactionHistory from '@/components/transaction-history'
 import { type JSX } from 'react'
 
-export default function Home(): JSX.Element {
+export default function Dashboard(): JSX.Element {
 	return (
-		<div className="w-full md:mx-auto md:max-w-[1600px] p-5 justify-items-center bg-base-100">
+		<div className="w-full h-full md:mx-auto md:max-w-[1600px] p-5 justify-items-center bg-base-100">
 			<Header />
 
-			<main className="grid w-full grid-cols-2 col-span-1 gap-6 p-2 mt-4 md:grid-cols-4">
+			<div className="grid w-full grid-cols-2 col-span-1 gap-6 p-2 mt-4 md:grid-cols-4">
 				<div className="w-full col-span-2 space-y-4 md:col-span-3">
 					<QuickStats />
 					<TransactionHistory />
@@ -20,7 +20,7 @@ export default function Home(): JSX.Element {
 					<FixedExpenseCard />
 					<GoalCard />
 				</div>
-			</main>
+			</div>
 		</div>
 	)
 }
