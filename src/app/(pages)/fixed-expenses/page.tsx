@@ -8,16 +8,18 @@ import {
 	DialogTitle,
 } from '@/components/ui/dialog'
 
-import AddFixedExpense from '@/components/fixed-expenses/add-fixed-expense-dialog'
+import AddFixedExpense from '@/pages/fixed-expenses/_components/add-fixed-expense-dialog'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import EditFixedExpense from '@/components/fixed-expenses/update-fixed-expense-dialog'
-import EmptyState from '@/components/empty-state'
-import FixedExpenseItem from '@/components/fixed-expenses/fixed-expense-item'
+import EditFixedExpense from '@/pages/fixed-expenses/_components/update-fixed-expense-dialog'
+import EmptyState from '@/components/shared/empty-state'
+import FixedExpenseItem from '@/pages/fixed-expenses/_components/fixed-expense-item'
 import { Plus } from 'lucide-react'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 import { type JSX, useState } from 'react'
+import PageHeader from '@/components/shared/page-header'
+import HeaderStats from '@/pages/fixed-expenses/_components/header-stats'
 
 export default function FixedExpenseCard(): JSX.Element {
 	const { fixedExpenses, deleteFixedExpense, updateFixedExpense } = useFixedExpenseStore()
@@ -74,7 +76,11 @@ export default function FixedExpenseCard(): JSX.Element {
 	}
 
 	return (
-		<>
+		<div className="flex flex-col gap-10">
+			<PageHeader title="Fixed Expenses" description="Manage your recurring expenses" />
+
+			<HeaderStats />
+
 			<Card className="relative max-h-[400px] h-full w-full">
 				<h2 className="text-sm font-medium md:text-lg text-neutral">Fixed Expenses</h2>
 				<div className="h-full space-y-4 overflow-y-auto rounded-md scrollbar-hide">
@@ -184,6 +190,6 @@ export default function FixedExpenseCard(): JSX.Element {
 					</Dialog>
 				</>
 			)}
-		</>
+		</div>
 	)
 }

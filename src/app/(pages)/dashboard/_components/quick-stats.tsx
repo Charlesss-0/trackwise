@@ -47,7 +47,7 @@ export default function QuickStats(): JSX.Element {
 					icon: <PiggyBank className="w-4 h-4 text-info" />,
 				},
 			] as const,
-		[income, expenses]
+		[totalIncome, totalExpenses, totalContributions, availableMoney]
 	)
 
 	return (

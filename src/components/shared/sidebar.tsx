@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, type JSX } from 'react'
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/utils/cn'
 import { usePathname, useRouter } from 'next/navigation'
 import {
@@ -55,16 +55,13 @@ export default function Sidebar(): JSX.Element {
 	)
 
 	return (
-		<aside className="hidden p-4 py-10 border-r h-svh md:block md:w-max bg-base-100 border-base-300">
+		<aside className="hidden p-4 py-10 border-r h-svh md:block md:w-max bg-base-200 border-base-300">
 			<nav className="flex flex-col gap-4">
 				{navigation.map(({ name, href, icon }) => (
 					<Button
 						key={href}
 						variant="ghost"
-						className={cn(
-							'justify-start h-10',
-							pathname.includes(href) ? 'bg-base-200 dark:bg-base-300' : ''
-						)}
+						className={cn('justify-start h-10', pathname.includes(href) ? 'bg-base-300' : '')}
 						onClick={() => router.push(href)}
 					>
 						{icon}

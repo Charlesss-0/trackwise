@@ -3,7 +3,7 @@ import './globals.css'
 import { amulya } from '@/fonts'
 
 import type { Metadata } from 'next'
-import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeProvider } from '@/components/shared/theme-provider'
 import { type JSX } from 'react'
 
 export const metadata: Metadata = {
