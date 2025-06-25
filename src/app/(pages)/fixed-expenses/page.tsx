@@ -76,10 +76,16 @@ export default function FixedExpenseCard(): JSX.Element {
 	}
 
 	return (
-		<div className="flex flex-col gap-10">
+		<>
 			<PageHeader title="Fixed Expenses" description="Manage your recurring expenses" />
 
-			<HeaderStats />
+			<div className="flex flex-col gap-4">
+				<Button className="self-end">
+					<Plus className="w-5 h-5" />
+					<span>Add Fixed Expense</span>
+				</Button>
+				<HeaderStats />
+			</div>
 
 			<Card className="relative max-h-[400px] h-full w-full">
 				<h2 className="text-sm font-medium md:text-lg text-neutral">Fixed Expenses</h2>
@@ -190,6 +196,6 @@ export default function FixedExpenseCard(): JSX.Element {
 					</Dialog>
 				</>
 			)}
-		</div>
+		</>
 	)
 }
