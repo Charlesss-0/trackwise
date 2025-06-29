@@ -1,5 +1,4 @@
 'use client'
-
 import {
 	Dialog,
 	DialogContent,
@@ -10,8 +9,7 @@ import {
 
 import AddFixedExpense from '@/pages/fixed-expenses/_components/add-fixed-expense-dialog'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import EditFixedExpense from '@/pages/fixed-expenses/_components/update-fixed-expense-dialog'
+import UpdateFixedExpense from '@/pages/fixed-expenses/_components/update-fixed-expense-dialog'
 import EmptyState from '@/components/shared/empty-state'
 import FixedExpenseItem from '@/pages/fixed-expenses/_components/fixed-expense-item'
 import { Plus } from 'lucide-react'
@@ -80,54 +78,43 @@ export default function FixedExpenseCard(): JSX.Element {
 			<PageHeader title="Fixed Expenses" description="Manage your recurring expenses" />
 
 			<div className="flex flex-col gap-4">
-				<Button className="self-end">
+				<Button className="self-end" onClick={() => openModal('add')}>
 					<Plus className="w-5 h-5" />
+
 					<span>Add Fixed Expense</span>
 				</Button>
+
 				<HeaderStats />
 			</div>
 
-			<Card className="relative max-h-[400px] h-full w-full">
-				<h2 className="text-sm font-medium md:text-lg text-neutral">Fixed Expenses</h2>
-				<div className="h-full space-y-4 overflow-y-auto rounded-md scrollbar-hide">
-					{fixedExpenses.length > 0 ? (
-						fixedExpenses.map(expense => (
-							<FixedExpenseItem
-								key={expense.id}
-								expense={expense}
-								onEdit={() => openModal('edit', expense.id)}
-								onDelete={() => openModal('delete', expense.id)}
-								onAddPayment={() => openModal('payment', expense.id)}
-							/>
-						))
-					) : (
-						<EmptyState
-							message="No fixed expenses set yet."
-							btnText="Add Fixed Expense"
-							onClick={() => openModal('add')}
+			<div className="grid grid-cols-auto-fill gap-4">
+				{fixedExpenses.length > 0 ? (
+					fixedExpenses.map(expense => (
+						<FixedExpenseItem
+							key={expense.id}
+							expense={expense}
+							onEdit={() => openModal('edit', expense.id)}
+							onDelete={() => openModal('delete', expense.id)}
+							onAddPayment={() => openModal('payment', expense.id)}
 						/>
-					)}
-
-					{fixedExpenses.length > 0 && (
-						<Button
-							variant="ghost"
-							size="icon"
-							className="absolute right-4 top-4 hover:bg-base-300"
-							onClick={() => openModal('add')}
-						>
-							<Plus size={16} />
-						</Button>
-					)}
-				</div>
-			</Card>
+					))
+				) : (
+					<EmptyState
+						message="No fixed expenses set yet."
+						btnText="Add Fixed Expense"
+						onClick={() => openModal('add')}
+					/>
+				)}
+			</div>
 
 			<AddFixedExpense
 				open={modalState === 'add'}
 				onOpenChange={isOpen => (isOpen ? openModal('add') : closeModal())}
 			/>
+
 			{selectedExpenseId && (
 				<>
-					<EditFixedExpense
+					<UpdateFixedExpense
 						id={selectedExpenseId}
 						open={modalState === 'edit'}
 						onOpenChange={isOpen => (isOpen ? openModal('edit', selectedExpenseId) : closeModal())}
@@ -143,10 +130,12 @@ export default function FixedExpenseCard(): JSX.Element {
 							<DialogTitle className="text-sm font-medium text-base-content">
 								Are you sure you want to delete this fixed expense?
 							</DialogTitle>
+
 							<div className="flex justify-end gap-4 mt-4">
 								<Button variant="secondary" onClick={closeModal}>
 									Cancel
 								</Button>
+
 								<Button
 									variant="destructive"
 									onClick={() => {
@@ -170,6 +159,7 @@ export default function FixedExpenseCard(): JSX.Element {
 						<DialogContent>
 							<DialogHeader>
 								<DialogTitle>Add Payment</DialogTitle>
+
 								<DialogDescription>
 									Enter the amount you want to pay for this expense.
 								</DialogDescription>
@@ -183,10 +173,12 @@ export default function FixedExpenseCard(): JSX.Element {
 									placeholder="Enter amount"
 									className="input"
 								/>
+
 								<div className="flex justify-end gap-2">
 									<Button variant="outline" type="button" onClick={closeModal}>
 										Cancel
 									</Button>
+
 									<Button type="submit" variant="secondary">
 										Pay
 									</Button>

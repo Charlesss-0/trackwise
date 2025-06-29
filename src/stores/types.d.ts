@@ -18,7 +18,6 @@ type Expense = {
 type FixedExpense = Omit<Expense, 'paymentMethod' | 'amount'> & {
 	targetAmount: number
 	currentAmount: number
-	dueDate: string
 	isRecurring: boolean
 	frequency: string
 	isPaid: boolean

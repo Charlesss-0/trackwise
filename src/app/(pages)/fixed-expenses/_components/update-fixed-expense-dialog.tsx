@@ -21,7 +21,7 @@ import { Button } from '@/components/ui/button'
 import { DEFAULT_EXPENSE_CATEGORIES } from '@/data/default-categories'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 
-export default function EditFixedExpense({
+export default function UpdateFixedExpense({
 	id,
 	open,
 	onOpenChange,
@@ -35,7 +35,6 @@ export default function EditFixedExpense({
 		name: '',
 		targetAmount: '',
 		category: '',
-		dueDate: '',
 		frequency: '',
 	})
 
@@ -47,7 +46,6 @@ export default function EditFixedExpense({
 				name: fixedExpense.name,
 				targetAmount: fixedExpense.targetAmount.toString(),
 				category: fixedExpense.category,
-				dueDate: fixedExpense.dueDate,
 				frequency: fixedExpense.frequency,
 			})
 		}
@@ -72,7 +70,6 @@ export default function EditFixedExpense({
 			name: formData.name,
 			targetAmount: Number(formData.targetAmount),
 			category: formData.category,
-			dueDate: formData.dueDate,
 			frequency: formData.frequency,
 		}
 
@@ -85,16 +82,19 @@ export default function EditFixedExpense({
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Edit Fixed Expense</DialogTitle>
+
 					<DialogDescription>
 						Edit your fixed expense details including category and payment method.
 					</DialogDescription>
 				</DialogHeader>
+
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6 ">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="name" className="text-right">
 								Name
 							</label>
+
 							<input
 								type="text"
 								id="name"
@@ -107,10 +107,12 @@ export default function EditFixedExpense({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="targetAmount" className="text-right">
 								Target Amount
 							</label>
+
 							<input
 								type="number"
 								id="targetAmount"
@@ -122,10 +124,12 @@ export default function EditFixedExpense({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="category" className="text-right">
 								Category
 							</label>
+
 							<Select
 								value={formData.category}
 								onValueChange={value => handleSelectChange('category', value)}
@@ -133,6 +137,7 @@ export default function EditFixedExpense({
 								<SelectTrigger id="category" className="col-span-3">
 									<SelectValue placeholder="Select category" />
 								</SelectTrigger>
+
 								<SelectContent>
 									{DEFAULT_EXPENSE_CATEGORIES.map(category => (
 										<SelectItem key={category} value={category}>
@@ -142,24 +147,12 @@ export default function EditFixedExpense({
 								</SelectContent>
 							</Select>
 						</fieldset>
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="dueDate" className="text-right">
-								Due Date
-							</label>
-							<input
-								type="date"
-								id="dueDate"
-								name="dueDate"
-								value={formData.dueDate}
-								onChange={handleChange}
-								required
-								className="col-span-3 input"
-							/>
-						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="frequency" className="text-right">
 								Frequency
 							</label>
+
 							<Select
 								value={formData.frequency}
 								onValueChange={value => handleSelectChange('frequency', value)}
@@ -168,14 +161,18 @@ export default function EditFixedExpense({
 								<SelectTrigger id="frequency" className="col-span-3">
 									<SelectValue placeholder="Select frequency" />
 								</SelectTrigger>
+
 								<SelectContent>
 									<SelectItem value="monthly">Monthly</SelectItem>
+
 									<SelectItem value="quarterly">Quarterly</SelectItem>
+
 									<SelectItem value="annually">Annually</SelectItem>
 								</SelectContent>
 							</Select>
 						</fieldset>
 					</div>
+
 					<DialogFooter>
 						<Button type="submit" variant="secondary">
 							Save

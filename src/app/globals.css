@@ -25,7 +25,7 @@
 	--base-200: #060d1c;
 	--base-300: #182230;
 	--base-content: #f1f2f4;
-	--secondary: #0082ce;
+	--secondary: #6f5af6;
 	--secondary-content: #edf7fd;
 	--accent: #d9487e;
 	--accent-content: #fcf2f8;
@@ -39,18 +39,23 @@
 
 @theme {
 	--font-sans: 'Amulya', sans-serif;
+
 	--radius-sm: 0.3rem;
 	--radius-md: 0.6rem;
 	--radius-lg: 0.7rem;
 	--radius-xl: 1rem;
+
 	--shadow-sm: 0 1px 2.5px rgba(0, 0, 0, 0.2);
 	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 	--shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
 	--color-destructive: #d73b37;
 	--color-destructive-content: #fcf2f8;
-	--color-primary: #6f5af6;
+
+	--color-primary: #0082ce;
 	--color-primary-content: #fdf9e8;
+
 	--color-green-primary: #00a43b;
 	--color-green-primary-content: #effcf3;
 	--color-light-green: #8be78f;
@@ -82,6 +87,10 @@
 	.scrollbar-hide {
 		-ms-overflow-style: none; /* IE and Edge */
 		scrollbar-width: none; /* Firefox */
+	}
+
+	.grid-cols-auto-fill {
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	}
 }
 

@@ -36,7 +36,6 @@ export default function AddFixedExpense({
 	const [name, setName] = useState<string>('')
 	const [targetAmount, setTargetAmount] = useState<string>('')
 	const [category, setCategory] = useState<string>('')
-	const [dueDate, setDueDate] = useState<string>('')
 	const [frequency, setFrequency] = useState<string>('')
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -48,7 +47,6 @@ export default function AddFixedExpense({
 			targetAmount: Number(targetAmount),
 			currentAmount: 0,
 			category,
-			dueDate: dueDate,
 			isRecurring: true,
 			frequency,
 			isPaid: false,
@@ -60,7 +58,6 @@ export default function AddFixedExpense({
 		setName('')
 		setTargetAmount('')
 		setCategory('')
-		setDueDate('')
 		setFrequency('')
 	}
 
@@ -69,16 +66,19 @@ export default function AddFixedExpense({
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Add Fixed Expense</DialogTitle>
+
 					<DialogDescription>
-						Add a recurring expense with target amount and due date.
+						Add a recurring expense with target amount and frequency
 					</DialogDescription>
 				</DialogHeader>
+
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6 ">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="name" className="text-right">
 								Name
 							</label>
+
 							<input
 								type="text"
 								id="name"
@@ -91,10 +91,12 @@ export default function AddFixedExpense({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="target" className="text-right">
 								Target Amount
 							</label>
+
 							<input
 								type="number"
 								id="target"
@@ -106,14 +108,17 @@ export default function AddFixedExpense({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="category" className="text-right">
 								Category
 							</label>
+
 							<Select value={category} onValueChange={setCategory}>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select category" />
 								</SelectTrigger>
+
 								<SelectContent>
 									{DEFAULT_EXPENSE_CATEGORIES.map(category => (
 										<SelectItem key={category} value={category}>
@@ -123,20 +128,7 @@ export default function AddFixedExpense({
 								</SelectContent>
 							</Select>
 						</fieldset>
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="dueDate" className="text-right">
-								Due Date
-							</label>
-							<input
-								type="date"
-								id="dueDate"
-								name="due_date"
-								value={dueDate}
-								onChange={e => setDueDate(e.target.value)}
-								required
-								className="col-span-3 input"
-							/>
-						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="frequency" className="text-right">
 								Frequency
@@ -145,6 +137,7 @@ export default function AddFixedExpense({
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select frequency" />
 								</SelectTrigger>
+
 								<SelectContent>
 									{DEFAULT_FIXED_EXPENSE_FREQUENCIES.map(frequency => (
 										<SelectItem key={frequency} value={frequency}>
@@ -155,10 +148,9 @@ export default function AddFixedExpense({
 							</Select>
 						</fieldset>
 					</div>
+
 					<DialogFooter>
-						<Button type="submit" variant="secondary">
-							Add Fixed Expense
-						</Button>
+						<Button type="submit">Add Fixed Expense</Button>
 					</DialogFooter>
 				</form>
 			</DialogContent>
