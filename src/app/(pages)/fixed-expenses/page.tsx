@@ -87,7 +87,7 @@ export default function FixedExpenseCard(): JSX.Element {
 				<HeaderStats />
 			</div>
 
-			<div className="grid grid-cols-auto-fill gap-4">
+			<div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
 				{fixedExpenses.length > 0 ? (
 					fixedExpenses.map(expense => (
 						<FixedExpenseItem

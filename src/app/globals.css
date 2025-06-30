@@ -88,10 +88,6 @@
 		-ms-overflow-style: none; /* IE and Edge */
 		scrollbar-width: none; /* Firefox */
 	}
-
-	.grid-cols-auto-fill {
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	}
 }
 
 @layer components {
