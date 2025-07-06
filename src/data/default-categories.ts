@@ -11,6 +11,7 @@ export const DEFAULT_EXPENSE_CATEGORIES = [
 	'other',
 ]
 
+// Fixed expense frequencies
 export const DEFAULT_FIXED_EXPENSE_FREQUENCIES = [
 	'daily',
 	'weekly',

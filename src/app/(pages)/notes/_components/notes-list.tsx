@@ -12,7 +12,7 @@ export default function NotesList(): JSX.Element {
 				<span className="text-2xl font-bold">Notes</span>
 			</div>
 
-			<Card className="bg-white border-l-4 border-r-0 rounded-md shadow-sm border-y-0 border-l-info">
+			<Card className="bg-white border-l-4 border-r-0 rounded-md shadow-sm border-y-0 border-l-info dark:bg-base-300">
 				<div className="flex items-center justify-between">
 					<div className="flex flex-col gap-1">
 						<span className="text-base-content">Take out the trash</span>

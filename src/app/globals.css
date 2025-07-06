@@ -25,7 +25,7 @@
 	--base-200: #060d1c;
 	--base-300: #182230;
 	--base-content: #f1f2f4;
-	--secondary: #6f5af6;
+	--secondary: #7bbbe6;
 	--secondary-content: #edf7fd;
 	--accent: #d9487e;
 	--accent-content: #fcf2f8;
@@ -93,5 +93,9 @@
 @layer components {
 	.input {
 		@apply w-full px-3 py-2 text-sm font-medium bg-transparent border rounded-lg outline-none border-neutral placeholder:text-neutral focus-visible:ring-3 focus-visible:ring-secondary dark:focus-visible:ring-secondary;
+	}
+
+	.textarea {
+		@apply w-full px-3 py-2 text-sm font-medium bg-transparent border rounded-lg outline-none resize-none border-neutral placeholder:text-neutral focus-visible:ring-3 focus-visible:ring-secondary dark:focus-visible:ring-secondary;
 	}
 }

@@ -74,16 +74,19 @@ export default function AddIncome({
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Add Income</DialogTitle>
+
 					<DialogDescription>
 						Add your income details. You can specify the type and frequency of your income.
 					</DialogDescription>
 				</DialogHeader>
+
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="amount" className="text-right">
 								Amount
 							</label>
+
 							<input
 								type="number"
 								value={amount}
@@ -95,14 +98,17 @@ export default function AddIncome({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="type" className="text-right">
 								Type
 							</label>
+
 							<Select value={type} onValueChange={setType}>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select income type" />
 								</SelectTrigger>
+
 								<SelectContent>
 									{DEFAULT_INCOME_TYPES.map(type => (
 										<SelectItem key={type} value={type}>
@@ -112,14 +118,17 @@ export default function AddIncome({
 								</SelectContent>
 							</Select>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="frequency" className="text-right">
 								Frequency
 							</label>
+
 							<Select value={frequency} onValueChange={setFrequency}>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select frequency" />
 								</SelectTrigger>
+
 								<SelectContent>
 									{incomeFrequencies.map(frequency => (
 										<SelectItem key={frequency} value={frequency}>
@@ -130,6 +139,7 @@ export default function AddIncome({
 							</Select>
 						</fieldset>
 					</div>
+
 					<DialogFooter>
 						<Button type="submit" variant="secondary">
 							Add Income
