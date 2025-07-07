@@ -107,7 +107,9 @@ export default function GoalCard(): JSX.Element {
 						/>
 					))
 				) : (
-					<span className="font-medium text-neutral">No goals set yet.</span>
+					<div className="flex items-center h-64">
+						<span className="font-medium text-neutral">No goals set yet.</span>
+					</div>
 				)}
 			</div>
 

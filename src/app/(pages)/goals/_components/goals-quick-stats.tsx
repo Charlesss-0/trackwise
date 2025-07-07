@@ -26,7 +26,7 @@ export default function GoalsQuickStats(): JSX.Element {
 					icon: <DollarSign />,
 				},
 			] as const,
-		[]
+		[goals]
 	)
 
 	return (
