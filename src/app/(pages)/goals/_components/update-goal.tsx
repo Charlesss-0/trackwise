@@ -86,14 +86,17 @@ export default function UpdateGoal({
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Update Goal</DialogTitle>
+
 					<DialogDescription>Update the details of a goal.</DialogDescription>
 				</DialogHeader>
+
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="name" className="text-right">
 								Name
 							</label>
+
 							<input
 								type="text"
 								id="name"
@@ -105,10 +108,12 @@ export default function UpdateGoal({
 								required
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="targetAmount" className="text-right">
 								Target Amount
 							</label>
+
 							<input
 								type="number"
 								id="targetAmount"
@@ -119,10 +124,12 @@ export default function UpdateGoal({
 								required
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="deadline" className="text-right">
 								Deadline
 							</label>
+
 							<input
 								type="date"
 								id="deadline"
@@ -133,10 +140,12 @@ export default function UpdateGoal({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="priority" className="text-right">
 								Priority
 							</label>
+
 							<Select
 								value={formData.priority}
 								onValueChange={value => handleSelectChange('priority', value)}
@@ -144,6 +153,7 @@ export default function UpdateGoal({
 								<SelectTrigger id="priority" className="col-span-3">
 									<SelectValue placeholder="Select priority" />
 								</SelectTrigger>
+
 								<SelectContent>
 									{DEFAULT_GOAL_PRIORITIES.map(priority => (
 										<SelectItem key={priority} value={priority}>
@@ -154,10 +164,9 @@ export default function UpdateGoal({
 							</Select>
 						</fieldset>
 					</div>
+
 					<DialogFooter>
-						<Button type="submit" variant="secondary">
-							Save
-						</Button>
+						<Button type="submit">Save</Button>
 					</DialogFooter>
 				</form>
 			</DialogContent>

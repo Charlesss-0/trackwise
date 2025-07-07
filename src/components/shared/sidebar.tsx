@@ -61,10 +61,14 @@ export default function Sidebar(): JSX.Element {
 					<Button
 						key={href}
 						variant="ghost"
-						className={cn('justify-start h-10', pathname.includes(href) ? 'bg-base-300' : '')}
+						className={cn(
+							'justify-start h-10 font-medium',
+							pathname.includes(href) ? 'bg-base-300' : ''
+						)}
 						onClick={() => router.push(href)}
 					>
 						{icon}
+
 						{name}
 					</Button>
 				))}

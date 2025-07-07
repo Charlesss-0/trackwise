@@ -2,7 +2,7 @@
 
 import { Calendar, CircleCheckBig, DollarSign } from 'lucide-react'
 import { useMemo, type JSX } from 'react'
-import StatsCard from './stats-card'
+import StatsCard from '@/pages/fixed-expenses/_components/stats-card'
 
 export default function HeaderStats(): JSX.Element {
 	const STATS_ITEMS = useMemo(

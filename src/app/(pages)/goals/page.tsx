@@ -10,8 +10,6 @@ import {
 
 import AddGoal from '@/pages/goals/_components/add-goal-dialog'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import EmptyState from '@/components/shared/empty-state'
 import GoalInfo from '@/pages/goals/_components/goal-info'
 import GoalItem from '@/pages/goals/_components/goal-item'
 import { Plus } from 'lucide-react'
@@ -19,6 +17,9 @@ import UpdateGoal from '@/pages/goals/_components/update-goal'
 import { useExpenseStore } from '@/stores/expenses-store'
 import { useGoalStore } from '@/stores/goals-store'
 import { type JSX, useState } from 'react'
+import PageHeader from '@/components/shared/page-header'
+import { cn } from '@/utils/cn'
+import GoalsQuickStats from './_components/goals-quick-stats'
 
 export default function GoalCard(): JSX.Element {
 	const { goals, updateGoal, deleteGoal } = useGoalStore()
@@ -77,44 +78,44 @@ export default function GoalCard(): JSX.Element {
 
 	return (
 		<>
-			<Card className="relative max-h-[400px] h-full">
-				<h2 className="text-sm font-medium md:text-lg text-neutral">Goals</h2>
-				<div className="h-full space-y-4 overflow-y-auto rounded-md scrollbar-hide">
-					{goals.length > 0 ? (
-						goals.map(goal => (
-							<GoalItem
-								key={goal.id}
-								goal={goal}
-								onEdit={() => openModal('edit', goal.id)}
-								onInfo={() => openModal('info', goal.id)}
-								onContribute={() => openModal('contribute', goal.id)}
-							/>
-						))
-					) : (
-						<EmptyState
-							message="No goals set yet."
-							btnText="Add Goal"
-							onClick={() => setModalState('add')}
-						/>
-					)}
-				</div>
+			<PageHeader title="Goals" description="Track your goals and progress" />
 
-				{goals.length > 0 && (
-					<Button
-						variant="ghost"
-						size="icon"
-						className="absolute right-4 top-4 hover:bg-base-300"
-						onClick={() => openModal('add')}
-					>
-						<Plus size={16} />
-					</Button>
+			<div className="flex flex-col gap-4">
+				<Button className="self-end" onClick={() => openModal('add')}>
+					<Plus className="w-5 h-5" />
+
+					<span>Add Goal</span>
+				</Button>
+			</div>
+
+			<GoalsQuickStats />
+
+			<div
+				className={cn(
+					'grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4',
+					goals.length > 0 ? '' : 'w-full flex justify-center'
 				)}
-			</Card>
+			>
+				{goals.length > 0 ? (
+					goals.map(goal => (
+						<GoalItem
+							key={goal.id}
+							goal={goal}
+							onEdit={() => openModal('edit', goal.id)}
+							onInfo={() => openModal('info', goal.id)}
+							onContribute={() => openModal('contribute', goal.id)}
+						/>
+					))
+				) : (
+					<span className="font-medium text-neutral">No goals set yet.</span>
+				)}
+			</div>
 
 			<AddGoal
 				open={modalState === 'add'}
 				onOpenChange={isOpen => (isOpen ? openModal('add') : closeModal())}
 			/>
+
 			{selectedGoalId && (
 				<>
 					<UpdateGoal
@@ -131,10 +132,12 @@ export default function GoalCard(): JSX.Element {
 							<DialogTitle className="text-sm font-medium text-base-content">
 								Are you sure you want to delete this goal?
 							</DialogTitle>
+
 							<div className="flex justify-end gap-4 mt-4">
 								<Button variant="secondary" onClick={closeModal}>
 									Cancel
 								</Button>
+
 								<Button
 									variant="destructive"
 									onClick={() => {
@@ -158,6 +161,7 @@ export default function GoalCard(): JSX.Element {
 						<DialogContent>
 							<DialogHeader>
 								<DialogTitle>Contribute to Goal</DialogTitle>
+
 								<DialogDescription>
 									Enter the amount you want to contribute to this goal.
 								</DialogDescription>
@@ -171,13 +175,13 @@ export default function GoalCard(): JSX.Element {
 									placeholder="Enter amount"
 									className="input"
 								/>
+
 								<div className="flex justify-end gap-2">
 									<Button variant="outline" type="button" onClick={closeModal}>
 										Cancel
 									</Button>
-									<Button type="submit" variant="secondary">
-										Contribute
-									</Button>
+
+									<Button type="submit">Contribute</Button>
 								</div>
 							</form>
 						</DialogContent>

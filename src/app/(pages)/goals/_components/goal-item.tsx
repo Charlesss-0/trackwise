@@ -24,8 +24,10 @@ export default function GoalItem({
 			<CardHeader className="flex justify-between text-xs">
 				<div className="flex flex-col gap-1">
 					<span className="font-medium text-gray-900 dark:text-white">{goal.name}</span>
+
 					<span className="text-neutral">Deadline: {formatDate(goal.deadline)}</span>
 				</div>
+
 				<Button
 					variant="ghost"
 					size="icon"
@@ -38,19 +40,22 @@ export default function GoalItem({
 					<Info size={14} />
 				</Button>
 			</CardHeader>
+
 			<CardContent className="flex-col gap-2 text-xs">
 				<div className="flex justify-between">
 					<span>Progress</span>
+
 					<span>
 						${goal.currentAmount ? goal.currentAmount.toFixed(2) : '0.00'} / $
 						{goal.targetAmount.toFixed(2)}
 					</span>
 				</div>
+
 				<Progress value={(goal.currentAmount / goal.targetAmount) * 100} />
 			</CardContent>
+
 			<CardFooter>
 				<Button
-					variant="secondary"
 					className="w-full text-xs rounded-full"
 					onClick={e => {
 						e.stopPropagation()
