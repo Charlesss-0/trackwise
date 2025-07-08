@@ -79,16 +79,19 @@ export default function AddGoal({
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Add Goal</DialogTitle>
+
 					<DialogDescription>
 						Set up a new financial goal with target amount and deadline.
 					</DialogDescription>
 				</DialogHeader>
+
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="name" className="text-right">
 								Goal Name
 							</label>
+
 							<input
 								type="text"
 								id="name"
@@ -101,10 +104,12 @@ export default function AddGoal({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="target" className="text-right">
 								Target Amount
 							</label>
+
 							<input
 								type="number"
 								id="targetAmount"
@@ -116,10 +121,12 @@ export default function AddGoal({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="deadline" className="text-right">
 								Deadline
 							</label>
+
 							<input
 								type="date"
 								id="deadline"
@@ -130,10 +137,12 @@ export default function AddGoal({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="priority" className="text-right">
 								Priority
 							</label>
+
 							<Select
 								value={formData.priority}
 								onValueChange={value => handleSelectChange('priority', value)}
@@ -141,6 +150,7 @@ export default function AddGoal({
 								<SelectTrigger className="col-span-3 input">
 									<SelectValue placeholder="Select priority" />
 								</SelectTrigger>
+
 								<SelectContent>
 									{DEFAULT_GOAL_PRIORITIES.map(category => (
 										<SelectItem key={category} value={category}>
@@ -150,10 +160,12 @@ export default function AddGoal({
 								</SelectContent>
 							</Select>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="monthly" className="text-right">
 								Monthly Contribution
 							</label>
+
 							<input
 								type="number"
 								id="monthlyContribution"
@@ -165,10 +177,9 @@ export default function AddGoal({
 							/>
 						</fieldset>
 					</div>
+
 					<DialogFooter>
-						<Button type="submit" variant="secondary">
-							Add Goal
-						</Button>
+						<Button type="submit">Add Goal</Button>
 					</DialogFooter>
 				</form>
 			</DialogContent>
