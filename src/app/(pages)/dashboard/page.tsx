@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import QuickStats from '@/pages/dashboard/_components/quick-stats'
+import QuickStats from '@/app/(pages)/dashboard/_components/dashboard-quick-stats'
 import { Plus, Wallet } from 'lucide-react'
 import { useState, type JSX } from 'react'
 import AddIncome from '@/pages/dashboard/_components/add-income-dialog'
@@ -39,6 +39,7 @@ export default function Dashboard(): JSX.Element {
 			<QuickStats />
 
 			<AddIncome open={addIncomeOpen} onOpenChange={setAddIncomeOpen} />
+
 			<AddExpense open={addExpenseOpen} onOpenChange={setAddExpenseOpen} />
 		</>
 	)

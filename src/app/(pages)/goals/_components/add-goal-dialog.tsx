@@ -86,11 +86,9 @@ export default function AddGoal({
 				</DialogHeader>
 
 				<form onSubmit={handleSubmit}>
-					<div className="grid gap-4 py-2 my-6">
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="name" className="text-right">
-								Goal Name
-							</label>
+					<div className="grid gap-4 py-2 my-6 [&>fieldset]:flex [&>fieldset]:flex-col [&>fieldset]:gap-2">
+						<fieldset>
+							<label htmlFor="name">Goal Name</label>
 
 							<input
 								type="text"
@@ -105,10 +103,8 @@ export default function AddGoal({
 							/>
 						</fieldset>
 
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="target" className="text-right">
-								Target Amount
-							</label>
+						<fieldset>
+							<label htmlFor="target">Target Amount</label>
 
 							<input
 								type="number"
@@ -122,10 +118,8 @@ export default function AddGoal({
 							/>
 						</fieldset>
 
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="deadline" className="text-right">
-								Deadline
-							</label>
+						<fieldset>
+							<label htmlFor="deadline">Deadline</label>
 
 							<input
 								type="date"
@@ -138,10 +132,8 @@ export default function AddGoal({
 							/>
 						</fieldset>
 
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="priority" className="text-right">
-								Priority
-							</label>
+						<fieldset>
+							<label htmlFor="priority">Priority</label>
 
 							<Select
 								value={formData.priority}
@@ -161,10 +153,8 @@ export default function AddGoal({
 							</Select>
 						</fieldset>
 
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="monthly" className="text-right">
-								Monthly Contribution
-							</label>
+						<fieldset>
+							<label htmlFor="monthly">Monthly Contribution</label>
 
 							<input
 								type="number"

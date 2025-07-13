@@ -1,9 +1,15 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { useNotesAndRemindersStore } from '@/stores/notes-and-reminders-store'
+import { format } from 'date-fns'
 import { FileText, Trash2 } from 'lucide-react'
 import { type JSX } from 'react'
 
 export default function NotesList(): JSX.Element {
+	const { notes, deleteNote } = useNotesAndRemindersStore()
+
 	return (
 		<div className="flex flex-col gap-2">
 			<div className="flex items-center gap-2">
@@ -12,23 +18,41 @@ export default function NotesList(): JSX.Element {
 				<span className="text-2xl font-bold">Notes</span>
 			</div>
 
-			<Card className="bg-white border-l-4 border-r-0 rounded-md shadow-sm border-y-0 border-l-info dark:bg-base-300">
-				<div className="flex items-center justify-between">
-					<div className="flex flex-col gap-1">
-						<span className="text-base-content">Take out the trash</span>
-					</div>
+			{notes.length > 0 ? (
+				notes.map(note => (
+					<Card key={note.id}>
+						<div className="flex items-center justify-between">
+							<div className="flex flex-col gap-1">
+								<span className="text-base-content font-semibold">{note.title}</span>
 
-					<Button
-						variant="ghost"
-						size="icon"
-						className="hover:bg-base-200 dark:hover:bg-base-300 size-9"
-					>
-						<Trash2 className="text-red-400" />
+								<span className="text-sm text-base-content">{note.content}</span>
 
-						<span className="sr-only">Delete</span>
-					</Button>
+								<span className="text-sm text-neutral">
+									Created {format(new Date(note.createdAt), 'MMM dd, yyyy')}
+								</span>
+							</div>
+
+							<Button
+								variant="ghost"
+								size="icon"
+								className="hover:bg-base-200 dark:hover:bg-base-300 size-9"
+								onClick={e => {
+									e.stopPropagation()
+									deleteNote(note.id)
+								}}
+							>
+								<Trash2 className="text-red-400" />
+
+								<span className="sr-only">Delete</span>
+							</Button>
+						</div>
+					</Card>
+				))
+			) : (
+				<div className="flex items-center justify-center h-64">
+					<span className="font-medium text-neutral">No notes set yet.</span>
 				</div>
-			</Card>
+			)}
 		</div>
 	)
 }

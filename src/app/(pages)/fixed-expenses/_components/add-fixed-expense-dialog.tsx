@@ -1,9 +1,6 @@
 'use client'
 
-import {
-	DEFAULT_EXPENSE_CATEGORIES,
-	DEFAULT_FIXED_EXPENSE_FREQUENCIES,
-} from '@/data/default-categories'
+import { DEFAULT_EXPENSE_CATEGORIES, FREQUENCIES } from '@/data/default-categories'
 import {
 	Dialog,
 	DialogContent,
@@ -73,11 +70,9 @@ export default function AddFixedExpense({
 				</DialogHeader>
 
 				<form onSubmit={handleSubmit}>
-					<div className="grid gap-4 py-2 my-6 ">
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="name" className="text-right">
-								Name
-							</label>
+					<div className="grid gap-4 py-2 my-6 [&>fieldset]:flex [&>fieldset]:flex-col [&>fieldset]:gap-2">
+						<fieldset>
+							<label htmlFor="name">Name</label>
 
 							<input
 								type="text"
@@ -92,10 +87,8 @@ export default function AddFixedExpense({
 							/>
 						</fieldset>
 
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="target" className="text-right">
-								Target Amount
-							</label>
+						<fieldset>
+							<label htmlFor="target">Target Amount</label>
 
 							<input
 								type="number"
@@ -109,10 +102,8 @@ export default function AddFixedExpense({
 							/>
 						</fieldset>
 
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="category" className="text-right">
-								Category
-							</label>
+						<fieldset>
+							<label htmlFor="category">Category</label>
 
 							<Select value={category} onValueChange={setCategory}>
 								<SelectTrigger className="col-span-3">
@@ -129,17 +120,15 @@ export default function AddFixedExpense({
 							</Select>
 						</fieldset>
 
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="frequency" className="text-right">
-								Frequency
-							</label>
+						<fieldset>
+							<label htmlFor="frequency">Frequency</label>
 							<Select value={frequency} onValueChange={setFrequency} required>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select frequency" />
 								</SelectTrigger>
 
 								<SelectContent>
-									{DEFAULT_FIXED_EXPENSE_FREQUENCIES.map(frequency => (
+									{FREQUENCIES.map(frequency => (
 										<SelectItem key={frequency} value={frequency}>
 											{capitalize(frequency)}
 										</SelectItem>

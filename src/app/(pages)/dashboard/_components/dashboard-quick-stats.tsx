@@ -14,8 +14,8 @@ export default function QuickStats(): JSX.Element {
 	const { expenses } = useExpenseStore()
 	const { goals } = useGoalStore()
 
-	const totalIncome = income.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2)
-	const totalExpenses = expenses.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2)
+	const totalIncome = income.reduce((acc, curr) => Number(acc + curr.amount), 0).toFixed(2)
+	const totalExpenses = expenses.reduce((acc, curr) => Number(acc + curr.amount), 0).toFixed(2)
 	const totalContributions = goals.reduce((acc, curr) => acc + curr.currentAmount, 0).toFixed(2)
 	const availableMoney = Number(totalIncome) - Number(totalExpenses)
 
@@ -56,8 +56,10 @@ export default function QuickStats(): JSX.Element {
 				<Card key={stat.name} className="w-full">
 					<CardHeader className="items-start gap-2">
 						<span className="text-xs truncate md:text-sm text-neutral">{stat.name}</span>
+
 						{stat.icon}
 					</CardHeader>
+
 					<p className={cn('text-sm md:text-2xl font-bold', stat.valueColor)}>${stat.value}</p>
 				</Card>
 			))}

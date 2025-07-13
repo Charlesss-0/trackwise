@@ -50,7 +50,7 @@ export default function GoalCard(): JSX.Element {
 		addExpense({
 			id: goal.id,
 			name: goal.name,
-			amount: newAmount,
+			amount: newAmount.toString(),
 			category: 'goal',
 			createdAt: Date.now(),
 			paymentMethod: 'unknown',

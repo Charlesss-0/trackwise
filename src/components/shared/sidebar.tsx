@@ -55,7 +55,7 @@ export default function Sidebar(): JSX.Element {
 	)
 
 	return (
-		<aside className="hidden p-4 py-10 border-r h-svh md:block md:w-max bg-base-200 border-base-300">
+		<aside className="hidden sticky top-0 left-0 p-4 py-10 border-r h-svh md:block md:w-max bg-base-200 border-base-300">
 			<nav className="flex flex-col gap-4">
 				{navigation.map(({ name, href, icon }) => (
 					<Button

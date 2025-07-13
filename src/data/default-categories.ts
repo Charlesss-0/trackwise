@@ -12,14 +12,7 @@ export const DEFAULT_EXPENSE_CATEGORIES = [
 ]
 
 // Fixed expense frequencies
-export const DEFAULT_FIXED_EXPENSE_FREQUENCIES = [
-	'daily',
-	'weekly',
-	'fortnightly',
-	'monthly',
-	'quarterly',
-	'yearly',
-]
+export const FREQUENCIES = ['daily', 'weekly', 'biweekly', 'monthly', 'quarterly', 'yearly']
 
 // Income types
 export const DEFAULT_INCOME_TYPES = [

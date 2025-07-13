@@ -15,11 +15,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+import { useMemo, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { DEFAULT_EXPENSE_CATEGORIES } from '@/data/default-categories'
+import { capitalize } from '@/utils/capitalize'
 import { useExpenseStore } from '@/stores/expenses-store'
-import { useState } from 'react'
 import { useTransactionsStore } from '@/stores/transactions-store'
 
 export default function AddExpense({
@@ -31,22 +32,19 @@ export default function AddExpense({
 }): React.ReactNode {
 	const { addExpense } = useExpenseStore()
 	const { addTransaction } = useTransactionsStore()
-	const [name, setName] = useState<string>('')
-	const [amount, setAmount] = useState<string>('')
-	const [category, setCategory] = useState<string>('')
-	const [paymentMethod, setPaymentMethod] = useState<string>('')
+	const [expense, setExpense] = useState<Expense>({
+		id: crypto.randomUUID(),
+		name: '',
+		amount: '',
+		category: '',
+		paymentMethod: '',
+		createdAt: Date.now(),
+	})
+
+	const paymentMethods = useMemo(() => ['credit', 'debit', 'cash', 'transfer'], [])
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
-
-		const expense: Expense = {
-			id: crypto.randomUUID(),
-			name,
-			amount: Number(amount),
-			category,
-			paymentMethod,
-			createdAt: Date.now(),
-		}
 
 		const transaction: Transaction = {
 			id: expense.id,
@@ -60,10 +58,14 @@ export default function AddExpense({
 		addExpense(expense)
 		addTransaction(transaction)
 		onOpenChange(false)
-		setName('')
-		setAmount('')
-		setCategory('')
-		setPaymentMethod('')
+		setExpense({
+			id: '',
+			name: '',
+			amount: '',
+			category: '',
+			paymentMethod: '',
+			createdAt: Date.now(),
+		})
 	}
 
 	return (
@@ -71,51 +73,56 @@ export default function AddExpense({
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Add Expense</DialogTitle>
+
 					<DialogDescription>
 						Add your expense details including category and payment method.
 					</DialogDescription>
 				</DialogHeader>
+
 				<form onSubmit={handleSubmit}>
-					<div className="grid gap-4 py-2 my-6">
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="name" className="text-right">
-								Expense Name
-							</label>
+					<div className="grid gap-4 my-6 [&>fieldset]:flex [&>fieldset]:flex-col [&>fieldset]:gap-2">
+						<fieldset>
+							<label htmlFor="name">Expense Name</label>
+
 							<input
 								type="text"
 								id="name"
 								name="name"
-								value={name}
-								onChange={e => setName(e.target.value)}
+								value={expense.name}
+								onChange={e => setExpense({ ...expense, name: e.target.value })}
 								placeholder="e.g., Dinner with friends"
 								required
 								autoComplete="off"
 								className="col-span-3 input"
 							/>
 						</fieldset>
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="amount" className="text-right">
-								Amount
-							</label>
+
+						<fieldset>
+							<label htmlFor="amount">Amount</label>
+
 							<input
 								type="number"
 								id="amount"
 								name="amount"
-								value={amount}
-								onChange={e => setAmount(e.target.value)}
+								value={expense.amount}
+								onChange={e => setExpense({ ...expense, amount: e.target.value })}
 								placeholder="0.00"
 								required
 								className="col-span-3 input"
 							/>
 						</fieldset>
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="category" className="text-right">
-								Category
-							</label>
-							<Select value={category} onValueChange={setCategory}>
+
+						<fieldset>
+							<label htmlFor="category">Category</label>
+
+							<Select
+								value={expense.category}
+								onValueChange={category => setExpense({ ...expense, category })}
+							>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select category" />
 								</SelectTrigger>
+
 								<SelectContent>
 									{DEFAULT_EXPENSE_CATEGORIES.map(category => (
 										<SelectItem key={category} value={category}>
@@ -125,27 +132,31 @@ export default function AddExpense({
 								</SelectContent>
 							</Select>
 						</fieldset>
-						<fieldset className="grid items-center grid-cols-4 gap-2">
-							<label htmlFor="payment_method" className="text-right">
-								Payment Method
-							</label>
-							<Select value={paymentMethod} onValueChange={setPaymentMethod}>
+
+						<fieldset>
+							<label htmlFor="payment_method">Payment Method</label>
+
+							<Select
+								value={expense.paymentMethod}
+								onValueChange={paymentMethod => setExpense({ ...expense, paymentMethod })}
+							>
 								<SelectTrigger className="col-span-3">
 									<SelectValue placeholder="Select payment method" />
 								</SelectTrigger>
+
 								<SelectContent>
-									<SelectItem value="credit">Credit Card</SelectItem>
-									<SelectItem value="debit">Debit Card</SelectItem>
-									<SelectItem value="cash">Cash</SelectItem>
-									<SelectItem value="transfer">Bank Transfer</SelectItem>
+									{paymentMethods.map(paymentMethod => (
+										<SelectItem key={paymentMethod} value={paymentMethod}>
+											{capitalize(paymentMethod)}
+										</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 						</fieldset>
 					</div>
+
 					<DialogFooter>
-						<Button type="submit" variant="secondary">
-							Add Expense
-						</Button>
+						<Button type="submit">Add Expense</Button>
 					</DialogFooter>
 				</form>
 			</DialogContent>

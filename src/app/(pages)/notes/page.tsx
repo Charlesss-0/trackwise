@@ -12,7 +12,7 @@ export default function Notes(): JSX.Element {
 	const [addNoteOpen, setAddNoteOpen] = useState<boolean>(false)
 
 	return (
-		<>
+		<div>
 			<PageHeader title="Notes" description="Manage your notes and tasks" />
 
 			<div className="flex justify-end">
@@ -29,6 +29,6 @@ export default function Notes(): JSX.Element {
 			</div>
 
 			<AddNoteDialog open={addNoteOpen} openChange={setAddNoteOpen} />
-		</>
+		</div>
 	)
 }

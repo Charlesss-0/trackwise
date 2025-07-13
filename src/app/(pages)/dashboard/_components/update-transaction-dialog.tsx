@@ -74,7 +74,7 @@ export default function UpdateTransactionDialog({
 			id,
 			name: formData.name,
 			category: formData.category,
-			amount: Number(formData.amount),
+			amount: formData.amount,
 			isExpense: formData.isExpense,
 			createdAt: Date.now(),
 		}
@@ -105,14 +105,17 @@ export default function UpdateTransactionDialog({
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Update Transaction</DialogTitle>
+
 					<DialogDescription>Update the details of a transaction.</DialogDescription>
 				</DialogHeader>
+
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-2 my-6">
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="name" className="text-right">
 								Name
 							</label>
+
 							<input
 								type="text"
 								id="name"
@@ -123,10 +126,12 @@ export default function UpdateTransactionDialog({
 								className="col-span-3 input"
 							/>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="category" className="text-right">
 								Category
 							</label>
+
 							<Select
 								value={formData.category}
 								onValueChange={value => handleSelectChange('category', value)}
@@ -134,6 +139,7 @@ export default function UpdateTransactionDialog({
 								<SelectTrigger id="category" className="col-span-3">
 									<SelectValue placeholder="Select category">{formData.category}</SelectValue>
 								</SelectTrigger>
+
 								<SelectContent>
 									{options.map(option => (
 										<SelectItem key={option} value={option}>
@@ -143,10 +149,12 @@ export default function UpdateTransactionDialog({
 								</SelectContent>
 							</Select>
 						</fieldset>
+
 						<fieldset className="grid items-center grid-cols-4 gap-2">
 							<label htmlFor="amount" className="text-right">
 								Amount
 							</label>
+
 							<input
 								type="number"
 								id="amount"
@@ -157,6 +165,7 @@ export default function UpdateTransactionDialog({
 							/>
 						</fieldset>
 					</div>
+
 					<DialogFooter>
 						<Button type="submit" variant="secondary">
 							Save

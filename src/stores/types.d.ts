@@ -1,6 +1,6 @@
 type Income = {
 	id: string
-	amount: number
+	amount: string
 	type: string
 	frequency: string
 	createdAt: number
@@ -9,7 +9,7 @@ type Income = {
 type Expense = {
 	id: string
 	name: string
-	amount: number
+	amount: string
 	category: string
 	paymentMethod: string
 	createdAt: number
@@ -46,7 +46,22 @@ type Transaction = {
 	id: string
 	name: string
 	category: string
-	amount: number
+	amount: string
 	isExpense: boolean
+	createdAt: number
+}
+
+type Note = {
+	id: string
+	title: string
+	content: string
+	createdAt: number
+}
+
+type Reminder = Note & {
+	id: string
+	dueDate: string
+	recurring: boolean
+	recurringFrequency: string
 	createdAt: number
 }

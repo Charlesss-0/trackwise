@@ -1,4 +1,5 @@
 'use client'
+
 import {
 	Dialog,
 	DialogContent,
@@ -10,7 +11,6 @@ import {
 import AddFixedExpense from '@/pages/fixed-expenses/_components/add-fixed-expense-dialog'
 import { Button } from '@/components/ui/button'
 import UpdateFixedExpense from '@/pages/fixed-expenses/_components/update-fixed-expense-dialog'
-import EmptyState from '@/components/shared/empty-state'
 import FixedExpenseItem from '@/pages/fixed-expenses/_components/fixed-expense-item'
 import { Plus } from 'lucide-react'
 import { useExpenseStore } from '@/stores/expenses-store'
@@ -18,6 +18,7 @@ import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 import { type JSX, useState } from 'react'
 import PageHeader from '@/components/shared/page-header'
 import HeaderStats from '@/pages/fixed-expenses/_components/header-stats'
+import { cn } from '@/utils/cn'
 
 export default function FixedExpenseCard(): JSX.Element {
 	const { fixedExpenses, deleteFixedExpense, updateFixedExpense } = useFixedExpenseStore()
@@ -48,7 +49,7 @@ export default function FixedExpenseCard(): JSX.Element {
 		addExpense({
 			id: expense.id,
 			name: expense.name,
-			amount: newAmount,
+			amount: newAmount.toString(),
 			category: expense.category,
 			createdAt: Date.now(),
 			paymentMethod: 'unknown',
@@ -87,7 +88,12 @@ export default function FixedExpenseCard(): JSX.Element {
 				<HeaderStats />
 			</div>
 
-			<div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+			<div
+				className={cn(
+					'grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4',
+					fixedExpenses.length > 0 ? '' : 'w-full flex justify-center'
+				)}
+			>
 				{fixedExpenses.length > 0 ? (
 					fixedExpenses.map(expense => (
 						<FixedExpenseItem
@@ -99,11 +105,9 @@ export default function FixedExpenseCard(): JSX.Element {
 						/>
 					))
 				) : (
-					<EmptyState
-						message="No fixed expenses set yet."
-						btnText="Add Fixed Expense"
-						onClick={() => openModal('add')}
-					/>
+					<div className="flex items-center h-64">
+						<span className="font-medium text-neutral">No fixed expenses set yet.</span>
+					</div>
 				)}
 			</div>
 
