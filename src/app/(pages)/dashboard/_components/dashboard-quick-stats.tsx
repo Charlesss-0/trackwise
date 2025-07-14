@@ -51,7 +51,7 @@ export default function QuickStats(): JSX.Element {
 	)
 
 	return (
-		<div className="grid w-full grid-cols-2 col-span-2 gap-4 md:col-span-4 md:gap-6 md:grid-cols-4">
+		<div className="grid w-full grid-cols-2 col-span-2 gap-4 md:gap-6 md:grid-cols-4">
 			{QUICK_STATS.map(stat => (
 				<Card key={stat.name} className="w-full">
 					<CardHeader className="items-start gap-2">

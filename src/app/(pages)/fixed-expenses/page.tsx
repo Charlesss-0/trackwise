@@ -17,7 +17,7 @@ import { useExpenseStore } from '@/stores/expenses-store'
 import { useFixedExpenseStore } from '@/stores/fixed-expenses-store'
 import { type JSX, useState } from 'react'
 import PageHeader from '@/components/shared/page-header'
-import HeaderStats from '@/pages/fixed-expenses/_components/header-stats'
+import FixedExpensesQuickStats from '@/app/(pages)/fixed-expenses/_components/fixed-expenses-quick-stats'
 import { cn } from '@/utils/cn'
 
 export default function FixedExpenseCard(): JSX.Element {
@@ -75,7 +75,7 @@ export default function FixedExpenseCard(): JSX.Element {
 	}
 
 	return (
-		<>
+		<div>
 			<PageHeader title="Fixed Expenses" description="Manage your recurring expenses" />
 
 			<div className="flex flex-col gap-4">
@@ -84,9 +84,9 @@ export default function FixedExpenseCard(): JSX.Element {
 
 					<span>Add Fixed Expense</span>
 				</Button>
-
-				<HeaderStats />
 			</div>
+
+			<FixedExpensesQuickStats />
 
 			<div
 				className={cn(
@@ -192,6 +192,6 @@ export default function FixedExpenseCard(): JSX.Element {
 					</Dialog>
 				</>
 			)}
-		</>
+		</div>
 	)
 }

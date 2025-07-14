@@ -65,3 +65,11 @@ type Reminder = Note & {
 	recurringFrequency: string
 	createdAt: number
 }
+
+type BudgetCategory = {
+	id: string
+	name: string
+	budgetAmount: string
+	spentAmount: string
+	createdAt: number
+}

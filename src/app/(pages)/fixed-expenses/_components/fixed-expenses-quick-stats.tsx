@@ -2,9 +2,9 @@
 
 import { Calendar, CircleCheckBig, DollarSign } from 'lucide-react'
 import { useMemo, type JSX } from 'react'
-import StatsCard from '@/pages/fixed-expenses/_components/stats-card'
+import { Card, CardHeader } from '@/components/ui/card'
 
-export default function HeaderStats(): JSX.Element {
+export default function FixedExpensesQuickStats(): JSX.Element {
 	const STATS_ITEMS = useMemo(
 		() => [
 			{
@@ -27,9 +27,17 @@ export default function HeaderStats(): JSX.Element {
 	)
 
 	return (
-		<div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-			{STATS_ITEMS.map((item, index) => (
-				<StatsCard key={index} {...item} />
+		<div className="grid w-full grid-cols-2 col-span-2 gap-4 mt-5 md:gap-6 md:grid-cols-3">
+			{STATS_ITEMS.map(stat => (
+				<Card key={stat.title} className="w-full">
+					<CardHeader className="items-start gap-2">
+						<span className="text-xs truncate md:text-sm text-neutral">{stat.title}</span>
+
+						{stat.icon}
+					</CardHeader>
+
+					<p className="text-sm font-bold md:text-2xl">{stat.value}</p>
+				</Card>
 			))}
 		</div>
 	)
