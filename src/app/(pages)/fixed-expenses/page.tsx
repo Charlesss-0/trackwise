@@ -90,7 +90,7 @@ export default function FixedExpenseCard(): JSX.Element {
 
 			<div
 				className={cn(
-					'grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4',
+					'grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 my-6',
 					fixedExpenses.length > 0 ? '' : 'w-full flex justify-center'
 				)}
 			>
