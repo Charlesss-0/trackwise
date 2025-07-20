@@ -39,7 +39,13 @@ export default function GoalsQuickStats(): JSX.Element {
 						{stat.icon}
 					</CardHeader>
 
-					<p className="text-sm font-bold md:text-2xl">${stat.value}</p>
+					<p className="text-sm font-bold md:text-2xl">
+						{stat.title.includes('Total Goals') ? (
+							<>{stat.value}</>
+						) : (
+							<span className="tracking-wide">${stat.value}</span>
+						)}
+					</p>
 				</Card>
 			))}
 		</div>

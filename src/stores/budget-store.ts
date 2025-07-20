@@ -2,13 +2,13 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 type State = {
-	categories: BudgetCategory[]
+	budgetCategory: BudgetCategory[]
 }
 
 type Actions = {
-	addCategory: (category: BudgetCategory) => void
-	updateCategory: (category: BudgetCategory) => void
-	deleteCategory: (id: string) => void
+	addBudgetCategory: (category: BudgetCategory) => void
+	updateBudgetCategory: (id: string, category: BudgetCategory) => void
+	deleteBudgetCategory: (id: string) => void
 }
 
 type BudgetStore = State & Actions
@@ -16,20 +16,22 @@ type BudgetStore = State & Actions
 export const useBudgetStore = create(
 	persist<BudgetStore>(
 		set => ({
-			categories: [],
-			addCategory: (category: BudgetCategory): void => {
-				set(state => ({ ...state, categories: [...state.categories, category] }))
+			budgetCategory: [],
+			addBudgetCategory: (budgetCategory: BudgetCategory): void => {
+				set(state => ({ ...state, budgetCategory: [...state.budgetCategory, budgetCategory] }))
 			},
-			updateCategory: (category: BudgetCategory): void => {
+			updateBudgetCategory: (id, budgetCategory: BudgetCategory): void => {
 				set(state => ({
 					...state,
-					categories: state.categories.map(item => (item.id === category.id ? category : item)),
+					budgetCategory: state.budgetCategory.map(category =>
+						category.id === id ? budgetCategory : category
+					),
 				}))
 			},
-			deleteCategory: (id: string): void => {
+			deleteBudgetCategory: (id: string): void => {
 				set(state => ({
 					...state,
-					categories: state.categories.filter(category => category.id !== id),
+					budgetCategory: state.budgetCategory.filter(category => category.id !== id),
 				}))
 			},
 		}),

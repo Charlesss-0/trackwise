@@ -6,11 +6,13 @@ import { type JSX } from 'react'
 
 export default function BudgetCardItem({
 	budgetCategory,
+	onEdit,
 }: {
 	budgetCategory: BudgetCategory
+	onEdit: () => void
 }): JSX.Element {
 	return (
-		<Card onClick={() => alert('Clicked')} className="bg-base-100 hover:cursor-pointer">
+		<Card onClick={onEdit} className="bg-base-100 hover:cursor-pointer">
 			<CardHeader className="flex justify-between">
 				<span className="text-sm font-bold text-base-content">{budgetCategory.name}</span>
 

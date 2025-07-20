@@ -9,17 +9,34 @@ import AddBudgetCategoryDialog from '@/pages/budget/_components/add-budget-categ
 import { useBudgetStore } from '@/stores/budget-store'
 import BudgetCardItem from './_components/budget-card-item'
 import { cn } from '@/utils/cn'
+import UpdateBudgetCategoryDialog from './_components/update-budget-category-dialog'
+
+type Modal = {
+	state: 'add' | 'update' | null
+	id: string | null
+}
 
 export default function Budget(): JSX.Element {
-	const { categories } = useBudgetStore()
-	const [modalState, setModalState] = useState<boolean>(false)
+	const { budgetCategory: categories } = useBudgetStore()
+	const [modal, setModal] = useState<Modal>({
+		state: null,
+		id: null,
+	})
+
+	const openModal = (state: typeof modal.state, id?: string): void => {
+		setModal({ state, id: id || null })
+	}
+
+	const closeModal = (): void => {
+		setModal({ state: null, id: null })
+	}
 
 	return (
 		<div>
 			<PageHeader title="Budget" description="Allocate your income across different categories" />
 
 			<div className="flex justify-end">
-				<Button className="self-end" onClick={() => setModalState(true)}>
+				<Button className="self-end" onClick={() => openModal('add')}>
 					<Plus className="w-5 h-5" />
 
 					<span>Add Category</span>
@@ -35,7 +52,13 @@ export default function Budget(): JSX.Element {
 				)}
 			>
 				{categories.length > 0 ? (
-					categories.map(category => <BudgetCardItem key={category.id} budgetCategory={category} />)
+					categories.map(category => (
+						<BudgetCardItem
+							key={category.id}
+							budgetCategory={category}
+							onEdit={() => openModal('update', category.id)}
+						/>
+					))
 				) : (
 					<div className="flex items-center justify-center h-64">
 						<span className="font-medium text-neutral">No budget categories set yet.</span>
@@ -43,7 +66,16 @@ export default function Budget(): JSX.Element {
 				)}
 			</div>
 
-			<AddBudgetCategoryDialog open={modalState} onOpenChange={setModalState} />
+			<AddBudgetCategoryDialog
+				open={modal.state === 'add'}
+				onOpenChange={isOpen => (isOpen ? openModal('add') : closeModal())}
+			/>
+
+			<UpdateBudgetCategoryDialog
+				id={modal.id as string}
+				open={modal.state === 'update'}
+				onOpenChange={closeModal}
+			/>
 		</div>
 	)
 }

@@ -17,7 +17,7 @@ export default function AddBudgetCategoryDialog({
 	open: boolean
 	onOpenChange: (open: boolean) => void
 }): JSX.Element {
-	const { addCategory } = useBudgetStore()
+	const { addBudgetCategory: addCategory } = useBudgetStore()
 	const [formData, setFormData] = useState({
 		name: '',
 		budgetAmount: '',
