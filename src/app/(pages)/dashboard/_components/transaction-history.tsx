@@ -79,6 +79,7 @@ export default function TransactionHistory(): JSX.Element {
 		<>
 			<Card>
 				<h2 className="text-sm font-medium md:text-lg text-neutral">Transaction History</h2>
+
 				<CardContent className="relative h-full p-0 overflow-y-auto border rounded-lg scrollbar-hide max-h-92 border-base-300 bg-base-100 dark:bg-base-100 dark:border-base-300">
 					<table className="min-w-full border-collapse table-fixed">
 						<thead className="sticky top-0 z-10 text-center bg-base-300">
@@ -87,12 +88,14 @@ export default function TransactionHistory(): JSX.Element {
 									<th key={index} className="px-6 py-4 text-left">
 										<span className="flex items-center gap-2 text-xs font-semibold md:text-sm text-neutral">
 											{header.name}
+
 											{header.icon}
 										</span>
 									</th>
 								))}
 							</tr>
 						</thead>
+
 						<tbody className="text-left">
 							{transactions && transactions.length > 0 ? (
 								transactions
@@ -110,12 +113,16 @@ export default function TransactionHistory(): JSX.Element {
 											<td className="px-6 max-w-[200px] truncate">
 												{transaction.name.charAt(0).toUpperCase() + transaction.name.slice(1)}
 											</td>
+
 											<td className="px-6 text-ellipsis">{formatDate(transaction.createdAt)}</td>
+
 											<td className="px-6 text-ellipsis max-w-[150px] truncate">
 												{transaction.category.charAt(0).toUpperCase() +
 													transaction.category.slice(1)}
 											</td>
+
 											<td className="px-6 text-ellipsis">${transaction.amount}</td>
+
 											<td className="px-6">
 												{transaction.isExpense ? (
 													<div className="flex items-center gap-2 px-4 py-2 text-xs rounded-full bg-destructive/20 w-max">
@@ -129,6 +136,7 @@ export default function TransactionHistory(): JSX.Element {
 													</div>
 												)}
 											</td>
+
 											<td className="px-6 py-3">
 												<Popover>
 													<PopoverTrigger asChild>
@@ -140,6 +148,7 @@ export default function TransactionHistory(): JSX.Element {
 															<Ellipsis size={16} />
 														</Button>
 													</PopoverTrigger>
+
 													<PopoverContent className="w-max">
 														<ul className="space-y-2">
 															<li>
@@ -152,9 +161,11 @@ export default function TransactionHistory(): JSX.Element {
 																	}}
 																>
 																	<span>Edit</span>
+
 																	<Pencil size={16} />
 																</Button>
 															</li>
+
 															<li>
 																<Button
 																	variant="ghost"
@@ -162,6 +173,7 @@ export default function TransactionHistory(): JSX.Element {
 																	onClick={() => removeTransaction(transaction.id)}
 																>
 																	<span>Delete</span>
+
 																	<Trash size={16} />
 																</Button>
 															</li>

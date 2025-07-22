@@ -7,6 +7,7 @@ import { useState, type JSX } from 'react'
 import AddIncome from '@/pages/dashboard/_components/add-income-dialog'
 import AddExpense from '@/pages/dashboard/_components/add-expense-dialog'
 import PageHeader from '@/components/shared/page-header'
+import TransactionHistory from './_components/transaction-history'
 
 export default function Dashboard(): JSX.Element {
 	const [addIncomeOpen, setAddIncomeOpen] = useState<boolean>(false)
@@ -37,6 +38,11 @@ export default function Dashboard(): JSX.Element {
 			</div>
 
 			<QuickStats />
+
+			<main className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+				<div />
+				<TransactionHistory />
+			</main>
 
 			<AddIncome open={addIncomeOpen} onOpenChange={setAddIncomeOpen} />
 

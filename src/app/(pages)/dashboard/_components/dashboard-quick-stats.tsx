@@ -4,20 +4,11 @@ import { ArrowDownCircle, PiggyBank, Target, TrendingUp } from 'lucide-react'
 import { Card, CardHeader } from '@/components/ui/card'
 
 import { cn } from '@/utils/cn'
-import { useExpenseStore } from '@/stores/expenses-store'
-import { useGoalStore } from '@/stores/goals-store'
-import { useIncomeStore } from '@/stores/income-store'
 import { type JSX, useMemo } from 'react'
+import useStats from '@/hooks/use-stats'
 
 export default function QuickStats(): JSX.Element {
-	const { income } = useIncomeStore()
-	const { expenses } = useExpenseStore()
-	const { goals } = useGoalStore()
-
-	const totalIncome = income.reduce((acc, curr) => Number(acc + curr.amount), 0).toFixed(2)
-	const totalExpenses = expenses.reduce((acc, curr) => Number(acc + curr.amount), 0).toFixed(2)
-	const totalContributions = goals.reduce((acc, curr) => acc + curr.currentAmount, 0).toFixed(2)
-	const availableMoney = Number(totalIncome) - Number(totalExpenses)
+	const { totalIncome, totalExpenses, totalContributions, availableMoney } = useStats()
 
 	const QUICK_STATS = useMemo(
 		() =>
@@ -42,7 +33,7 @@ export default function QuickStats(): JSX.Element {
 				},
 				{
 					name: 'Available Money',
-					value: availableMoney.toFixed(2),
+					value: availableMoney,
 					valueColor: 'text-info',
 					icon: <PiggyBank className="w-4 h-4 text-info" />,
 				},
