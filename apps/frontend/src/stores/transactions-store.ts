@@ -17,14 +17,14 @@ export const useTransactionsStore = create(
 	persist<TransactionStore>(
 		set => ({
 			transactions: [],
-			addTransaction: (transaction: Transaction): void =>
+			addTransaction: (transaction: Transaction): unknown =>
 				set(state => ({ ...state, transactions: [...state.transactions, transaction] })),
-			deleteTransaction: (id: string): void =>
+			deleteTransaction: (id: string): unknown =>
 				set(state => ({
 					...state,
 					transactions: state.transactions.filter(transaction => transaction.id !== id),
 				})),
-			updateTransaction: (id: string, transaction: Transaction): void =>
+			updateTransaction: (id: string, transaction: Transaction): unknown =>
 				set(state => ({
 					...state,
 					transactions: state.transactions.map(item => (item.id === id ? transaction : item)),

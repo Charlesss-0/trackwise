@@ -17,14 +17,14 @@ export const useIncomeStore = create(
 	persist<IncomeStore>(
 		set => ({
 			income: [],
-			addIncome: (income: Income): void =>
+			addIncome: (income: Income): unknown =>
 				set(state => ({ ...state, income: [...state.income, income] })),
-			updateIncome: (id: string, income: Income): void =>
+			updateIncome: (id: string, income: Income): unknown =>
 				set(state => ({
 					...state,
 					income: state.income.map(item => (item.id === id ? income : item)),
 				})),
-			deleteIncome: (id: string): void =>
+			deleteIncome: (id: string): unknown =>
 				set(state => ({ ...state, income: state.income.filter(income => income.id !== id) })),
 		}),
 		{

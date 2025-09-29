@@ -17,14 +17,14 @@ export const useExpenseStore = create(
 	persist<ExpenseStore>(
 		set => ({
 			expenses: [],
-			addExpense: (expense: Expense): void =>
+			addExpense: (expense: Expense): unknown =>
 				set(state => ({ ...state, expenses: [...state.expenses, expense] })),
-			updateExpense: (id: string, expense: Expense): void =>
+			updateExpense: (id: string, expense: Expense): unknown =>
 				set(state => ({
 					...state,
 					expenses: state.expenses.map(item => (item.id === id ? expense : item)),
 				})),
-			deleteExpense: (id: string): void =>
+			deleteExpense: (id: string): unknown =>
 				set(state => ({ ...state, expenses: state.expenses.filter(expense => expense.id !== id) })),
 		}),
 		{

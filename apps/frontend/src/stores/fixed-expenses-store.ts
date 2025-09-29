@@ -17,14 +17,14 @@ export const useFixedExpenseStore = create(
 	persist<FixedExpenseStore>(
 		set => ({
 			fixedExpenses: [],
-			addFixedExpense: (fixedExpense: FixedExpense): void =>
+			addFixedExpense: (fixedExpense: FixedExpense): unknown =>
 				set(state => ({ ...state, fixedExpenses: [...state.fixedExpenses, fixedExpense] })),
-			updateFixedExpense: (id: string, fixedExpense: FixedExpense): void =>
+			updateFixedExpense: (id: string, fixedExpense: FixedExpense): unknown =>
 				set(state => ({
 					...state,
 					fixedExpenses: state.fixedExpenses.map(item => (item.id === id ? fixedExpense : item)),
 				})),
-			deleteFixedExpense: (id: string): void =>
+			deleteFixedExpense: (id: string): unknown =>
 				set(state => ({
 					...state,
 					fixedExpenses: state.fixedExpenses.filter(fixedExpense => fixedExpense.id !== id),
