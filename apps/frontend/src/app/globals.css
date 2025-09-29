@@ -1,0 +1,101 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+	--base-100: #f7f8fa;
+	--base-200: #e9ebed;
+	--base-300: #d3d4d6;
+	--base-content: #242b2f;
+	--secondary: #aad4f5;
+	--secondary-content: #1c2327;
+	--accent: #ffd5d3;
+	--accent-content: #271f23;
+	--info: #81d1f0;
+	--info-content: #010404;
+	--warning: #ffd489;
+	--warning-content: #0d0b06;
+	--neutral: #4d4d50;
+	--neutral-content: #f1f2f4;
+}
+
+.dark {
+	--base-100: #030712;
+	--base-200: #060d1c;
+	--base-300: #182230;
+	--base-content: #f1f2f4;
+	--secondary: #7bbbe6;
+	--secondary-content: #edf7fd;
+	--accent: #d9487e;
+	--accent-content: #fcf2f8;
+	--info: #0090b5;
+	--info-content: #ebfdfe;
+	--warning: #d08700;
+	--warning-content: #fcfae6;
+	--neutral: #aeb3bc;
+	--neutral-content: #f7f8fa;
+}
+
+@theme {
+	--font-sans: 'Amulya', sans-serif;
+
+	--radius-sm: 0.3rem;
+	--radius-md: 0.6rem;
+	--radius-lg: 0.7rem;
+	--radius-xl: 1rem;
+
+	--shadow-sm: 0 1px 2.5px rgba(0, 0, 0, 0.2);
+	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+	--shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+	--color-destructive: #d73b37;
+	--color-destructive-content: #fcf2f8;
+
+	--color-primary: #0082ce;
+	--color-primary-content: #fdf9e8;
+
+	--color-green-primary: #00a43b;
+	--color-green-primary-content: #effcf3;
+	--color-light-green: #8be78f;
+	--color-light-green-content: #020403;
+}
+
+@theme inline {
+	--color-base-100: var(--base-100);
+	--color-base-200: var(--base-200);
+	--color-base-300: var(--base-300);
+	--color-base-content: var(--base-content);
+	--color-secondary: var(--secondary);
+	--color-secondary-content: var(--secondary-content);
+	--color-accent: var(--accent);
+	--color-accent-content: var(--accent-content);
+	--color-info: var(--info);
+	--color-info-content: var(--info-content);
+	--color-warning: var(--warning);
+	--color-warning-content: var(--warning-content);
+	--color-neutral: var(--neutral);
+	--color-neutral-content: var(--neutral-content);
+}
+
+@layer utilities {
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none;
+	}
+
+	.scrollbar-hide {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+}
+
+@layer components {
+	.input {
+		@apply w-full px-3 py-2 text-sm font-medium bg-transparent border rounded-lg outline-none border-neutral placeholder:text-neutral focus-visible:ring-3 focus-visible:ring-secondary dark:focus-visible:ring-secondary;
+	}
+
+	.textarea {
+		@apply w-full px-3 py-2 text-sm font-medium bg-transparent border rounded-lg outline-none resize-none border-neutral placeholder:text-neutral focus-visible:ring-3 focus-visible:ring-secondary dark:focus-visible:ring-secondary;
+	}
+}
