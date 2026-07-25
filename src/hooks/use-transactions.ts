@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { endOfMonth, parseISO, startOfMonth } from "date-fns";
 import { createClient } from "@/lib/supabase/client";
 import { useExchangeRateStore } from "@/stores/exchange-rate-store";
-import type { AccountUpdate, Category, Currency, NewTransaction, Transaction, TransactionWithRelations, TxnType } from "@/types";
+import type { Category, Currency, NewTransaction, Transaction, TransactionUpdate, TransactionWithRelations, TxnType } from "@/types";
 import { convertCurrency } from "@/utils/currency";
 
 type TransactionFilters = {
@@ -78,12 +78,13 @@ export function useCreateTransaction() {
       if (!account) throw new Error("Account not found");
 
       const rate = useExchangeRateStore.getState().rate ?? 36.5;
-      const convertedAmount = convertCurrency(transaction.amount, transaction.currency as Currency, account.currency, rate);
+      if (!transaction.currency) throw new Error("Transaction currency is required");
+      const convertedAmount = convertCurrency(transaction.amount, transaction.currency, account.currency, rate);
 
       const balanceChange = transaction.type === "income" ? convertedAmount : -convertedAmount;
 
       if (account.type === "credit" && account.credit_limit != null && account.available_balance != null) {
-        const newAvailableBalance = Math.max(0, account.available_balance - balanceChange);
+        const newAvailableBalance = Math.max(0, account.available_balance + balanceChange);
         const newBalance = account.credit_limit - newAvailableBalance;
 
         await supabase
@@ -102,7 +103,7 @@ export function useCreateTransaction() {
         if (balanceError) {
           await supabase
             .from("accounts")
-            .update({ balance: account.balance + balanceChange } as AccountUpdate)
+            .update({ balance: account.balance + balanceChange })
             .eq("id", transaction.account_id);
         }
       }
@@ -121,10 +122,71 @@ export function useCreateTransaction() {
 export function useUpdateTransaction() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async ({ id, ...updates }: NewTransaction & { id: string }) => {
+    mutationFn: async ({ id, ...updates }: TransactionUpdate & { id: string }) => {
+      const { data: originalTransaction, error: fetchError } = await supabase.from("transactions").select("*").eq("id", id).single();
+
+      if (fetchError) throw fetchError;
+      if (!originalTransaction) throw new Error("Transaction not found");
+
       const { data, error } = await supabase.from("transactions").update(updates).eq("id", id).select().single();
 
       if (error) throw error;
+
+      const rate = useExchangeRateStore.getState().rate ?? 36.5;
+
+      const applyBalanceChange = async (accountId: string, amount: number, currency: Currency, type: TxnType, sign: 1 | -1) => {
+        const { data: account } = await supabase
+          .from("accounts")
+          .select("balance, currency, type, credit_limit, available_balance")
+          .eq("id", accountId)
+          .single();
+
+        if (!account) throw new Error("Account not found");
+
+        const convertedAmount = convertCurrency(amount, currency, account.currency, rate);
+        const balanceChange = sign * (type === "income" ? convertedAmount : -convertedAmount);
+
+        if (account.type === "credit" && account.credit_limit != null && account.available_balance != null) {
+          const newAvailableBalance = Math.max(0, account.available_balance + balanceChange);
+          const newBalance = account.credit_limit - newAvailableBalance;
+
+          await supabase
+            .from("accounts")
+            .update({
+              available_balance: newAvailableBalance,
+              balance: newBalance,
+            })
+            .eq("id", accountId);
+        } else {
+          const { error: balanceError } = await supabase.rpc("update_account_balance", {
+            p_account_id: accountId,
+            p_amount: balanceChange,
+          });
+
+          if (balanceError) {
+            await supabase
+              .from("accounts")
+              .update({ balance: account.balance + balanceChange })
+              .eq("id", accountId);
+          }
+        }
+      };
+
+      await applyBalanceChange(
+        originalTransaction.account_id,
+        originalTransaction.amount,
+        originalTransaction.currency,
+        originalTransaction.type,
+        -1,
+      );
+
+      const newAccountId = updates.account_id ?? originalTransaction.account_id;
+      const newAmount = updates.amount ?? originalTransaction.amount;
+      const newCurrency = updates.currency ?? originalTransaction.currency;
+      const newType = updates.type ?? originalTransaction.type;
+
+      await applyBalanceChange(newAccountId, newAmount, newCurrency, newType, 1);
+
       return data;
     },
     onSuccess: () => {
@@ -155,7 +217,7 @@ export function useDeleteTransaction() {
       const balanceChange = transaction.type === "income" ? -convertedAmount : convertedAmount;
 
       if (account.type === "credit" && account.credit_limit != null && account.available_balance != null) {
-        const newAvailableBalance = Math.min(account.credit_limit, account.available_balance - balanceChange);
+        const newAvailableBalance = Math.min(account.credit_limit, account.available_balance + balanceChange);
         const newBalance = account.credit_limit - newAvailableBalance;
 
         await supabase

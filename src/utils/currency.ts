@@ -35,7 +35,7 @@ export function formatCurrency(amount: number, currency: Currency | undefined): 
  * convertCurrency(100, "USD", "NIO", 36.5) // 3650
  * convertCurrency(3650, "NIO", "USD", 36.5) // 100
  */
-export function convertCurrency(amount: number, from: Currency, to: Currency | undefined, rate: number): number {
+export function convertCurrency(amount: number, from: Currency, to: Currency, rate: number): number {
   if (from === to) return amount;
 
   // from USD → NIO: multiply by rate

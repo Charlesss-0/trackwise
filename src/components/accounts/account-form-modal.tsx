@@ -22,8 +22,6 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
   const [creditLimit, setCreditLimit] = useState<string>(account?.credit_limit?.toString() ?? "");
   const [availableBalance, setAvailableBalance] = useState<string>(account?.available_balance?.toString() ?? "0");
 
-  const [validationError, setValidationError] = useState("");
-
   useEffect(() => {
     if (isOpen) {
       setName(account?.name ?? "");
@@ -32,7 +30,6 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
       setBalance(account?.balance.toString() ?? "0");
       setCreditLimit(account?.credit_limit?.toString() ?? "0");
       setAvailableBalance(account?.available_balance?.toString() ?? "");
-      setValidationError("");
     }
   }, [isOpen, account]);
 
@@ -130,7 +127,6 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
     setBalance("0");
     setCreditLimit("");
     setAvailableBalance("");
-    setValidationError("");
     onClose();
   };
 
@@ -141,6 +137,7 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
           <label className="label" htmlFor="account-name">
             <span className="label-text">Account Name</span>
           </label>
+
           <input
             id="account-name"
             type="text"
@@ -156,6 +153,7 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
           <label className="label" htmlFor="account-type">
             <span className="label-text">Type</span>
           </label>
+
           <select id="account-type" className="select select-bordered w-full" value={type} onChange={(e) => setType(e.target.value as AccountType)}>
             <option value="debit">Debit</option>
             <option value="credit">Credit Card</option>
@@ -168,6 +166,7 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
           <label className="label" htmlFor="account-currency">
             <span className="label-text">Currency</span>
           </label>
+
           <select
             id="account-currency"
             className="select select-bordered w-full"
@@ -185,6 +184,7 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
               <label className="label" htmlFor="account-credit-limit">
                 <span className="label-text">Credit Limit</span>
               </label>
+
               <input
                 id="account-credit-limit"
                 type="number"
@@ -202,6 +202,7 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
               <label className="label" htmlFor="account-available-balance">
                 <span className="label-text">Available Balance</span>
               </label>
+
               <input
                 id="account-available-balance"
                 type="number"
@@ -213,10 +214,11 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
                 onChange={(e) => setAvailableBalance(e.target.value)}
                 required
               />
+
               {creditValidationError && (
-                <label className="label">
+                <div className="label">
                   <span className="label-text-alt text-error">{creditValidationError}</span>
-                </label>
+                </div>
               )}
             </div>
 
@@ -225,6 +227,7 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
                 <label className="label" htmlFor="account-amount-owed">
                   <span className="label-text">Amount Owed</span>
                 </label>
+
                 <input
                   id="account-amount-owed"
                   type="text"
@@ -233,9 +236,6 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
                   readOnly
                   tabIndex={-1}
                 />
-                <label className="label">
-                  <span className="label-text-alt text-base-content/50">Auto-calculated: Credit Limit − Available Balance</span>
-                </label>
               </div>
             )}
           </>
@@ -244,6 +244,7 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
             <label className="label" htmlFor="account-balance">
               <span className="label-text">{isEditing ? "Balance" : "Initial Balance"}</span>
             </label>
+
             <input
               id="account-balance"
               type="number"
@@ -272,9 +273,11 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
               Delete
             </button>
           )}
+
           <button type="button" className="btn btn-ghost" onClick={handleClose} disabled={isPending}>
             Cancel
           </button>
+
           <button type="submit" className="btn btn-primary" disabled={isPending || !name.trim() || (isCredit && !!creditValidationError)}>
             {isPending && <span className="loading loading-spinner loading-sm" />}
             {isEditing ? "Save Changes" : "Add Account"}

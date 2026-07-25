@@ -82,7 +82,7 @@ export default function TransactionsPage() {
                     <div className={`flex items-center justify-end gap-1 font-medium ${tx.type === "income" ? "text-success" : ""}`}>
                       {tx.type === "income" ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
                       {formatCurrency(tx.amount, tx.currency)}
-                      {tx.currency !== tx.account?.currency && exchangeRate && (
+                      {tx.currency !== tx.account?.currency && exchangeRate && tx.account?.currency && (
                         <span className="badge badge-sm badge-ghost ml-1">
                           {formatCurrency(convertCurrency(tx.amount, tx.currency, tx.account?.currency, exchangeRate), tx.account?.currency)}
                         </span>

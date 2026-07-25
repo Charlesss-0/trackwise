@@ -116,6 +116,7 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
             <label className="label" htmlFor="tx-amount">
               <span className="label-text">Amount</span>
             </label>
+
             <input
               id="tx-amount"
               type="number"
@@ -128,10 +129,12 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
               required
             />
           </div>
+
           <div className="form-control w-28">
             <label className="label" htmlFor="tx-currency">
               <span className="label-text">Currency</span>
             </label>
+
             <select
               id="tx-currency"
               className="select select-bordered w-full"
@@ -148,10 +151,12 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
           <label className="label" htmlFor="tx-account">
             <span className="label-text">Account</span>
           </label>
+
           <select id="tx-account" className="select select-bordered w-full" value={accountId} onChange={(e) => setAccountId(e.target.value)} required>
             <option value="" disabled>
               Select account
             </option>
+
             {accounts.map((acc) => (
               <option key={acc.id} value={acc.id}>
                 {acc.name} ({acc.currency})
@@ -164,6 +169,7 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
           <label className="label" htmlFor="tx-category">
             <span className="label-text">Category</span>
           </label>
+
           <select
             id="tx-category"
             className="select select-bordered w-full"
@@ -174,6 +180,7 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
             <option value="" disabled>
               Select category
             </option>
+
             {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.name}
@@ -186,6 +193,7 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
           <label className="label" htmlFor="tx-date">
             <span className="label-text">Date</span>
           </label>
+
           <input id="tx-date" type="date" className="input input-bordered w-full" value={date} onChange={(e) => setDate(e.target.value)} required />
         </div>
 
@@ -193,6 +201,7 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
           <label className="label" htmlFor="tx-note">
             <span className="label-text">Note</span>
           </label>
+
           <textarea
             id="tx-note"
             className="textarea textarea-bordered w-full"
@@ -206,6 +215,7 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
         <div className="form-control">
           <label className="label cursor-pointer" htmlFor="tx-recurring">
             <span className="label-text">Recurring</span>
+
             <input
               id="tx-recurring"
               type="checkbox"
@@ -222,6 +232,7 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
               <label className="label" htmlFor="tx-frequency">
                 <span className="label-text">Frequency</span>
               </label>
+
               <select
                 id="tx-frequency"
                 className="select select-bordered w-full"
@@ -234,10 +245,12 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
                 <option value="yearly">Yearly</option>
               </select>
             </div>
+
             <div className="form-control w-24">
               <label className="label" htmlFor="tx-due-day">
                 <span className="label-text">Due Day</span>
               </label>
+
               <input
                 id="tx-due-day"
                 type="number"
@@ -270,6 +283,7 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
           <button type="button" className="btn btn-ghost" onClick={handleClose} disabled={isPending}>
             Cancel
           </button>
+
           <button type="submit" className="btn btn-primary" disabled={isPending || !amount || !accountId || !categoryId}>
             {isPending && <span className="loading loading-spinner loading-sm" />}
             {isEditing ? "Save Changes" : "Add Transaction"}
