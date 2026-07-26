@@ -33,7 +33,7 @@ export function Sidebar() {
 
 			<aside
 				className={twMerge(
-					"flex flex-col fixed top-0 left-0 z-50 h-screen w-64 bg-base-200 border-r border-base-300 transition-transform duration-300 ease-in-out",
+					"flex flex-col fixed top-0 left-0 z-50 h-screen w-64 bg-base-200 border-r border-base-300 transition-transform duration-300 ease-in-out pt-[env(safe-area-inset-top)]",
 					sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
 				)}
 			>

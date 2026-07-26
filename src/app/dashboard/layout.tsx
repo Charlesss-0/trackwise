@@ -16,7 +16,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
 	return (
 		<QueryProvider>
-			<div className="min-h-screen bg-base-100 flex" data-theme="business">
+			<div className="min-h-screen bg-base-100 flex pt-[env(safe-area-inset-top)]" data-theme="business">
 				<Sidebar />
 
 				<main className="flex-1 lg:pl-64 pb-16 lg:pb-0">
