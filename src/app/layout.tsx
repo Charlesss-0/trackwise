@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	title: "Trackwise",
 	description: "Take control of your financial future",
+	manifest: "/manifest.json",
 	formatDetection: {
 		telephone: false,
 	},
