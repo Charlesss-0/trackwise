@@ -49,7 +49,7 @@ pnpm install
 2. Copy the environment variables:
 
 ```bash
-cp .env.local.example .env.local
+cp .env.example .env.local
 ```
 
 Fill in your Supabase project URL and anon key.
