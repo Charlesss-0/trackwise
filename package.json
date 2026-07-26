@@ -10,30 +10,34 @@
     "format": "biome format --write",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "db:push": "supabase db push",
+    "db:gen:types": "supabase gen types typescript --project-id ${NEXT_PUBLIC_SUPABASE_PROJECT_ID} --schema public > src/types/supabase.ts",
+    "db:migrate": "pnpm run db:push && pnpm run db:gen:types"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.3",
-    "@supabase/supabase-js": "^2.110.5",
-    "@tanstack/react-query": "^5.101.2",
-    "daisyui": "^5.6.18",
+    "@supabase/supabase-js": "^2.110.8",
+    "@tanstack/react-query": "^5.101.4",
+    "clsx": "^2.1.1",
+    "daisyui": "^5.7.0",
     "date-fns": "^4.4.0",
-    "lucide-react": "^1.24.0",
-    "next": "16.2.10",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "recharts": "^3.9.2",
+    "lucide-react": "^1.26.0",
+    "next": "16.2.11",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "tailwind-merge": "^3.6.0",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.0",
-    "@tailwindcss/postcss": "^4",
+    "@biomejs/biome": "2.5.5",
+    "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^20",
+    "@types/node": "^26.1.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "jest": "^30.4.2",
@@ -41,8 +45,8 @@
     "jsdom": "^29.1.1",
     "msw": "^2.15.0",
     "sharp": "^0.35.3",
-    "tailwindcss": "^4",
+    "tailwindcss": "^4.3.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^6.0.3"
   }
 }

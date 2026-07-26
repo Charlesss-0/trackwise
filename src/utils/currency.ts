@@ -1,8 +1,8 @@
 import type { Account, Currency } from "@/types";
 
 const SYMBOLS: Record<Currency, string> = {
-  NIO: "C$",
-  USD: "$",
+	NIO: "C$",
+	USD: "$",
 };
 
 /**
@@ -13,13 +13,13 @@ const SYMBOLS: Record<Currency, string> = {
  * formatCurrency(42, "USD")     // "$42.00"
  */
 export function formatCurrency(amount: number, currency: Currency | undefined): string {
-  const formatted = new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(Math.abs(amount));
+	const formatted = new Intl.NumberFormat("en-US", {
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
+	}).format(Math.abs(amount));
 
-  const sign = amount < 0 ? "-" : "";
-  return `${sign}${SYMBOLS[currency ?? "USD"]}${formatted}`;
+	const sign = amount < 0 ? "-" : "";
+	return `${sign}${SYMBOLS[currency ?? "USD"]}${formatted}`;
 }
 
 /**
@@ -36,12 +36,12 @@ export function formatCurrency(amount: number, currency: Currency | undefined): 
  * convertCurrency(3650, "NIO", "USD", 36.5) // 100
  */
 export function convertCurrency(amount: number, from: Currency, to: Currency, rate: number): number {
-  if (from === to) return amount;
+	if (from === to) return amount;
 
-  // from USD → NIO: multiply by rate
-  // from NIO → USD: divide by rate
-  const converted = from === "USD" ? amount * rate : amount / rate;
-  return Math.round(converted * 100) / 100;
+	// from USD → NIO: multiply by rate
+	// from NIO → USD: divide by rate
+	const converted = from === "USD" ? amount * rate : amount / rate;
+	return Math.round(converted * 100) / 100;
 }
 
 /**
@@ -49,8 +49,8 @@ export function convertCurrency(amount: number, from: Currency, to: Currency, ra
  * Returns 0 for non-credit accounts or if fields are missing.
  */
 export function getAmountOwed(account: Account): number {
-  if (account.type !== "credit" || account.credit_limit == null || account.available_balance == null) {
-    return 0;
-  }
-  return account.credit_limit - account.available_balance;
+	if (account.type !== "credit" || account.credit_limit == null || account.available_balance == null) {
+		return 0;
+	}
+	return account.credit_limit - account.available_balance;
 }

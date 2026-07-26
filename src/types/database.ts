@@ -39,6 +39,6 @@ export type ExchangeRateUpdate = TablesUpdate<"exchange_rates">;
 // ─── Relation Types ─────────────────────────────
 
 export type TransactionWithRelations = Transaction & {
-  account: Pick<Account, "name" | "currency"> | null;
-  category: Pick<Category, "name" | "color" | "icon"> | null;
+	account: Pick<Account, "name" | "currency"> | null;
+	category: Pick<Category, "name" | "color" | "icon"> | null;
 };
