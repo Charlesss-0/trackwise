@@ -153,7 +153,7 @@ export default function SignupPage() {
 
 				<p className="text-center text-sm text-base-content/50 mt-6 animate-fade-in-delay-2">
 					Already have an account?{" "}
-					<Link href="/login" className="text-primary hover:text-primary/80 font-medium">
+					<Link href="/auth/login" className="text-primary hover:text-primary/80 font-medium">
 						Sign in
 					</Link>
 				</p>
