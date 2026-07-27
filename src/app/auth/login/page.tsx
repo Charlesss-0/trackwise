@@ -111,7 +111,7 @@ function LoginContent() {
 
 				<p className="text-center text-sm text-base-content/50 mt-6 animate-fade-in-delay-2">
 					Don&apos;t have an account?{" "}
-					<Link href="/signup" className="text-primary hover:text-primary/80 font-medium">
+					<Link href="/auth/signup" className="text-primary hover:text-primary/80 font-medium">
 						Create one
 					</Link>
 				</p>
