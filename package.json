@@ -16,6 +16,7 @@
     "db:migrate": "pnpm run db:push && pnpm run db:gen:types"
   },
   "dependencies": {
+    "@serwist/turbopack": "9.5.12",
     "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.110.8",
     "@tanstack/react-query": "^5.101.4",
@@ -26,6 +27,7 @@
     "next": "16.2.11",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "serwist": "9.5.12",
     "tailwind-merge": "^3.6.0",
     "zustand": "^5.0.14"
   },
@@ -40,6 +42,8 @@
     "@types/node": "^26.1.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.25.12",
+    "esbuild-wasm": "^0.25.12",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "jsdom": "^29.1.1",
