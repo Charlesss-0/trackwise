@@ -6,6 +6,8 @@ export default function manifest(): MetadataRoute.Manifest {
 		short_name: "Trackwise",
 		description: "A Progressive Web App",
 		start_url: "/",
+		scope: "/",
+		orientation: "portrait",
 		display: "standalone",
 		background_color: "#1d232a",
 		theme_color: "#1d232a",
