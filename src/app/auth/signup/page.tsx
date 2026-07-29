@@ -1,16 +1,17 @@
 "use client";
 
-import { MailCheck, TrendingUp, TriangleAlert } from "lucide-react";
+import { TrendingUp, TriangleAlert } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { type SubmitEvent, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 export default function SignupPage() {
+	const router = useRouter();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [error, setError] = useState("");
-	const [success, setSuccess] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 	const supabase = createClient();
@@ -36,9 +37,6 @@ export default function SignupPage() {
 		const { error: signUpError } = await supabase.auth.signUp({
 			email: email.trim(),
 			password,
-			options: {
-				emailRedirectTo: `${window.location.origin}/auth/callback`,
-			},
 		});
 
 		if (signUpError) {
@@ -47,30 +45,7 @@ export default function SignupPage() {
 			return;
 		}
 
-		setSuccess(true);
-		setLoading(false);
-	}
-
-	if (success) {
-		return (
-			<div className="auth-gradient min-h-dvh flex items-center justify-center p-4">
-				<div className="w-full max-w-md animate-fade-in">
-					<div className="glass-card rounded-2xl p-8 shadow-2xl text-center">
-						<div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-success/10 mb-4">
-							<MailCheck />
-						</div>
-						<h2 className="text-xl font-semibold mb-2">Check your email</h2>
-						<p className="text-base-content/60 text-sm mb-6">
-							We&apos;ve sent a confirmation link to <span className="font-medium text-base-content">{email}</span>. Click it to activate your
-							account.
-						</p>
-						<Link href="/login" className="btn btn-primary btn-block">
-							Back to sign in
-						</Link>
-					</div>
-				</div>
-			</div>
-		);
+		router.push("/");
 	}
 
 	return (
