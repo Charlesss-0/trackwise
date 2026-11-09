@@ -1,25 +1,20 @@
-import type { LucideIcon } from "lucide-react";
+import { type LucideIcon, Plus } from "lucide-react";
+import { Button } from "./button";
 
-type EmptyStateProps = {
-	icon: LucideIcon;
-	title: string;
-	description: string;
-	actionLabel?: string;
-	onAction?: () => void;
-};
-
+type EmptyStateProps = { icon: LucideIcon; title: string; description: string; actionLabel?: string; onAction?: () => void };
 export function EmptyState({ icon: Icon, title, description, actionLabel, onAction }: EmptyStateProps) {
 	return (
-		<div className="flex flex-col items-center justify-center py-16 text-center">
-			<div className="bg-base-200 rounded-full p-4 mb-4">
-				<Icon className="w-10 h-10 text-base-content/40" />
+		<div className="flex flex-col items-center justify-center px-5 py-14 text-center">
+			<div className="mb-5 flex size-12 items-center justify-center rounded-xl border border-border bg-muted">
+				<Icon className="size-5 text-muted-foreground" />
 			</div>
-			<h3 className="text-lg font-semibold mb-1">{title}</h3>
-			<p className="text-base-content/60 max-w-sm mb-6">{description}</p>
+			<h3 className="font-display text-base font-semibold">{title}</h3>
+			<p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">{description}</p>
 			{actionLabel && onAction && (
-				<button type="button" className="btn btn-primary" onClick={onAction}>
+				<Button type="button" variant="outline" className="mt-5" onClick={onAction}>
+					<Plus />
 					{actionLabel}
-				</button>
+				</Button>
 			)}
 		</div>
 	);

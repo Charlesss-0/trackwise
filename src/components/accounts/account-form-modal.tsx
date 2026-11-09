@@ -1,7 +1,14 @@
 "use client";
 
 import { type SubmitEvent, useEffect, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { DeleteButton } from "@/components/ui/confirm-dialog";
+import { ErrorNotice } from "@/components/ui/feedback";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Modal } from "@/components/ui/modal";
+import { NativeSelect } from "@/components/ui/native-select";
 import { useCreateAccount, useDeleteAccount, useUpdateAccount } from "@/hooks/use-accounts";
 import type { Account, AccountType, Currency } from "@/types";
 import { formatCurrency } from "@/utils/currency";
@@ -132,16 +139,21 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
 
 	return (
 		<Modal isOpen={isOpen} onClose={handleClose} title={isEditing ? "Edit Account" : "Add Account"}>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-				<div className="form-control">
-					<label className="label" htmlFor="account-name">
-						<span className="label-text">Account Name</span>
-					</label>
+			<form
+				onSubmit={(event) => {
+					void handleSubmit(event).catch(() => {});
+				}}
+				className="flex flex-col gap-4"
+			>
+				<div className="field">
+					<Label htmlFor="account-name">
+						<span className="text-sm">Account Name</span>
+					</Label>
 
-					<input
+					<Input
 						id="account-name"
 						type="text"
-						className="input input-bordered w-full"
+						className="w-full"
 						placeholder="e.g. BAC Savings"
 						value={name}
 						onChange={(e) => setName(e.target.value)}
@@ -149,48 +161,43 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
 					/>
 				</div>
 
-				<div className="form-control">
-					<label className="label" htmlFor="account-type">
-						<span className="label-text">Type</span>
-					</label>
+				<div className="field">
+					<Label htmlFor="account-type">
+						<span className="text-sm">Type</span>
+					</Label>
 
-					<select id="account-type" className="select select-bordered w-full" value={type} onChange={(e) => setType(e.target.value as AccountType)}>
+					<NativeSelect id="account-type" className="w-full" value={type} onChange={(e) => setType(e.target.value as AccountType)}>
 						<option value="debit">Debit</option>
 						<option value="credit">Credit Card</option>
 						<option value="cash">Cash</option>
 						<option value="savings">Savings</option>
-					</select>
+					</NativeSelect>
 				</div>
 
-				<div className="form-control">
-					<label className="label" htmlFor="account-currency">
-						<span className="label-text">Currency</span>
-					</label>
+				<div className="field">
+					<Label htmlFor="account-currency">
+						<span className="text-sm">Currency</span>
+					</Label>
 
-					<select
-						id="account-currency"
-						className="select select-bordered w-full"
-						value={currency}
-						onChange={(e) => setCurrency(e.target.value as Currency)}
-					>
+					<NativeSelect id="account-currency" className="w-full" value={currency} onChange={(e) => setCurrency(e.target.value as Currency)}>
 						<option value="NIO">NIO (Córdoba)</option>
 						<option value="USD">USD (Dollar)</option>
-					</select>
+					</NativeSelect>
 				</div>
 
 				{isCredit ? (
 					<>
-						<div className="form-control">
-							<label className="label" htmlFor="account-credit-limit">
-								<span className="label-text">Credit Limit</span>
-							</label>
+						<div className="field">
+							<Label htmlFor="account-credit-limit">
+								<span className="text-sm">Credit Limit</span>
+							</Label>
 
-							<input
+							<Input
 								id="account-credit-limit"
 								type="number"
 								step="0.01"
 								min="0"
-								className="input input-bordered w-full"
+								className="w-full"
 								placeholder="e.g. 5000"
 								value={creditLimit}
 								onChange={(e) => setCreditLimit(e.target.value)}
@@ -198,17 +205,17 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
 							/>
 						</div>
 
-						<div className="form-control">
-							<label className="label" htmlFor="account-available-balance">
-								<span className="label-text">Available Balance</span>
-							</label>
+						<div className="field">
+							<Label htmlFor="account-available-balance">
+								<span className="text-sm">Available Balance</span>
+							</Label>
 
-							<input
+							<Input
 								id="account-available-balance"
 								type="number"
 								step="0.01"
 								min="0"
-								className="input input-bordered w-full"
+								className="w-full"
 								placeholder="e.g. 2500"
 								value={availableBalance}
 								onChange={(e) => setAvailableBalance(e.target.value)}
@@ -216,22 +223,22 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
 							/>
 
 							{creditValidationError && (
-								<div className="label">
-									<span className="label-text-alt text-error">{creditValidationError}</span>
+								<div>
+									<span className="text-xs text-destructive">{creditValidationError}</span>
 								</div>
 							)}
 						</div>
 
 						{amountOwed !== null && (
-							<div className="form-control">
-								<label className="label" htmlFor="account-amount-owed">
-									<span className="label-text">Amount Owed</span>
-								</label>
+							<div className="field">
+								<Label htmlFor="account-amount-owed">
+									<span className="text-sm">Amount Owed</span>
+								</Label>
 
-								<input
+								<Input
 									id="account-amount-owed"
 									type="text"
-									className="input input-bordered w-full text-error font-medium"
+									className="w-full text-destructive font-medium"
 									value={formatCurrency(amountOwed, currency)}
 									readOnly
 									tabIndex={-1}
@@ -240,16 +247,16 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
 						)}
 					</>
 				) : (
-					<div className="form-control">
-						<label className="label" htmlFor="account-balance">
-							<span className="label-text">{isEditing ? "Balance" : "Initial Balance"}</span>
-						</label>
+					<div className="field">
+						<Label htmlFor="account-balance">
+							<span className="text-sm">{isEditing ? "Balance" : "Initial Balance"}</span>
+						</Label>
 
-						<input
+						<Input
 							id="account-balance"
 							type="number"
 							step="0.01"
-							className="input input-bordered w-full"
+							className="w-full"
 							value={balance}
 							onChange={(e) => setBalance(e.target.value)}
 							min={0}
@@ -257,31 +264,33 @@ export function AccountFormModal({ isOpen, onClose, account }: AccountFormModalP
 					</div>
 				)}
 
-				<div className="modal-action">
+				<ErrorNotice error={createAccount.error || updateAccount.error || deleteAccount.error} />
+				<div className="form-actions">
 					{isEditing && (
-						<button
+						<DeleteButton
 							type="button"
-							className="btn btn-error mr-auto"
-							onClick={() => {
-								if (confirm("Are you sure you want to delete this account?")) {
-									deleteAccount.mutate(account.id);
-									handleClose();
-								}
+							variant="destructive"
+							size="default"
+							className="mr-auto"
+							message="Are you sure you want to delete this account?"
+							onConfirm={() => {
+								deleteAccount.mutate(account.id);
+								handleClose();
 							}}
 							disabled={isPending}
 						>
 							Delete
-						</button>
+						</DeleteButton>
 					)}
 
-					<button type="button" className="btn btn-ghost" onClick={handleClose} disabled={isPending}>
+					<Button type="button" variant="ghost" size="default" onClick={handleClose} disabled={isPending}>
 						Cancel
-					</button>
+					</Button>
 
-					<button type="submit" className="btn btn-primary" disabled={isPending || !name.trim() || (isCredit && !!creditValidationError)}>
-						{isPending && <span className="loading loading-spinner loading-sm" />}
+					<Button type="submit" variant="default" size="default" disabled={isPending || !name.trim() || (isCredit && !!creditValidationError)}>
+						{isPending && <LoadingSpinner size="sm" />}
 						{isEditing ? "Save Changes" : "Add Account"}
-					</button>
+					</Button>
 				</div>
 			</form>
 		</Modal>

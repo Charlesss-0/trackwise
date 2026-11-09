@@ -2,5 +2,8 @@ import clsx, { type ClassValue } from "clsx";
 import { twMerge as tailwindMerge } from "tailwind-merge";
 
 export function twMerge(...inputs: ClassValue[]) {
-  return tailwindMerge(clsx(inputs));
+	return tailwindMerge(clsx(inputs));
 }
+
+// Standard shadcn alias for components added through the CLI.
+export const cn = twMerge;

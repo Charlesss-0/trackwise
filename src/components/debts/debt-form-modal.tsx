@@ -1,7 +1,14 @@
 "use client";
 
 import { type FormEvent, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { DeleteButton } from "@/components/ui/confirm-dialog";
+import { ErrorNotice } from "@/components/ui/feedback";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Modal } from "@/components/ui/modal";
+import { NativeSelect } from "@/components/ui/native-select";
 import { useCreateDebt, useDeleteDebt, useUpdateDebt } from "@/hooks/use-debts";
 import type { Currency, Debt } from "@/types";
 
@@ -87,15 +94,20 @@ export function DebtFormModal({ isOpen, onClose, debt }: DebtFormModalProps) {
 
 	return (
 		<Modal isOpen={isOpen} onClose={handleClose} title={isEditing ? "Edit Debt" : "Add Debt"}>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-				<div className="form-control">
-					<label className="label" htmlFor="creditor">
-						<span className="label-text">Creditor Name</span>
-					</label>
-					<input
+			<form
+				onSubmit={(event) => {
+					void handleSubmit(event).catch(() => {});
+				}}
+				className="flex flex-col gap-4"
+			>
+				<div className="field">
+					<Label htmlFor="creditor">
+						<span className="text-sm">Creditor Name</span>
+					</Label>
+					<Input
 						id="creditor"
 						type="text"
-						className="input input-bordered w-full"
+						className="w-full"
 						placeholder="e.g. Chase Visa"
 						value={creditorName}
 						onChange={(e) => setCreditorName(e.target.value)}
@@ -104,16 +116,16 @@ export function DebtFormModal({ isOpen, onClose, debt }: DebtFormModalProps) {
 				</div>
 
 				<div className="grid grid-cols-2 gap-4">
-					<div className="form-control">
-						<label className="label" htmlFor="total-amount">
-							<span className="label-text">Total Amount</span>
-						</label>
-						<input
+					<div className="field">
+						<Label htmlFor="total-amount">
+							<span className="text-sm">Total Amount</span>
+						</Label>
+						<Input
 							id="total-amount"
 							type="number"
 							step="0.01"
 							min="0.01"
-							className="input input-bordered w-full"
+							className="w-full"
 							value={totalAmount}
 							onChange={(e) => {
 								setTotalAmount(e.target.value);
@@ -123,16 +135,16 @@ export function DebtFormModal({ isOpen, onClose, debt }: DebtFormModalProps) {
 						/>
 					</div>
 
-					<div className="form-control">
-						<label className="label" htmlFor="remaining">
-							<span className="label-text">Remaining Balance</span>
-						</label>
-						<input
+					<div className="field">
+						<Label htmlFor="remaining">
+							<span className="text-sm">Remaining Balance</span>
+						</Label>
+						<Input
 							id="remaining"
 							type="number"
 							step="0.01"
 							min="0"
-							className="input input-bordered w-full"
+							className="w-full"
 							value={remainingBalance}
 							onChange={(e) => setRemainingBalance(e.target.value)}
 							required
@@ -141,32 +153,32 @@ export function DebtFormModal({ isOpen, onClose, debt }: DebtFormModalProps) {
 				</div>
 
 				<div className="grid grid-cols-2 gap-4">
-					<div className="form-control">
-						<label className="label" htmlFor="monthly">
-							<span className="label-text">Monthly Payment</span>
-						</label>
-						<input
+					<div className="field">
+						<Label htmlFor="monthly">
+							<span className="text-sm">Monthly Payment</span>
+						</Label>
+						<Input
 							id="monthly"
 							type="number"
 							step="0.01"
 							min="0.01"
-							className="input input-bordered w-full"
+							className="w-full"
 							value={monthlyPayment}
 							onChange={(e) => setMonthlyPayment(e.target.value)}
 							required
 						/>
 					</div>
 
-					<div className="form-control">
-						<label className="label" htmlFor="due-day">
-							<span className="label-text">Due Day (1-31)</span>
-						</label>
-						<input
+					<div className="field">
+						<Label htmlFor="due-day">
+							<span className="text-sm">Due Day (1-31)</span>
+						</Label>
+						<Input
 							id="due-day"
 							type="number"
 							min="1"
 							max="31"
-							className="input input-bordered w-full"
+							className="w-full"
 							value={dueDay}
 							onChange={(e) => setDueDay(e.target.value)}
 							required
@@ -174,44 +186,41 @@ export function DebtFormModal({ isOpen, onClose, debt }: DebtFormModalProps) {
 					</div>
 				</div>
 
-				<div className="form-control">
-					<label className="label" htmlFor="debt-currency">
-						<span className="label-text">Currency</span>
-					</label>
-					<select
-						id="debt-currency"
-						className="select select-bordered w-full"
-						value={currency}
-						onChange={(e) => setCurrency(e.target.value as Currency)}
-					>
+				<div className="field">
+					<Label htmlFor="debt-currency">
+						<span className="text-sm">Currency</span>
+					</Label>
+					<NativeSelect id="debt-currency" className="w-full" value={currency} onChange={(e) => setCurrency(e.target.value as Currency)}>
 						<option value="USD">USD (Dollar)</option>
 						<option value="NIO">NIO (Córdoba)</option>
-					</select>
+					</NativeSelect>
 				</div>
 
-				<div className="modal-action">
+				<ErrorNotice error={createDebt.error || updateDebt.error || deleteDebt.error} />
+				<div className="form-actions">
 					{isEditing && (
-						<button
+						<DeleteButton
 							type="button"
-							className="btn btn-error mr-auto"
-							onClick={() => {
-								if (confirm("Are you sure you want to delete this debt?")) {
-									deleteDebt.mutate(debt.id);
-									handleClose();
-								}
+							variant="destructive"
+							size="default"
+							className="mr-auto"
+							message="Are you sure you want to delete this debt?"
+							onConfirm={() => {
+								deleteDebt.mutate(debt.id);
+								handleClose();
 							}}
 							disabled={isPending}
 						>
 							Delete
-						</button>
+						</DeleteButton>
 					)}
-					<button type="button" className="btn btn-ghost" onClick={handleClose} disabled={isPending}>
+					<Button type="button" variant="ghost" size="default" onClick={handleClose} disabled={isPending}>
 						Cancel
-					</button>
-					<button type="submit" className="btn btn-primary" disabled={isPending || !creditorName.trim()}>
-						{isPending && <span className="loading loading-spinner loading-sm" />}
+					</Button>
+					<Button type="submit" variant="default" size="default" disabled={isPending || !creditorName.trim()}>
+						{isPending && <LoadingSpinner size="sm" />}
 						{isEditing ? "Save Changes" : "Add Debt"}
-					</button>
+					</Button>
 				</div>
 			</form>
 		</Modal>

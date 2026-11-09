@@ -1,11 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Geist_Mono, Manrope } from "next/font/google";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import "./globals.css";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
+const bodyFont = DM_Sans({
+	variable: "--font-body",
 	subsets: ["latin"],
 });
+
+const headingFont = Manrope({ variable: "--font-heading", subsets: ["latin"] });
 
 const geistMono = Geist_Mono({
 	variable: "--font-geist-mono",
@@ -92,7 +95,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-	themeColor: "#1d232a",
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "#f6f7f4" },
+		{ media: "(prefers-color-scheme: dark)", color: "#151c19" },
+	],
 	width: "device-width",
 	initialScale: 1,
 };
@@ -103,8 +109,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-			<body className="min-h-full flex flex-col">{children}</body>
+		<html lang="en" suppressHydrationWarning className={`${bodyFont.variable} ${headingFont.variable} ${geistMono.variable} h-full antialiased`}>
+			<body className="min-h-full flex flex-col">
+				<ThemeProvider>{children}</ThemeProvider>
+			</body>
 		</html>
 	);
 }

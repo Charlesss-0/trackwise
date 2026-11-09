@@ -2,7 +2,16 @@
 
 import { format } from "date-fns";
 import { type SubmitEvent, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { DeleteButton } from "@/components/ui/confirm-dialog";
+import { ErrorNotice } from "@/components/ui/feedback";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Modal } from "@/components/ui/modal";
+import { NativeSelect } from "@/components/ui/native-select";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import { useAccounts } from "@/hooks/use-accounts";
 import { useCategories } from "@/hooks/use-categories";
 import { useCreateTransaction, useDeleteTransaction, useUpdateTransaction } from "@/hooks/use-transactions";
@@ -99,30 +108,47 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
 
 	return (
 		<Modal isOpen={isOpen} onClose={handleClose} title={isEditing ? "Edit Transaction" : "Add Transaction"}>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-				<div className="form-control">
+			<form
+				onSubmit={(event) => {
+					void handleSubmit(event).catch(() => {});
+				}}
+				className="flex flex-col gap-4"
+			>
+				<div className="field">
 					<div className="flex gap-2">
-						<button type="button" className={`btn flex-1 ${type === "expense" ? "btn-error" : "btn-ghost"}`} onClick={() => setType("expense")}>
+						<Button
+							type="button"
+							variant={type === "expense" ? "secondary" : "ghost"}
+							aria-pressed={type === "expense"}
+							className="flex-1"
+							onClick={() => setType("expense")}
+						>
 							Expense
-						</button>
-						<button type="button" className={`btn flex-1 ${type === "income" ? "btn-success" : "btn-ghost"}`} onClick={() => setType("income")}>
+						</Button>
+						<Button
+							type="button"
+							variant={type === "income" ? "secondary" : "ghost"}
+							aria-pressed={type === "income"}
+							className="flex-1"
+							onClick={() => setType("income")}
+						>
 							Income
-						</button>
+						</Button>
 					</div>
 				</div>
 
 				<div className="flex gap-2">
-					<div className="form-control flex-1">
-						<label className="label" htmlFor="tx-amount">
-							<span className="label-text">Amount</span>
-						</label>
+					<div className="field flex-1">
+						<Label htmlFor="tx-amount">
+							<span className="text-sm">Amount</span>
+						</Label>
 
-						<input
+						<Input
 							id="tx-amount"
 							type="number"
 							step="0.01"
 							min="0.01"
-							className="input input-bordered w-full"
+							className="w-full"
 							placeholder="0.00"
 							value={amount}
 							onChange={(e) => setAmount(e.target.value)}
@@ -130,29 +156,24 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
 						/>
 					</div>
 
-					<div className="form-control w-28">
-						<label className="label" htmlFor="tx-currency">
-							<span className="label-text">Currency</span>
-						</label>
+					<div className="field w-28">
+						<Label htmlFor="tx-currency">
+							<span className="text-sm">Currency</span>
+						</Label>
 
-						<select
-							id="tx-currency"
-							className="select select-bordered w-full"
-							value={currency}
-							onChange={(e) => setCurrency(e.target.value as Currency)}
-						>
+						<NativeSelect id="tx-currency" className="w-full" value={currency} onChange={(e) => setCurrency(e.target.value as Currency)}>
 							<option value="NIO">NIO</option>
 							<option value="USD">USD</option>
-						</select>
+						</NativeSelect>
 					</div>
 				</div>
 
-				<div className="form-control">
-					<label className="label" htmlFor="tx-account">
-						<span className="label-text">Account</span>
-					</label>
+				<div className="field">
+					<Label htmlFor="tx-account">
+						<span className="text-sm">Account</span>
+					</Label>
 
-					<select id="tx-account" className="select select-bordered w-full" value={accountId} onChange={(e) => setAccountId(e.target.value)} required>
+					<NativeSelect id="tx-account" className="w-full" value={accountId} onChange={(e) => setAccountId(e.target.value)} required>
 						<option value="" disabled>
 							Select account
 						</option>
@@ -162,21 +183,15 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
 								{acc.name} ({acc.currency})
 							</option>
 						))}
-					</select>
+					</NativeSelect>
 				</div>
 
-				<div className="form-control">
-					<label className="label" htmlFor="tx-category">
-						<span className="label-text">Category</span>
-					</label>
+				<div className="field">
+					<Label htmlFor="tx-category">
+						<span className="text-sm">Category</span>
+					</Label>
 
-					<select
-						id="tx-category"
-						className="select select-bordered w-full"
-						value={categoryId}
-						onChange={(e) => setCategoryId(e.target.value)}
-						required
-					>
+					<NativeSelect id="tx-category" className="w-full" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
 						<option value="" disabled>
 							Select category
 						</option>
@@ -186,25 +201,25 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
 								{cat.name}
 							</option>
 						))}
-					</select>
+					</NativeSelect>
 				</div>
 
-				<div className="form-control">
-					<label className="label" htmlFor="tx-date">
-						<span className="label-text">Date</span>
-					</label>
+				<div className="field">
+					<Label htmlFor="tx-date">
+						<span className="text-sm">Date</span>
+					</Label>
 
-					<input id="tx-date" type="date" className="input input-bordered w-full" value={date} onChange={(e) => setDate(e.target.value)} required />
+					<Input id="tx-date" type="date" className="w-full" value={date} onChange={(e) => setDate(e.target.value)} required />
 				</div>
 
-				<div className="form-control">
-					<label className="label" htmlFor="tx-note">
-						<span className="label-text">Note</span>
-					</label>
+				<div className="field">
+					<Label htmlFor="tx-note">
+						<span className="text-sm">Note</span>
+					</Label>
 
-					<textarea
+					<Textarea
 						id="tx-note"
-						className="textarea textarea-bordered w-full"
+						className="w-full"
 						placeholder="Optional description"
 						value={note}
 						onChange={(e) => setNote(e.target.value)}
@@ -212,51 +227,40 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
 					/>
 				</div>
 
-				<div className="form-control">
-					<label className="label cursor-pointer" htmlFor="tx-recurring">
-						<span className="label-text">Recurring</span>
+				<div className="field">
+					<Label className="justify-between rounded-lg border border-border bg-muted/40 p-3 cursor-pointer" htmlFor="tx-recurring">
+						<span className="text-sm">Recurring</span>
 
-						<input
-							id="tx-recurring"
-							type="checkbox"
-							className="toggle toggle-primary"
-							checked={isRecurring}
-							onChange={(e) => setIsRecurring(e.target.checked)}
-						/>
-					</label>
+						<Switch id="tx-recurring" checked={isRecurring} onCheckedChange={setIsRecurring} />
+					</Label>
 				</div>
 
 				{isRecurring && (
 					<div className="flex gap-2">
-						<div className="form-control flex-1">
-							<label className="label" htmlFor="tx-frequency">
-								<span className="label-text">Frequency</span>
-							</label>
+						<div className="field flex-1">
+							<Label htmlFor="tx-frequency">
+								<span className="text-sm">Frequency</span>
+							</Label>
 
-							<select
-								id="tx-frequency"
-								className="select select-bordered w-full"
-								value={frequency}
-								onChange={(e) => setFrequency(e.target.value as RecurringFreq)}
-							>
+							<NativeSelect id="tx-frequency" className="w-full" value={frequency} onChange={(e) => setFrequency(e.target.value as RecurringFreq)}>
 								<option value="weekly">Weekly</option>
 								<option value="biweekly">Biweekly</option>
 								<option value="monthly">Monthly</option>
 								<option value="yearly">Yearly</option>
-							</select>
+							</NativeSelect>
 						</div>
 
-						<div className="form-control w-24">
-							<label className="label" htmlFor="tx-due-day">
-								<span className="label-text">Due Day</span>
-							</label>
+						<div className="field w-24">
+							<Label htmlFor="tx-due-day">
+								<span className="text-sm">Due Day</span>
+							</Label>
 
-							<input
+							<Input
 								id="tx-due-day"
 								type="number"
 								min="1"
 								max="31"
-								className="input input-bordered w-full"
+								className="w-full"
 								value={recurringDueDay}
 								onChange={(e) => setRecurringDueDay(e.target.value)}
 							/>
@@ -264,30 +268,32 @@ export function TransactionFormModal({ isOpen, onClose, transaction }: Transacti
 					</div>
 				)}
 
-				<div className="modal-action">
+				<ErrorNotice error={createTransaction.error || updateTransaction.error || deleteTransaction.error} />
+				<div className="form-actions">
 					{isEditing && (
-						<button
+						<DeleteButton
 							type="button"
-							className="btn btn-error mr-auto"
-							onClick={() => {
-								if (confirm("Are you sure you want to delete this transaction?")) {
-									deleteTransaction.mutate(transaction);
-									handleClose();
-								}
+							variant="destructive"
+							size="default"
+							className="mr-auto"
+							message="Are you sure you want to delete this transaction?"
+							onConfirm={() => {
+								deleteTransaction.mutate(transaction);
+								handleClose();
 							}}
 							disabled={isPending}
 						>
 							Delete
-						</button>
+						</DeleteButton>
 					)}
-					<button type="button" className="btn btn-ghost" onClick={handleClose} disabled={isPending}>
+					<Button type="button" variant="ghost" size="default" onClick={handleClose} disabled={isPending}>
 						Cancel
-					</button>
+					</Button>
 
-					<button type="submit" className="btn btn-primary" disabled={isPending || !amount || !accountId || !categoryId}>
-						{isPending && <span className="loading loading-spinner loading-sm" />}
+					<Button type="submit" variant="default" size="default" disabled={isPending || !amount || !accountId || !categoryId}>
+						{isPending && <LoadingSpinner size="sm" />}
 						{isEditing ? "Save Changes" : "Add Transaction"}
-					</button>
+					</Button>
 				</div>
 			</form>
 		</Modal>

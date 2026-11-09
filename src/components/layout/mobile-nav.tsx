@@ -1,43 +1,47 @@
 "use client";
-
 import { ArrowLeftRight, CreditCard, LayoutDashboard, Menu, Wallet } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useUIStore } from "@/stores/ui-store";
 
 const mainItems = [
-	{ href: "/dashboard", label: "Home", icon: LayoutDashboard },
+	{ href: "/dashboard", label: "Overview", icon: LayoutDashboard },
 	{ href: "/dashboard/accounts", label: "Accounts", icon: Wallet },
-	{ href: "/dashboard/transactions", label: "Add", icon: ArrowLeftRight },
+	{ href: "/dashboard/transactions", label: "Activity", icon: ArrowLeftRight },
 	{ href: "/dashboard/debts", label: "Debts", icon: CreditCard },
 ];
-
 export function MobileNav() {
 	const pathname = usePathname();
-	const router = useRouter();
-	const toggleSidebar = useUIStore((s) => s.toggleSidebar);
-
+	const { toggleSidebar, sidebarOpen } = useUIStore();
 	return (
-		<div className="lg:hidden fixed bottom-0 left-0 right-0 border-t border-base-300 bg-base-200 z-30 pb-safe">
-			<div className="flex items-center justify-around h-16">
-				{mainItems.map((item) => {
-					const isActive = pathname === item.href;
-					return (
-						<button
-							type="button"
-							key={item.href}
-							onClick={() => router.push(item.href)}
-							className={`flex flex-col items-center justify-center w-16 h-full gap-1 ${isActive ? "text-primary" : "text-base-content/60"}`}
-						>
-							<item.icon size={20} />
-							<span className="text-[10px] font-medium">{item.label}</span>
-						</button>
-					);
-				})}
-				<button type="button" onClick={toggleSidebar} className="flex flex-col items-center justify-center w-16 h-full gap-1 text-base-content/60">
-					<Menu size={20} />
-					<span className="text-[10px] font-medium">Menu</span>
+		<nav
+			aria-label="Mobile navigation"
+			className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-sidebar pb-[env(safe-area-inset-bottom)] lg:hidden"
+		>
+			<div className="flex h-16 items-center justify-around">
+				{mainItems.map(({ href, label, icon: Icon }) => (
+					<Link
+						key={href}
+						href={href}
+						aria-current={pathname === href ? "page" : undefined}
+						className={`flex h-full w-16 flex-col items-center justify-center gap-1 text-[10px] font-medium ${pathname === href ? "text-sidebar-primary" : "text-muted-foreground"}`}
+					>
+						<span className={`rounded-lg px-3 py-1 ${pathname === href ? "bg-sidebar-accent" : ""}`}>
+							<Icon size={18} />
+						</span>
+						{label}
+					</Link>
+				))}
+				<button
+					type="button"
+					onClick={toggleSidebar}
+					aria-expanded={sidebarOpen}
+					className="flex h-full w-16 flex-col items-center justify-center gap-2 text-[10px] font-medium text-muted-foreground"
+				>
+					<Menu size={18} />
+					Menu
 				</button>
 			</div>
-		</div>
+		</nav>
 	);
 }

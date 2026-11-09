@@ -1,14 +1,21 @@
 "use client";
 
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { CreditCard, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { DebtFormModal } from "@/components/debts/debt-form-modal";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { DeleteButton } from "@/components/ui/confirm-dialog";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorNotice } from "@/components/ui/feedback";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { PageHeader } from "@/components/ui/page-header";
 import { useDebts, useDeleteDebt } from "@/hooks/use-debts";
 import type { Debt } from "@/types/database";
 import { formatCurrency } from "@/utils/currency";
 
 export default function DebtsPage() {
-	const { data: debts, isLoading } = useDebts();
+	const { data: debts, isLoading, error } = useDebts();
 	const deleteDebt = useDeleteDebt();
 	const [modalOpen, setModalOpen] = useState(false);
 	const [debtToEdit, setDebtToEdit] = useState<Debt | null>(null);
@@ -16,89 +23,111 @@ export default function DebtsPage() {
 	if (isLoading)
 		return (
 			<div className="flex justify-center p-12">
-				<span className="loading loading-spinner loading-lg"></span>
+				<LoadingSpinner size="lg" />
 			</div>
 		);
 
 	return (
-		<div className="space-y-6">
-			<div className="flex justify-between items-center">
-				<h1 className="text-2xl font-bold">Debts & Loans</h1>
-				<button
+		<div className="space-y-7">
+			<PageHeader title="Debts & loans" description="Keep track of what you owe and the progress you’re making.">
+				<Button
 					type="button"
 					onClick={() => {
 						setDebtToEdit(null);
 						setModalOpen(true);
 					}}
-					className="btn btn-primary btn-sm"
+					variant="default"
+					size="sm"
 				>
 					<Plus size={16} /> Add Debt
-				</button>
-			</div>
+				</Button>
+			</PageHeader>
+			<ErrorNotice error={error || deleteDebt.error} />
 
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+			<div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
 				{debts?.map((debt) => {
 					const progress = ((debt.total_amount - debt.remaining_balance) / debt.total_amount) * 100;
 
 					return (
-						<div key={debt.id} className="card bg-base-200 border border-base-300">
-							<div className="card-body p-5">
-								<div className="flex justify-between items-start">
+						<Card key={debt.id}>
+							<div className="p-5 sm:p-6">
+								<div className="flex justify-between items-start gap-3">
 									<div>
-										<h2 className="card-title text-lg">{debt.creditor_name}</h2>
-										<p className="text-sm text-base-content/60">Due on day {debt.due_day} of every month</p>
+										<h2 className="flex items-center gap-2 font-display font-semibold text-lg">{debt.creditor_name}</h2>
+
+										<p className="text-sm text-muted-foreground">Due on day {debt.due_day} of every month</p>
 									</div>
+
 									<div className="flex gap-2">
-										<button
+										<Button
 											type="button"
-											className="btn btn-square btn-sm btn-ghost"
+											variant="ghost"
+											size="icon-sm"
 											onClick={() => {
 												setDebtToEdit(debt);
 												setModalOpen(true);
 											}}
 										>
 											<Pencil size={14} />
-										</button>
-										<button
+
+											<span className="sr-only">Edit</span>
+										</Button>
+
+										<DeleteButton
 											type="button"
-											className="btn btn-square btn-sm btn-ghost text-error"
-											onClick={() => {
-												if (confirm("Delete this debt?")) {
-													deleteDebt.mutate(debt.id);
-												}
+											variant="ghost"
+											size="icon-sm"
+											className="text-destructive"
+											message="Delete this debt?"
+											onConfirm={() => {
+												deleteDebt.mutate(debt.id);
 											}}
 										>
 											<Trash2 size={14} />
-										</button>
+
+											<span className="sr-only">Delete</span>
+										</DeleteButton>
 									</div>
 								</div>
 
-								<div className="mt-4 flex justify-between items-end">
+								<div className="mt-6 flex flex-wrap justify-between items-end gap-5">
 									<div>
-										<p className="text-xs text-base-content/60 uppercase font-semibold tracking-wider">Remaining</p>
-										<p className="text-2xl font-bold text-error mt-1">{formatCurrency(debt.remaining_balance, debt.currency)}</p>
+										<p className="text-xs text-muted-foreground uppercase font-semibold tracking-wider">Remaining</p>
+
+										<p className="font-display text-2xl font-semibold tracking-tight tabular-nums text-destructive mt-1">
+											{formatCurrency(debt.remaining_balance, debt.currency)}
+										</p>
 									</div>
+
 									<div className="text-right">
-										<p className="text-xs text-base-content/60 uppercase font-semibold tracking-wider">Monthly Payment</p>
+										<p className="text-xs text-muted-foreground uppercase font-semibold tracking-wider">Monthly Payment</p>
+
 										<p className="text-lg font-semibold mt-1">{formatCurrency(debt.monthly_payment, debt.currency)}</p>
 									</div>
 								</div>
 
 								<div className="mt-6">
-									<div className="flex justify-between text-xs mb-1">
+									<div className="flex flex-wrap justify-between gap-2 text-xs mb-3 text-muted-foreground">
 										<span>Paid: {formatCurrency(debt.total_amount - debt.remaining_balance, debt.currency)}</span>
+
 										<span>Total: {formatCurrency(debt.total_amount, debt.currency)}</span>
 									</div>
-									<progress className="progress progress-success w-full h-2" value={progress} max="100"></progress>
+
+									<progress aria-label="Payment progress" className="balance-progress text-success w-full h-2" value={progress} max="100"></progress>
 								</div>
 							</div>
-						</div>
+						</Card>
 					);
 				})}
+
 				{debts?.length === 0 && (
-					<div className="col-span-full py-12 text-center text-base-content/60 bg-base-200 rounded-box border border-base-300 border-dashed">
-						<p>No debts found. You are debt free!</p>
-					</div>
+					<Card className="col-span-full">
+						<EmptyState
+							icon={CreditCard}
+							title="Nothing owed. A little peace of mind."
+							description="No debts found. You are debt free! Add any loans you want to keep track of here."
+						/>
+					</Card>
 				)}
 			</div>
 

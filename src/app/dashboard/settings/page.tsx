@@ -1,13 +1,22 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: any */
 "use client";
 
 import { useEffect, useState } from "react";
+import { AppearanceSelector } from "@/components/ui/appearance-selector";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ErrorNotice } from "@/components/ui/feedback";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { NativeSelect } from "@/components/ui/native-select";
+import { PageHeader } from "@/components/ui/page-header";
 import { useExchangeRate, useSetManualRate } from "@/hooks/use-exchange-rate";
 import { useUIStore } from "@/stores/ui-store";
 
 export default function SettingsPage() {
 	const { homeCurrency, setHomeCurrency } = useUIStore();
 	const { data: rate, isLoading } = useExchangeRate();
-	const { mutate: setManual, isPending } = useSetManualRate();
+	const { mutate: setManual, isPending, isSuccess, error: saveError } = useSetManualRate();
 	const isManual = useUIStore((s) => (s as any).isManual) || false;
 
 	const [manualValue, setManualValue] = useState<string>("");
@@ -24,60 +33,71 @@ export default function SettingsPage() {
 	};
 
 	return (
-		<div className="space-y-6 max-w-2xl">
-			<h1 className="text-2xl font-bold">Settings</h1>
+		<div className="space-y-6 max-w-3xl">
+			<PageHeader title="Settings" description="Make Trackwise feel right for the way you manage your money." />
 
-			<div className="card bg-base-200 border border-base-300">
-				<div className="card-body">
-					<h2 className="card-title">Preferences</h2>
+			<Card>
+				<div className="p-5 sm:p-6">
+					<h2 className="flex items-center gap-2 font-display font-semibold">Preferences</h2>
+					<AppearanceSelector />
 
-					<div className="form-control w-full max-w-xs mt-4">
-						<label className="label">
-							<span className="label-text font-medium">Home Currency</span>
-						</label>
+					<div className="field w-full max-w-md mt-5">
+						<Label htmlFor="home-currency">
+							<span className="text-sm font-medium">Home Currency</span>
+						</Label>
 
-						<select className="select select-bordered" value={homeCurrency} onChange={(e) => setHomeCurrency(e.target.value as "NIO" | "USD")}>
+						<NativeSelect id="home-currency" value={homeCurrency} onChange={(e) => setHomeCurrency(e.target.value as "NIO" | "USD")}>
 							<option value="USD">USD - US Dollar ($)</option>
 							<option value="NIO">NIO - Nicaraguan Córdoba (C$)</option>
-						</select>
+						</NativeSelect>
 
-						<label className="label">
-							<span className="label-text-alt text-base-content/60">All totals and summaries will be converted to this currency.</span>
-						</label>
+						<p>
+							<span className="text-xs text-muted-foreground">All totals and summaries will be converted to this currency.</span>
+						</p>
 					</div>
 				</div>
-			</div>
+			</Card>
 
-			<div className="card bg-base-200 border border-base-300">
-				<div className="card-body">
-					<h2 className="card-title">Exchange Rate (NIO per USD)</h2>
+			<Card>
+				<div className="p-5 sm:p-6">
+					<h2 className="flex items-center gap-2 font-display font-semibold">Exchange Rate (NIO per USD)</h2>
 
-					<div className="form-control w-full max-w-xs mt-4">
-						<label className="label">
-							<span className="label-text font-medium">Current Rate</span>
-						</label>
+					<div className="field w-full max-w-md mt-5">
+						<Label htmlFor="exchange-rate">
+							<span className="text-sm font-medium">Current Rate</span>
+						</Label>
 
 						<div className="flex gap-2">
-							<input
+							<Input
+								id="exchange-rate"
 								type="number"
 								step="0.01"
-								className="input input-bordered w-full"
+								className="w-full"
 								value={manualValue}
 								onChange={(e) => setManualValue(e.target.value)}
 							/>
-							<button className="btn btn-primary" onClick={handleSaveRate} disabled={isPending || parseFloat(manualValue) === rate}>
-								Save
-							</button>
+
+							<Button
+								variant="default"
+								size="default"
+								type="button"
+								onClick={handleSaveRate}
+								disabled={isPending || parseFloat(manualValue) === rate}
+							>
+								{isPending ? "Saving…" : isSuccess && parseFloat(manualValue) === rate ? "Saved" : "Save"}
+							</Button>
 						</div>
 
-						<label className="label">
-							<span className="label-text-alt text-base-content/60">
+						<ErrorNotice error={saveError} />
+
+						<p>
+							<span className="text-xs text-muted-foreground">
 								{isLoading ? "Loading rate..." : `Currently using ${isManual ? "manual" : "automatic"} rate.`}
 							</span>
-						</label>
+						</p>
 					</div>
 				</div>
-			</div>
+			</Card>
 		</div>
 	);
 }

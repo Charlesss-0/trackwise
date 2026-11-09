@@ -1,6 +1,12 @@
 "use client";
 
 import { type SubmitEvent, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { DeleteButton } from "@/components/ui/confirm-dialog";
+import { ErrorNotice } from "@/components/ui/feedback";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Modal } from "@/components/ui/modal";
 import { useCreateCategory, useDeleteCategory, useUpdateCategory } from "@/hooks/use-categories";
 import type { Category } from "@/types/database";
@@ -62,15 +68,20 @@ export function CategoryFormModal({ isOpen, onClose, category }: CategoryFormMod
 
 	return (
 		<Modal isOpen={isOpen} onClose={handleClose} title={isEditing ? "Edit Category" : "Add Category"}>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-				<div className="form-control">
-					<label className="label" htmlFor="category-name">
-						<span className="label-text">Category Name</span>
-					</label>
-					<input
+			<form
+				onSubmit={(event) => {
+					void handleSubmit(event).catch(() => {});
+				}}
+				className="flex flex-col gap-4"
+			>
+				<div className="field">
+					<Label htmlFor="category-name">
+						<span className="text-sm">Category Name</span>
+					</Label>
+					<Input
 						id="category-name"
 						type="text"
-						className="input input-bordered w-full"
+						className="w-full"
 						placeholder="e.g. Pet Supplies"
 						value={name}
 						onChange={(e) => setName(e.target.value)}
@@ -78,42 +89,38 @@ export function CategoryFormModal({ isOpen, onClose, category }: CategoryFormMod
 					/>
 				</div>
 
-				<div className="form-control">
-					<label className="label" htmlFor="category-color">
-						<span className="label-text">Color</span>
-					</label>
-					<input
-						id="category-color"
-						type="color"
-						className="input input-bordered w-full h-12 p-1"
-						value={color}
-						onChange={(e) => setColor(e.target.value)}
-					/>
+				<div className="field">
+					<Label htmlFor="category-color">
+						<span className="text-sm">Color</span>
+					</Label>
+					<Input id="category-color" type="color" className="w-full h-12 p-1" value={color} onChange={(e) => setColor(e.target.value)} />
 				</div>
 
-				<div className="modal-action">
+				<ErrorNotice error={createCategory.error || updateCategory.error || deleteCategory.error} />
+				<div className="form-actions">
 					{isEditing && (
-						<button
+						<DeleteButton
 							type="button"
-							className="btn btn-error mr-auto"
-							onClick={() => {
-								if (confirm("Are you sure you want to delete this category?")) {
-									deleteCategory.mutate(category.id);
-									handleClose();
-								}
+							variant="destructive"
+							size="default"
+							className="mr-auto"
+							message="Are you sure you want to delete this category?"
+							onConfirm={() => {
+								deleteCategory.mutate(category.id);
+								handleClose();
 							}}
 							disabled={isPending}
 						>
 							Delete
-						</button>
+						</DeleteButton>
 					)}
-					<button type="button" className="btn btn-ghost" onClick={handleClose} disabled={isPending}>
+					<Button type="button" variant="ghost" size="default" onClick={handleClose} disabled={isPending}>
 						Cancel
-					</button>
-					<button type="submit" className="btn btn-primary" disabled={isPending || !name.trim()}>
-						{isPending && <span className="loading loading-spinner loading-sm" />}
+					</Button>
+					<Button type="submit" variant="default" size="default" disabled={isPending || !name.trim()}>
+						{isPending && <LoadingSpinner size="sm" />}
 						{isEditing ? "Save Changes" : "Add Category"}
-					</button>
+					</Button>
 				</div>
 			</form>
 		</Modal>

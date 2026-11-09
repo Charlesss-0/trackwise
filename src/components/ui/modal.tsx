@@ -1,42 +1,32 @@
 "use client";
+import { useRef } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./dialog";
 
-import { useEffect, useRef } from "react";
-
-type ModalProps = {
-	isOpen: boolean;
-	onClose: () => void;
-	title: string;
-	children: React.ReactNode;
-};
-
+type ModalProps = { isOpen: boolean; onClose: () => void; title: string; children: React.ReactNode };
 export function Modal({ isOpen, onClose, title, children }: ModalProps) {
-	const dialogRef = useRef<HTMLDialogElement>(null);
-
-	useEffect(() => {
-		const dialog = dialogRef.current;
-		if (!dialog) return;
-
-		if (isOpen) {
-			dialog.showModal();
-		} else {
-			dialog.close();
-		}
-	}, [isOpen]);
-
+	const returnFocus = useRef<HTMLElement | null>(null);
 	return (
-		<dialog ref={dialogRef} className="modal" onClose={onClose}>
-			<div className="modal-box">
-				<h3 className="text-lg font-bold">{title}</h3>
-				<button type="button" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={onClose} aria-label="Close">
-					✕
-				</button>
-				<div className="mt-4">{children}</div>
-			</div>
-			<form method="dialog" className="modal-backdrop">
-				<button type="submit" onClick={onClose}>
-					close
-				</button>
-			</form>
-		</dialog>
+		<Dialog
+			open={isOpen}
+			onOpenChange={(open) => {
+				if (!open) onClose();
+			}}
+		>
+			<DialogContent
+				onOpenAutoFocus={() => {
+					returnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+				}}
+				onCloseAutoFocus={(event) => {
+					event.preventDefault();
+					returnFocus.current?.focus();
+				}}
+			>
+				<div className="mb-6 pr-8">
+					<DialogTitle className="font-display text-xl font-semibold tracking-tight">{title}</DialogTitle>
+					<DialogDescription className="mt-1 text-sm text-muted-foreground">Keep your financial picture up to date.</DialogDescription>
+				</div>
+				{children}
+			</DialogContent>
+		</Dialog>
 	);
 }

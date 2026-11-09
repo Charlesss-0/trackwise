@@ -17,6 +17,7 @@ export type Database = {
 					currency: Database["public"]["Enums"]["currency_code"];
 					id: string;
 					name: string;
+					sort_order: number;
 					type: Database["public"]["Enums"]["account_type"];
 					updated_at: string;
 					user_id: string;
@@ -29,6 +30,7 @@ export type Database = {
 					currency?: Database["public"]["Enums"]["currency_code"];
 					id?: string;
 					name: string;
+					sort_order?: number;
 					type: Database["public"]["Enums"]["account_type"];
 					updated_at?: string;
 					user_id?: string;
@@ -41,6 +43,7 @@ export type Database = {
 					currency?: Database["public"]["Enums"]["currency_code"];
 					id?: string;
 					name?: string;
+					sort_order?: number;
 					type?: Database["public"]["Enums"]["account_type"];
 					updated_at?: string;
 					user_id?: string;
@@ -237,6 +240,10 @@ export type Database = {
 		Functions: {
 			copy_default_categories_for_user: {
 				Args: { target_user_id: string };
+				Returns: undefined;
+			};
+			reorder_accounts: {
+				Args: { p_expected_ids: string[]; p_ordered_ids: string[] };
 				Returns: undefined;
 			};
 			update_account_balance: {

@@ -10,4 +10,6 @@ ignoredBuiltDependencies:
   - unrs-resolver
 
 onlyBuiltDependencies:
+  - '@swc/core'
+  - esbuild
   - msw

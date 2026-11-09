@@ -7,8 +7,14 @@ const supabase = createClient();
 export function useAccounts() {
 	return useQuery({
 		queryKey: ["accounts"],
-		queryFn: async (): Promise<Account[]> => {
-			const { data, error } = await supabase.from("accounts").select("*").order("created_at", { ascending: true });
+		queryFn: async ({ signal }): Promise<Account[]> => {
+			const { data, error } = await supabase
+				.from("accounts")
+				.select("*")
+				.order("sort_order", { ascending: true })
+				.order("created_at", { ascending: true })
+				.order("id", { ascending: true })
+				.abortSignal(signal);
 
 			if (error) throw error;
 			return data ?? [];

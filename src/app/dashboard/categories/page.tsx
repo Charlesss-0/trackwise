@@ -1,14 +1,21 @@
 "use client";
 
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Pencil, Plus, Tags, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { CategoryFormModal } from "@/components/categories/category-form-modal";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { CategoryIcon } from "@/components/ui/category-icon";
+import { DeleteButton } from "@/components/ui/confirm-dialog";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorNotice } from "@/components/ui/feedback";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { PageHeader } from "@/components/ui/page-header";
 import { useCategories, useDeleteCategory } from "@/hooks/use-categories";
 import type { Category } from "@/types/database";
 
 export default function CategoriesPage() {
-	const { data: categories, isLoading } = useCategories();
+	const { data: categories, isLoading, error } = useCategories();
 	const deleteCategory = useDeleteCategory();
 	const [modalOpen, setModalOpen] = useState(false);
 	const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null);
@@ -16,66 +23,89 @@ export default function CategoriesPage() {
 	if (isLoading)
 		return (
 			<div className="flex justify-center p-12">
-				<span className="loading loading-spinner loading-lg"></span>
+				<LoadingSpinner size="lg" />
 			</div>
 		);
 
 	return (
-		<div className="space-y-6">
-			<div className="flex justify-between items-center">
-				<h1 className="text-2xl font-bold">Categories</h1>
-				<button
+		<div className="space-y-7">
+			<PageHeader title="Categories" description="Give every transaction a place. Keep your spending easy to understand.">
+				<Button
 					type="button"
 					onClick={() => {
 						setCategoryToEdit(null);
 						setModalOpen(true);
 					}}
-					className="btn btn-primary btn-sm"
+					variant="default"
 				>
 					<Plus size={16} /> Add Category
-				</button>
-			</div>
+				</Button>
+			</PageHeader>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+			<ErrorNotice error={error || deleteCategory.error} />
+
+			<div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4">
 				{categories?.map((cat) => (
-					<div key={cat.id} className="card bg-base-200 border border-base-300">
-						<div className="card-body p-4 flex flex-row items-center justify-between">
-							<div className="flex items-center gap-3">
-								<CategoryIcon name={cat.icon} color={cat.color} size={20} />
+					<Card key={cat.id}>
+						<div className="flex items-center justify-between gap-2 p-4">
+							<div className="flex min-w-0 flex-wrap items-center gap-3">
+								<div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted">
+									<CategoryIcon name={cat.icon} color={cat.color} size={19} />
+								</div>
 
-								<span className="font-medium">{cat.name}</span>
+								<span className="wrap-break-word font-medium">{cat.name}</span>
 
-								{cat.is_default && <span className="badge badge-sm">Default</span>}
+								{cat.is_default && <span className="inline-flex items-center rounded-md bg-muted px-2 py-1 text-xs font-medium">Default</span>}
 							</div>
 
-							<div className="flex gap-2">
-								<button
+							<div className="flex shrink-0 gap-1">
+								<Button
 									type="button"
-									className="btn btn-ghost btn-xs"
+									variant="ghost"
+									size="icon-sm"
 									onClick={() => {
 										setCategoryToEdit(cat);
 										setModalOpen(true);
 									}}
 								>
 									<Pencil size={14} />
-								</button>
 
-								<button
+									<span className="sr-only">Edit</span>
+								</Button>
+
+								<DeleteButton
 									type="button"
-									className="btn btn-ghost btn-xs text-error"
-									onClick={() => {
-										if (confirm("Are you sure you want to delete this category?")) {
-											deleteCategory.mutate(cat.id);
-										}
+									variant="ghost"
+									size="icon-sm"
+									className="text-destructive"
+									message="Are you sure you want to delete this category?"
+									onConfirm={() => {
+										deleteCategory.mutate(cat.id);
 									}}
 									disabled={deleteCategory.isPending}
 								>
 									<Trash2 size={14} />
-								</button>
+
+									<span className="sr-only">Delete</span>
+								</DeleteButton>
 							</div>
 						</div>
-					</div>
+					</Card>
 				))}
+				{categories?.length === 0 && (
+					<Card className="col-span-full">
+						<EmptyState
+							icon={Tags}
+							title="Make room for your categories"
+							description="Create categories to organize your everyday income and expenses."
+							actionLabel="Add category"
+							onAction={() => {
+								setCategoryToEdit(null);
+								setModalOpen(true);
+							}}
+						/>
+					</Card>
+				)}
 			</div>
 
 			<CategoryFormModal isOpen={modalOpen} onClose={() => setModalOpen(false)} category={categoryToEdit} />
